@@ -5,23 +5,23 @@ const FILTER_WAIT_TIME = 1000
 // Helper function to navigate to folders consultation page
 async function navigateToFoldersConsultation(page) {
 	// Direct navigation to avoid mobile sidebar issues
-	await page.goto('/yol-project/dashboard/folders/consultation')
+	await page.goto('/yol-benicio/dashboard/folders/consultation')
 }
 
 // Helper function to navigate to folders registration page
 async function navigateToFoldersRegistration(page) {
 	// Direct navigation to avoid mobile sidebar issues
-	await page.goto('/yol-project/dashboard/folders/register')
+	await page.goto('/yol-benicio/dashboard/folders/register')
 }
 
 test.describe('Folders Management', () => {
 	test.beforeEach(async ({page}) => {
 		// Login first
-		await page.goto('/yol-project/')
+		await page.goto('/yol-benicio/')
 		await page.getByPlaceholder('E-mail').fill('test@benicio.com.br')
 		await page.getByPlaceholder('Senha').fill('benicio123')
 		await page.getByRole('button', {name: 'Entrar'}).click()
-		await expect(page).toHaveURL('/yol-project/dashboard')
+		await expect(page).toHaveURL('/yol-benicio/dashboard')
 	})
 
 	test('should navigate to folders consultation page', async ({page}) => {
@@ -29,7 +29,7 @@ test.describe('Folders Management', () => {
 		await navigateToFoldersConsultation(page)
 
 		// Should navigate to consultation page
-		await expect(page).toHaveURL('/yol-project/dashboard/folders/consultation')
+		await expect(page).toHaveURL('/yol-benicio/dashboard/folders/consultation')
 		await expect(
 			page.getByRole('heading', {name: 'Consulta de pastas'})
 		).toBeVisible()
@@ -40,7 +40,7 @@ test.describe('Folders Management', () => {
 		await navigateToFoldersRegistration(page)
 
 		// Should navigate to registration page
-		await expect(page).toHaveURL('/yol-project/dashboard/folders/register')
+		await expect(page).toHaveURL('/yol-benicio/dashboard/folders/register')
 	})
 
 	test('should display folder consultation filters', async ({page}) => {

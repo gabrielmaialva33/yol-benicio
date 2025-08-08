@@ -33,7 +33,7 @@ test.describe('Performance and Network Tests', () => {
 			setTimeout(() => route.continue(), NETWORK_DELAY_3G) // Add 500ms delay
 		})
 
-		await page.goto('/yol-project/')
+		await page.goto('/yol-benicio/')
 
 		// Page should still load
 		await expect(page.getByPlaceholder('E-mail')).toBeVisible({timeout: 10_000})
@@ -44,7 +44,7 @@ test.describe('Performance and Network Tests', () => {
 		await page.getByRole('button', {name: 'Entrar'}).click()
 
 		// Should eventually navigate (with longer timeout)
-		await expect(page).toHaveURL('/yol-project/dashboard', {timeout: 15_000})
+		await expect(page).toHaveURL('/yol-benicio/dashboard', {timeout: 15_000})
 	})
 
 	test('should show loading states', async ({page}) => {
@@ -54,7 +54,7 @@ test.describe('Performance and Network Tests', () => {
 		})
 
 		// Login
-		await page.goto('/yol-project/')
+		await page.goto('/yol-benicio/')
 		await page.getByPlaceholder('E-mail').fill('test@benicio.com.br')
 		await page.getByPlaceholder('Senha').fill('benicio123')
 
@@ -67,7 +67,7 @@ test.describe('Performance and Network Tests', () => {
 		// await expect(loginButton).toBeDisabled()
 
 		// Eventually should navigate
-		await expect(page).toHaveURL('/yol-project/dashboard', {timeout: 10_000})
+		await expect(page).toHaveURL('/yol-benicio/dashboard', {timeout: 10_000})
 	})
 
 	test('should handle API errors gracefully', async ({page}) => {
@@ -85,7 +85,7 @@ test.describe('Performance and Network Tests', () => {
 			}
 		})
 
-		await page.goto('/yol-project/')
+		await page.goto('/yol-benicio/')
 		await page.getByPlaceholder('E-mail').fill('test@benicio.com.br')
 		await page.getByPlaceholder('Senha').fill('benicio123')
 		await page.getByRole('button', {name: 'Entrar'}).click()
@@ -97,16 +97,16 @@ test.describe('Performance and Network Tests', () => {
 		await page.getByRole('button', {name: 'Entrar'}).click()
 
 		// Second attempt should work
-		await expect(page).toHaveURL('/yol-project/dashboard', {timeout: 10_000})
+		await expect(page).toHaveURL('/yol-benicio/dashboard', {timeout: 10_000})
 	})
 
 	test('should handle offline mode', async ({page, context}) => {
 		// Login first while online
-		await page.goto('/yol-project/')
+		await page.goto('/yol-benicio/')
 		await page.getByPlaceholder('E-mail').fill('test@benicio.com.br')
 		await page.getByPlaceholder('Senha').fill('benicio123')
 		await page.getByRole('button', {name: 'Entrar'}).click()
-		await expect(page).toHaveURL('/yol-project/dashboard')
+		await expect(page).toHaveURL('/yol-benicio/dashboard')
 
 		// Go offline
 		await context.setOffline(true)
@@ -130,7 +130,7 @@ test.describe('Performance and Network Tests', () => {
 		// Start measuring
 		const startTime = Date.now()
 
-		await page.goto('/yol-project/')
+		await page.goto('/yol-benicio/')
 
 		// Wait for page to be fully loaded
 		await page.waitForLoadState('networkidle')
@@ -164,7 +164,7 @@ test.describe('Performance and Network Tests', () => {
 
 	test('should handle large data sets', async ({page}) => {
 		// Login
-		await page.goto('/yol-project/')
+		await page.goto('/yol-benicio/')
 		await page.getByPlaceholder('E-mail').fill('test@benicio.com.br')
 		await page.getByPlaceholder('Senha').fill('benicio123')
 		await page.getByRole('button', {name: 'Entrar'}).click()
@@ -188,7 +188,7 @@ test.describe('Performance and Network Tests', () => {
 
 	test('should not have memory leaks on navigation', async ({page}) => {
 		// Login
-		await page.goto('/yol-project/')
+		await page.goto('/yol-benicio/')
 		await page.getByPlaceholder('E-mail').fill('test@benicio.com.br')
 		await page.getByPlaceholder('Senha').fill('benicio123')
 		await page.getByRole('button', {name: 'Entrar'}).click()
@@ -229,7 +229,7 @@ test.describe('Performance and Network Tests', () => {
 
 	test('should handle concurrent operations', async ({page}) => {
 		// Login
-		await page.goto('/yol-project/')
+		await page.goto('/yol-benicio/')
 		await page.getByPlaceholder('E-mail').fill('test@benicio.com.br')
 		await page.getByPlaceholder('Senha').fill('benicio123')
 		await page.getByRole('button', {name: 'Entrar'}).click()

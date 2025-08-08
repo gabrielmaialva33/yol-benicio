@@ -2,7 +2,7 @@
   <img src="./public/logo-yol.svg" alt="YOL Project Logo" width="150" height="150" />
 
   <h1 align="center">
-    YOL-PROJECT
+    YOL-BENICIO
   </h1>
 
   <p align="center">
@@ -10,15 +10,15 @@
   </p>
 
   <p align="center">
-    <img src="https://img.shields.io/github/license/gabrielmaialva33/yol-project?color=00b8d3&style=for-the-badge&logo=appveyor" alt="License" />
-    <img src="https://img.shields.io/github/languages/top/gabrielmaialva33/yol-project?style=for-the-badge&logo=typescript" alt="GitHub top language" >
-    <img src="https://img.shields.io/github/languages/count/gabrielmaialva33/yol-project?style=for-the-badge&logo=appveyor" alt="GitHub language count" >
-    <img src="https://img.shields.io/github/repo-size/gabrielmaialva33/yol-project?style=for-the-badge&logo=appveyor" alt="Repository size" >
+    <img src="https://img.shields.io/github/license/gabrielmaialva33/yol-benicio?color=00b8d3&style=for-the-badge&logo=appveyor" alt="License" />
+    <img src="https://img.shields.io/github/languages/top/gabrielmaialva33/yol-benicio?style=for-the-badge&logo=typescript" alt="GitHub top language" >
+    <img src="https://img.shields.io/github/languages/count/gabrielmaialva33/yol-benicio?style=for-the-badge&logo=appveyor" alt="GitHub language count" >
+    <img src="https://img.shields.io/github/repo-size/gabrielmaialva33/yol-benicio?style=for-the-badge&logo=appveyor" alt="Repository size" >
   </p>
 
   <p align="center">
-    <a href="https://github.com/gabrielmaialva33/yol-project/commits/main">
-      <img src="https://img.shields.io/github/last-commit/gabrielmaialva33/yol-project?style=for-the-badge&logo=git" alt="GitHub last commit" >
+    <a href="https://github.com/gabrielmaialva33/yol-benicio/commits/main">
+      <img src="https://img.shields.io/github/last-commit/gabrielmaialva33/yol-benicio?style=for-the-badge&logo=git" alt="GitHub last commit" >
       <img src="https://img.shields.io/badge/made%20by-Maia-15c3d6?style=for-the-badge&logo=dev.to" alt="Maia" >  
     </a>
   </p>
@@ -35,7 +35,7 @@
 
 ## 📖 About
 
-**YOL-PROJECT** is a web application for Benício Advogados, designed to provide a modern and efficient platform for
+**YOL-BENICIO** is a web application for Benício Advogados, designed to provide a modern and efficient platform for
 legal services management.
 
 ## 💻 Technologies
@@ -110,13 +110,13 @@ The following software must be installed:
 ### Cloning the repository
 
 ```bash
-$ git clone https://github.com/gabrielmaialva33/yol-project.git
+$ git clone https://github.com/gabrielmaialva33/yol-benicio.git
 ```
 
 ### Running the application
 
 ```bash
-$ cd yol-project
+$ cd yol-benicio
 # Install dependencies
 $ pnpm install
 # Start the development server
@@ -144,7 +144,7 @@ This project is under the **MIT** license.
 &copy; 2017-present <a href="https://github.com/gabrielmaialva33/" target="_blank">Maia</a>
 
   <p>
-    <a href="https://github.com/gabrielmaialva33/yol-project" target="_blank">GitHub</a> |
-    <a href="https://gabrielmaialva33.github.io/yol-project/" target="_blank">Live Demo</a>
+    <a href="https://github.com/gabrielmaialva33/yol-benicio" target="_blank">GitHub</a> |
+    <a href="https://gabrielmaialva33.github.io/yol-benicio/" target="_blank">Live Demo</a>
   </p>
 </div>

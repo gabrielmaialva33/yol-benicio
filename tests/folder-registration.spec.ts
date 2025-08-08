@@ -7,14 +7,14 @@ const _SECTION_EXPAND_WAIT_TIME = 500
 test.describe('Folder Registration', () => {
 	test.beforeEach(async ({page}) => {
 		// Login first
-		await page.goto('/yol-project/')
+		await page.goto('/yol-benicio/')
 		await page.getByPlaceholder('E-mail').fill('test@benicio.com.br')
 		await page.getByPlaceholder('Senha').fill('benicio123')
 		await page.getByRole('button', {name: 'Entrar'}).click()
-		await expect(page).toHaveURL('/yol-project/dashboard')
+		await expect(page).toHaveURL('/yol-benicio/dashboard')
 
 		// Navigate to registration page
-		await page.goto('/yol-project/dashboard/folders/register')
+		await page.goto('/yol-benicio/dashboard/folders/register')
 	})
 
 	test('should display all form sections', async ({page}) => {
@@ -56,7 +56,7 @@ test.describe('Folder Registration', () => {
 
 		// Should redirect back to consultation page
 		await page.waitForTimeout(SUBMIT_WAIT_TIME)
-		await expect(page).toHaveURL('/yol-project/dashboard/folders/consultation')
+		await expect(page).toHaveURL('/yol-benicio/dashboard/folders/consultation')
 	})
 
 	test('should validate required fields', async ({page}) => {

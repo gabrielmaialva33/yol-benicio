@@ -3,11 +3,11 @@ import {expect, test} from '@playwright/test'
 test.describe('Dashboard', () => {
 	test.beforeEach(async ({page}) => {
 		// Login first
-		await page.goto('/yol-project/')
+		await page.goto('/yol-benicio/')
 		await page.getByPlaceholder('E-mail').fill('test@benicio.com.br')
 		await page.getByPlaceholder('Senha').fill('benicio123')
 		await page.getByRole('button', {name: 'Entrar'}).click()
-		await expect(page).toHaveURL('/yol-project/dashboard')
+		await expect(page).toHaveURL('/yol-benicio/dashboard')
 	})
 
 	test('should display dashboard header with title', async ({page}) => {
@@ -86,7 +86,7 @@ test.describe('Dashboard', () => {
 		await logoutButton.click()
 
 		// Should redirect to login page
-		await expect(page).toHaveURL('/yol-project/')
+		await expect(page).toHaveURL('/yol-benicio/')
 		await expect(page.getByPlaceholder('E-mail')).toBeVisible()
 	})
 

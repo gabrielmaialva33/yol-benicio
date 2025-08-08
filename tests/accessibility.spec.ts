@@ -3,7 +3,7 @@ import {checkA11y, injectAxe} from 'axe-playwright'
 
 test.describe('Accessibility Tests', () => {
 	test.beforeEach(async ({page}) => {
-		await page.goto('/yol-project/')
+		await page.goto('/yol-benicio/')
 	})
 
 	test('login page should be accessible', async ({page}) => {
@@ -63,7 +63,7 @@ test.describe('Accessibility Tests', () => {
 		await page.keyboard.press('Enter')
 
 		// Should navigate to dashboard
-		await expect(page).toHaveURL('/yol-project/dashboard')
+		await expect(page).toHaveURL('/yol-benicio/dashboard')
 	})
 
 	test('dashboard should be accessible', async ({page}) => {
@@ -71,7 +71,7 @@ test.describe('Accessibility Tests', () => {
 		await page.getByPlaceholder('E-mail').fill('test@benicio.com.br')
 		await page.getByPlaceholder('Senha').fill('benicio123')
 		await page.getByRole('button', {name: 'Entrar'}).click()
-		await expect(page).toHaveURL('/yol-project/dashboard')
+		await expect(page).toHaveURL('/yol-benicio/dashboard')
 
 		// Inject axe-core
 		await injectAxe(page)

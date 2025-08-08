@@ -8,7 +8,7 @@ type StorageData = Record<string, string | null>
 
 test.describe('Security and Validation Tests', () => {
 	test('should not allow SQL injection in login form', async ({page}) => {
-		await page.goto('/yol-project/')
+		await page.goto('/yol-benicio/')
 
 		// Try SQL injection in email field
 		await page.getByPlaceholder('E-mail').fill("' OR '1'='1")
@@ -17,11 +17,11 @@ test.describe('Security and Validation Tests', () => {
 
 		// Should show error, not log in
 		await expect(page.getByText('E-mail inválido')).toBeVisible()
-		await expect(page).toHaveURL('/yol-project/') // Still on login page
+		await expect(page).toHaveURL('/yol-benicio/') // Still on login page
 	})
 
 	test('should validate email format', async ({page}) => {
-		await page.goto('/yol-project/')
+		await page.goto('/yol-benicio/')
 
 		// Invalid email formats
 		const invalidEmails = [
@@ -52,11 +52,11 @@ test.describe('Security and Validation Tests', () => {
 		page
 	}) => {
 		// Login
-		await page.goto('/yol-project/')
+		await page.goto('/yol-benicio/')
 		await page.getByPlaceholder('E-mail').fill('test@benicio.com.br')
 		await page.getByPlaceholder('Senha').fill('benicio123')
 		await page.getByRole('button', {name: 'Entrar'}).click()
-		await expect(page).toHaveURL('/yol-project/dashboard')
+		await expect(page).toHaveURL('/yol-benicio/dashboard')
 
 		// Check localStorage
 		const localStorageData = await page.evaluate((): StorageData => {
@@ -95,7 +95,7 @@ test.describe('Security and Validation Tests', () => {
 
 	test('should handle XSS attempts in forms', async ({page}) => {
 		// Login first
-		await page.goto('/yol-project/')
+		await page.goto('/yol-benicio/')
 		await page.getByPlaceholder('E-mail').fill('test@benicio.com.br')
 		await page.getByPlaceholder('Senha').fill('benicio123')
 		await page.getByRole('button', {name: 'Entrar'}).click()
@@ -121,20 +121,20 @@ test.describe('Security and Validation Tests', () => {
 
 	test('should require authentication for protected routes', async ({page}) => {
 		// Try to access dashboard directly without login
-		await page.goto('/yol-project/dashboard')
+		await page.goto('/yol-benicio/dashboard')
 
 		// Should redirect to login
-		await expect(page).toHaveURL('/yol-project/')
+		await expect(page).toHaveURL('/yol-benicio/')
 		await expect(page.getByPlaceholder('E-mail')).toBeVisible()
 	})
 
 	test('should clear session on logout', async ({page}) => {
 		// Login
-		await page.goto('/yol-project/')
+		await page.goto('/yol-benicio/')
 		await page.getByPlaceholder('E-mail').fill('test@benicio.com.br')
 		await page.getByPlaceholder('Senha').fill('benicio123')
 		await page.getByRole('button', {name: 'Entrar'}).click()
-		await expect(page).toHaveURL('/yol-project/dashboard')
+		await expect(page).toHaveURL('/yol-benicio/dashboard')
 
 		// Store any auth tokens/data
 		const preLogoutStorage = await page.evaluate(() => ({
@@ -160,7 +160,7 @@ test.describe('Security and Validation Tests', () => {
 
 	test('should sanitize file uploads', async ({page}) => {
 		// Login
-		await page.goto('/yol-project/')
+		await page.goto('/yol-benicio/')
 		await page.getByPlaceholder('E-mail').fill('test@benicio.com.br')
 		await page.getByPlaceholder('Senha').fill('benicio123')
 		await page.getByRole('button', {name: 'Entrar'}).click()
@@ -179,7 +179,7 @@ test.describe('Security and Validation Tests', () => {
 	})
 
 	test('should enforce password requirements', async ({page}) => {
-		await page.goto('/yol-project/')
+		await page.goto('/yol-benicio/')
 
 		// Try weak passwords
 		const weakPasswords = ['123', 'abc', '    ', '']
@@ -201,15 +201,15 @@ test.describe('Security and Validation Tests', () => {
 
 	test('should prevent concurrent sessions', async ({page, context}) => {
 		// Login in first tab
-		await page.goto('/yol-project/')
+		await page.goto('/yol-benicio/')
 		await page.getByPlaceholder('E-mail').fill('test@benicio.com.br')
 		await page.getByPlaceholder('Senha').fill('benicio123')
 		await page.getByRole('button', {name: 'Entrar'}).click()
-		await expect(page).toHaveURL('/yol-project/dashboard')
+		await expect(page).toHaveURL('/yol-benicio/dashboard')
 
 		// Open second tab and try to login with same user
 		const page2 = await context.newPage()
-		await page2.goto('/yol-project/')
+		await page2.goto('/yol-benicio/')
 		await page2.getByPlaceholder('E-mail').fill('test@benicio.com.br')
 		await page2.getByPlaceholder('Senha').fill('benicio123')
 		await page2.getByRole('button', {name: 'Entrar'}).click()
@@ -223,7 +223,7 @@ test.describe('Security and Validation Tests', () => {
 
 	test('should mask sensitive information in UI', async ({page}) => {
 		// Login
-		await page.goto('/yol-project/')
+		await page.goto('/yol-benicio/')
 
 		// Password should be masked
 		const passwordField = page.getByPlaceholder('Senha')

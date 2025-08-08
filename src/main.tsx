@@ -13,7 +13,7 @@ const queryClient = new QueryClient()
 if (import.meta.env.DEV || window.location.hostname.includes('github.io')) {
 	worker.start({
 		serviceWorker: {
-			url: '/yol-project/mock-service-worker.js'
+			url: '/yol-benicio/mock-service-worker.js'
 		}
 	})
 }
@@ -25,7 +25,7 @@ if (container) {
 		<StrictMode>
 			<QueryClientProvider client={queryClient}>
 				<ReactQueryDevtools initialIsOpen={false} />
-				<BrowserRouter basename='/yol-project/'>
+				<BrowserRouter basename='/yol-benicio/'>
 					<App />
 				</BrowserRouter>
 			</QueryClientProvider>

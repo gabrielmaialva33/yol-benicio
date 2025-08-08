@@ -9,11 +9,11 @@ test.describe('Mobile Responsiveness', () => {
 
 	test.beforeEach(async ({page}) => {
 		// Login first
-		await page.goto('/yol-project/')
+		await page.goto('/yol-benicio/')
 		await page.getByPlaceholder('E-mail').fill('test@benicio.com.br')
 		await page.getByPlaceholder('Senha').fill('benicio123')
 		await page.getByRole('button', {name: 'Entrar'}).click()
-		await expect(page).toHaveURL('/yol-project/dashboard')
+		await expect(page).toHaveURL('/yol-benicio/dashboard')
 	})
 
 	test('should display mobile-optimized dashboard', async ({page}) => {
@@ -72,7 +72,7 @@ test.describe('Mobile Responsiveness', () => {
 
 	test('should display folder table in mobile view', async ({page}) => {
 		// Navigate directly to consultation page (sidebar dropdown doesn't work when collapsed on mobile)
-		await page.goto('/yol-project/dashboard/folders/consultation')
+		await page.goto('/yol-benicio/dashboard/folders/consultation')
 
 		// Table should be scrollable or responsive
 		const table = page.locator('table')
@@ -86,7 +86,7 @@ test.describe('Mobile Responsiveness', () => {
 
 	test('should handle form inputs on mobile', async ({page}) => {
 		// Navigate directly to registration page (sidebar dropdown doesn't work when collapsed on mobile)
-		await page.goto('/yol-project/dashboard/folders/register')
+		await page.goto('/yol-benicio/dashboard/folders/register')
 
 		// Form fields should be accessible - use actual field from registration form
 		const processNumberField = page.getByLabel('Nº Processo')
@@ -99,7 +99,7 @@ test.describe('Mobile Responsiveness', () => {
 
 	test('should show mobile-optimized date picker', async ({page}) => {
 		// Navigate directly to registration page (sidebar dropdown doesn't work when collapsed on mobile)
-		await page.goto('/yol-project/dashboard/folders/register')
+		await page.goto('/yol-benicio/dashboard/folders/register')
 
 		// Click date field - use actual field from registration form
 		const dateField = page.getByLabel('Data de Entrada')
@@ -116,7 +116,7 @@ test.describe('Mobile Responsiveness', () => {
 		await logoutButton.click()
 
 		// Should redirect to login
-		await expect(page).toHaveURL('/yol-project/')
+		await expect(page).toHaveURL('/yol-benicio/')
 		await expect(page.getByPlaceholder('E-mail')).toBeVisible()
 	})
 })
@@ -128,7 +128,7 @@ test.describe('Tablet Responsiveness', () => {
 
 	test('should display tablet-optimized layout', async ({page}) => {
 		// Login
-		await page.goto('/yol-project/')
+		await page.goto('/yol-benicio/')
 		await page.getByPlaceholder('E-mail').fill('test@benicio.com.br')
 		await page.getByPlaceholder('Senha').fill('benicio123')
 		await page.getByRole('button', {name: 'Entrar'}).click()
@@ -148,7 +148,7 @@ test.describe('Tablet Responsiveness', () => {
 
 	test('should handle orientation changes', async ({page}) => {
 		// Login
-		await page.goto('/yol-project/')
+		await page.goto('/yol-benicio/')
 		await page.getByPlaceholder('E-mail').fill('test@benicio.com.br')
 		await page.getByPlaceholder('Senha').fill('benicio123')
 		await page.getByRole('button', {name: 'Entrar'}).click()

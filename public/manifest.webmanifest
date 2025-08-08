@@ -5,46 +5,46 @@
 		{
 			"purpose": "maskable",
 			"sizes": "192x192",
-			"src": "/yol-project/icon-192x192.png",
+			"src": "/yol-benicio/icon-192x192.png",
 			"type": "image/png"
 		},
 		{
 			"sizes": "512x512",
-			"src": "/yol-project/icon-512x512.png",
+			"src": "/yol-benicio/icon-512x512.png",
 			"type": "image/png"
 		}
 	],
-	"id": "/yol-project/",
+	"id": "/yol-benicio/",
 	"lang": "en",
 	"name": "Benício Advogados",
-	"scope": "/yol-project/",
+	"scope": "/yol-benicio/",
 	"screenshots": [
 		{
 			"form_factor": "narrow",
 			"sizes": "585x1266",
-			"src": "/yol-project/screenshot-1.webp",
+			"src": "/yol-benicio/screenshot-1.webp",
 			"type": "image/png"
 		},
 		{
 			"form_factor": "narrow",
 			"sizes": "585x1266",
-			"src": "/yol-project/screenshot-2.webp",
+			"src": "/yol-benicio/screenshot-2.webp",
 			"type": "image/png"
 		},
 		{
 			"form_factor": "wide",
 			"sizes": "1366x768",
-			"src": "/yol-project/screenshot-3.webp",
+			"src": "/yol-benicio/screenshot-3.webp",
 			"type": "image/png"
 		},
 		{
 			"form_factor": "wide",
 			"sizes": "1366x768",
-			"src": "/yol-project/screenshot-4.webp",
+			"src": "/yol-benicio/screenshot-4.webp",
 			"type": "image/png"
 		}
 	],
-	"short_name": "YOL-PROJECT",
-	"start_url": "/yol-project/",
+	"short_name": "YOL-BENICIO",
+	"start_url": "/yol-benicio/",
 	"theme_color": "#BD34FE"
 }
