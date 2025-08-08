@@ -41,9 +41,7 @@ test.describe('Dashboard', () => {
 
 		// Check main navigation items
 		await expect(page.getByRole('button', {name: 'Visão Geral'})).toBeVisible()
-		await expect(
-			page.getByRole('button', {name: 'Pastas Pastas Dropdown'})
-		).toBeVisible()
+		await expect(page.getByTestId('sidebar-pastas')).toBeVisible()
 	})
 
 	test('should toggle sidebar collapse', async ({page}) => {
@@ -105,13 +103,20 @@ test.describe('Dashboard', () => {
 	})
 
 	test('should show active folders count', async ({page}) => {
+		// Wait for API data to load first
+		await page.waitForLoadState('networkidle')
+
 		// Look for active folders widget
 		const foldersWidget = page
 			.getByRole('heading', {name: 'Pastas ativas'})
 			.locator('..')
 
-		// Should display folder count
-		await expect(foldersWidget.getByText(/^\d+$/)).toBeVisible()
+		// Wait for the widget to be fully loaded and visible
+		await expect(foldersWidget).toBeVisible()
+
+		// Should display folder count - wait for it to be non-zero
+		const folderCount = foldersWidget.getByText(/^\d+$/)
+		await expect(folderCount).toBeVisible()
 		await expect(foldersWidget.getByText(/novos neste mês/)).toBeVisible()
 	})
 })

@@ -73,7 +73,7 @@ test.describe('Performance and Network Tests', () => {
 	test('should handle API errors gracefully', async ({page}) => {
 		// Mock API error for login
 		let errorCount = 0
-		await page.route('**/api/login', route => {
+		await page.route('**/api/auth/login', route => {
 			if (errorCount === 0) {
 				errorCount++
 				route.fulfill({
@@ -112,7 +112,7 @@ test.describe('Performance and Network Tests', () => {
 		await context.setOffline(true)
 
 		// Try to navigate
-		await page.getByRole('button', {name: 'Pastas Pastas Dropdown'}).click()
+		await page.getByTestId('sidebar-pastas').click()
 
 		// Page should handle offline state
 		// Either show cached content or offline message
@@ -170,7 +170,7 @@ test.describe('Performance and Network Tests', () => {
 		await page.getByRole('button', {name: 'Entrar'}).click()
 
 		// Navigate to folders with potentially large table
-		await page.getByRole('button', {name: 'Pastas Pastas Dropdown'}).click()
+		await page.getByTestId('sidebar-pastas').click()
 		await page.getByRole('link', {name: 'Consulta'}).click()
 
 		// Measure table render time
@@ -204,7 +204,7 @@ test.describe('Performance and Network Tests', () => {
 
 		// Navigate multiple times sequentially to avoid race conditions
 		for (let i = 0; i < NAVIGATION_ITERATIONS; i++) {
-			await page.getByRole('button', {name: 'Pastas Pastas Dropdown'}).click()
+			await page.getByTestId('sidebar-pastas').click()
 			await page.getByRole('link', {name: 'Consulta'}).click()
 			await page.waitForSelector('table')
 
@@ -236,7 +236,7 @@ test.describe('Performance and Network Tests', () => {
 
 		// Trigger multiple operations simultaneously
 		const operations = [
-			page.getByRole('button', {name: 'Pastas Pastas Dropdown'}).click(),
+			page.getByTestId('sidebar-pastas').click(),
 			page.getByAltText('Notificações').click(),
 			page.getByAltText('mensagens').click()
 		]

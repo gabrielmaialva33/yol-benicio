@@ -101,7 +101,7 @@ test.describe('Security and Validation Tests', () => {
 		await page.getByRole('button', {name: 'Entrar'}).click()
 
 		// Navigate to folder registration
-		await page.getByRole('button', {name: 'Pastas Pastas Dropdown'}).click()
+		await page.getByTestId('sidebar-pastas').click()
 		await page.getByRole('link', {name: 'Cadastrar'}).click()
 
 		// Try XSS in client name field
