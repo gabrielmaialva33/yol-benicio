@@ -125,6 +125,113 @@ $ pnpm dev
 
 ---
 
+## 🧭 Exploração do Projeto
+
+Esta seção traz uma visão prática e rápida de como o projeto está organizado, como executar, testar e contribuir no dia a dia.
+
+### Visão Geral
+- Build tool: Vite 7 (React + TypeScript)
+- UI: React 19, Tailwind CSS 4
+- Dados e Estado: TanStack Query 5
+- Roteamento: React Router 7
+- Mocks de API: MSW 2 (Mock Service Worker)
+- Testes: Vitest + Testing Library (unitários) e Playwright (E2E)
+- Lint/Format: Biome + checagem de tipos (tsc)
+
+### Scripts úteis
+```bash
+# Desenvolvimento (abre o navegador automaticamente)
+pnpm dev
+
+# Testes unitários
+pnpm test         # modo watch
+pnpm test:ci      # execução headless e coleta de cobertura
+
+# Testes E2E (Playwright)
+pnpm test:e2e         # UI do Playwright
+pnpm test:e2e:headed  # browser visível
+pnpm test:e2e:debug   # modo debug
+pnpm test:e2e:ci      # headless para CI
+
+# Qualidade de código
+pnpm lint         # tsc + biome
+pnpm lint:tsc     # checagem de tipos
+pnpm lint:biome   # lint/format com Biome
+
+# Build e Preview
+pnpm build
+pnpm preview
+
+# Pipeline local completo (lint + unit + e2e)
+pnpm validate
+```
+
+### Estrutura principal de pastas
+```
+/ (raiz)
+├─ index.html
+├─ vite.config.ts               # base '/yol-benicio/' (GH Pages), testes Vitest
+├─ playwright.config.ts         # E2E: webServer pnpm dev, baseURL http://localhost:5173
+├─ tsconfig*.json               # baseUrl: 'src' (imports absolutos), vite-tsconfig-paths
+├─ public/
+│  └─ logo-yol.svg, mock-service-worker.js (gerado pelo MSW)
+├─ src/
+│  ├─ app/
+│  │  └─ router.tsx            # definição de rotas (lazy)
+│  ├─ features/
+│  │  ├─ auth/                 # LoginPage e formulário
+│  │  ├─ dashboard/            # Layout (Header, Sidebar) + widgets
+│  │  └─ folders/              # Consulta, detalhe e cadastro de pastas
+│  ├─ mocks/
+│  │  ├─ browser.ts            # setupWorker(...handlers)
+│  │  ├─ handlers.ts           # composição de handlers
+│  │  └─ handlers/             # handlers por domínio (auth, dashboard, folders...)
+│  ├─ shared/
+│  │  ├─ api/                  # auth e utilitários de API
+│  │  ├─ hooks/                # createApiHooks (CRUD genérico), etc.
+│  │  ├─ types/                # tipos de API e domínio
+│  │  ├─ ui/                   # componentes compartilhados
+│  │  └─ utils/                # helpers (datas, avatar, media query...)
+│  ├─ test-setup.ts            # Vitest + MSW (server.listen/reset/close)
+│  ├─ test-utils.tsx           # render util com QueryClientProvider + BrowserRouter
+│  ├─ App.tsx                  # orquestra o AppRouter
+│  └─ main.tsx                 # ponto de entrada (QueryClient, Router, MSW)
+└─ tests/                      # specs E2E (Playwright)
+```
+
+### Roteamento
+Definido em src/app/router.tsx com carregamento lazy:
+- '/' → LoginPage
+- '/dashboard' → layout do Dashboard (Header + Sidebar)
+  - index → DashboardContent
+  - 'folders/consultation' → consulta de pastas
+  - 'folders/consultation/:folderId' → detalhes de uma pasta
+  - 'folders/register' → cadastro de pastas
+- '*' → redireciona para '/'
+
+Observação: Por estar publicado no GitHub Pages, o projeto usa basename/base '/yol-benicio/':
+- vite.config.ts → base: '/yol-benicio/'
+- src/main.tsx → <BrowserRouter basename='/yol-benicio/'>
+Em desenvolvimento, o servidor roda em http://localhost:5173; se notar URLs com prefixo, acesse http://localhost:5173/yol-benicio/.
+
+### MSW (Mock Service Worker)
+- Inicialização em desenvolvimento e quando hospedado no GitHub Pages:
+  - src/main.tsx inicia o worker quando import.meta.env.DEV ou hostname inclui 'github.io'.
+  - O service worker é servido em '/yol-benicio/mock-service-worker.js'.
+- Antes do build, o worker é gerado em public/ via script prebuild: `npx msw init public/`.
+- Nos testes unitários (Vitest), o MSW roda em modo server (src/test-setup.ts via src/mocks/server.ts).
+
+### API e Hooks
+- O módulo src/shared/hooks/use-api.ts expõe createApiHooks para CRUD genérico (useList, useGet, useCreate, useUpdate, useDelete) com TanStack Query.
+- Base de URL e headers são montados dinamicamente; em mocks, as rotas são atendidas pelos handlers do MSW.
+
+### Convenções
+- Imports absolutos (graças ao baseUrl 'src' e vite-tsconfig-paths).
+- TypeScript em modo estrito, Jest-DOM para assertions em testes, happy-dom como ambiente.
+- Tailwind 4 com plugin oficial @tailwindcss/vite e Autoprefixer.
+
+---
+
 ## 📝 License
 
 This project is under the **MIT** license.
