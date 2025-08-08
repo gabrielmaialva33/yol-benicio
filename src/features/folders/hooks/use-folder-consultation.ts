@@ -9,7 +9,8 @@ export function useFolderConsultation() {
 		clientNumber: '',
 		dateRange: '',
 		area: '',
-		status: 'Total'
+		status: 'Total',
+		search: ''
 	})
 	const [sort, setSort] = useState({
 		column: 'created_at',
@@ -22,7 +23,8 @@ export function useFolderConsultation() {
 		per_page: limit,
 		sort_by: sort.column,
 		order: sort.direction as 'asc' | 'desc',
-		...(filters.clientNumber && {search: filters.clientNumber}),
+		...(filters.search && {search: filters.search}),
+		...(filters.clientNumber && {client_number: filters.clientNumber}),
 		...(filters.area && filters.area !== 'Total' && {area: filters.area}),
 		...(filters.status &&
 			filters.status !== 'Total' && {status: filters.status}),

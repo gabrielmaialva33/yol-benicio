@@ -10,7 +10,8 @@ const StatusBadge = (props: {status: string}) => {
 	const baseClasses =
 		'px-2.5 py-0.5 text-xs font-semibold rounded-full inline-block'
 	const statusClasses = {
-		Completed: 'bg-green-100 text-green-800'
+		Completed: 'bg-green-100 text-green-800',
+		Ativo: 'bg-green-100 text-green-800'
 		// Add other statuses as needed
 	}
 	return (

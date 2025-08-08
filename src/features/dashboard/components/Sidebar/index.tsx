@@ -57,6 +57,7 @@ const pages: MenuItem[] = [
 ]
 
 const DROPDOWN_VISIBLE_ITEMS_LIMIT = 3
+const MOBILE_BREAKPOINT = 768
 
 const SidebarHeader = (props: {isCollapsed: boolean; toggle: () => void}) => (
 	<div
@@ -126,6 +127,7 @@ const MenuItemComponent = (props: {
 			{props.item.subItems ? (
 				<button
 					className='w-full'
+					data-testid={`sidebar-${props.item.text.toLowerCase().replace(/\s+/g, '-')}`}
 					onClick={() => props.handleDropdown(props.item.text)}
 					type='button'
 				>
@@ -222,7 +224,10 @@ const MenuList = (props: {
 }
 
 const Sidebar = () => {
-	const [isCollapsed, setIsCollapsed] = useState(false)
+	// On mobile (screen width < 768px), default to collapsed
+	const [isCollapsed, setIsCollapsed] = useState(
+		typeof window !== 'undefined' && window.innerWidth < MOBILE_BREAKPOINT
+	)
 	const {data: favoriteClients = []} = useQuery<FavoriteClient[]>({
 		queryKey: ['favorite-clients'],
 		queryFn: getFavoriteClients
@@ -242,7 +247,7 @@ const Sidebar = () => {
 	return (
 		<aside
 			className={`bg-[#1F2A37] text-white ${
-				isCollapsed ? 'w-24 items-center' : 'w-[340px]'
+				isCollapsed ? 'w-16 md:w-24 items-center' : 'w-[280px] md:w-[340px]'
 			} py-10 transition-all duration-300 ease-in-out flex flex-col gap-y-6`}
 		>
 			<SidebarHeader isCollapsed={isCollapsed} toggle={toggleSidebar} />

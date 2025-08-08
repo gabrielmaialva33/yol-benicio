@@ -49,9 +49,9 @@ export function LoginForm() {
 	return (
 		<div className='flex w-full flex-col items-center justify-center gap-10 rounded-[15px] bg-white p-8 font-sans shadow-lg animate-in fade-in zoom-in-95 duration-1000 md:h-[607px] md:px-[32.5px] md:py-16'>
 			<div className='flex flex-col items-center gap-[15px] self-stretch'>
-				<h1 className='self-stretch text-center text-[40px] font-semibold leading-[0.6em] tracking-[-0.01em] text-gray-900'>
+				<h2 className='self-stretch text-center text-[40px] font-semibold leading-[0.6em] tracking-[-0.01em] text-gray-900'>
 					Fazer login
-				</h1>
+				</h2>
 			</div>
 			<form
 				className='flex flex-col items-start gap-5 self-stretch'

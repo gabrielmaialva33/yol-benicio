@@ -97,7 +97,9 @@ const SidebarItem = (props: SidebarItemProps) => {
 			</style>
 			{props.asButton !== false ? (
 				<button
+					aria-label={props.isCollapsed ? props.text : undefined}
 					className={className}
+					data-testid={`sidebar-${props.text.toLowerCase().replace(/\s+/g, '-')}`}
 					onMouseEnter={() => props.isCollapsed && setShowTooltip(true)}
 					onMouseLeave={() => setShowTooltip(false)}
 					type='button'

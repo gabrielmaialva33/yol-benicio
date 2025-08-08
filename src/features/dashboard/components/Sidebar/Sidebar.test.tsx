@@ -80,12 +80,14 @@ describe('Sidebar', () => {
 		const toggleButton = screen.getByAltText('Alternar Barra Lateral')
 		const sidebar = container.querySelector('aside')
 
-		// Initially expanded
-		expect(sidebar).toHaveClass('w-[340px]')
+		// Initially expanded - check for responsive classes
+		expect(sidebar).toHaveClass('w-[280px]')
+		expect(sidebar).toHaveClass('md:w-[340px]')
 
 		// Click to collapse
 		fireEvent.click(toggleButton)
-		expect(sidebar).toHaveClass('w-24')
+		expect(sidebar).toHaveClass('w-16')
+		expect(sidebar).toHaveClass('md:w-24')
 	})
 
 	it('should not show search input when collapsed', () => {
