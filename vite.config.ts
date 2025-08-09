@@ -14,6 +14,14 @@ export default defineConfig({
 			plugins: [autoprefixer()]
 		}
 	},
+	server: {
+		proxy: {
+			'/api': {
+				target: 'http://localhost:8080',
+				changeOrigin: true
+			}
+		}
+	},
 	test: {
 		bail: 1,
 		clearMocks: true,
