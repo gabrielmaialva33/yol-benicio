@@ -6,11 +6,12 @@ import {createRoot} from 'react-dom/client'
 import {BrowserRouter} from 'react-router'
 import {App} from './App'
 import {worker} from './mocks/browser'
+import {ENABLE_MSW} from './config/api'
 
 const queryClient = new QueryClient()
 
-// Start MSW in development or when deployed on GitHub Pages
-if (import.meta.env.DEV || window.location.hostname.includes('github.io')) {
+// Start MSW only if enabled
+if (ENABLE_MSW && (import.meta.env.DEV || window.location.hostname.includes('github.io'))) {
 	worker.start({
 		serviceWorker: {
 			url: '/yol-benicio/mock-service-worker.js'
