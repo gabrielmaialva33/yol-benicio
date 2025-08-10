@@ -12,7 +12,9 @@ export function LoginPage() {
 					<img
 						alt='YOL'
 						className='h-auto w-full max-w-[406px] animate-in fade-in zoom-in-50 duration-1000'
+						height={120}
 						src={logo}
+						width={406}
 					/>
 				</div>
 				<div className='z-10 w-full max-w-[490px]'>
