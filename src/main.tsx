@@ -5,8 +5,8 @@ import {StrictMode} from 'react'
 import {createRoot} from 'react-dom/client'
 import {BrowserRouter} from 'react-router'
 import {App} from './App'
-import {worker} from './mocks/browser'
 import {ENABLE_MSW} from './config/api'
+import {worker} from './mocks/browser'
 
 const queryClient = new QueryClient()
 
