@@ -125,7 +125,7 @@ test.describe('Folders Management', () => {
 		// Click on "Andamento" tab to show the timeline
 		await page.getByRole('button', {name: 'Andamento'}).click()
 
-		// Check for timeline - the actual text is "Histórico" not "Linha do Tempo"
+		// Check for timeline - the actual text is "Historico" not "Timeline"
 		await expect(page.getByText('Histórico')).toBeVisible({timeout: 10_000})
 
 		// Should have timeline items - they are in a div with space-y-6 class
@@ -141,7 +141,7 @@ test.describe('Folders Management', () => {
 		await page.waitForSelector('table')
 		await page.waitForSelector('tbody tr', {timeout: 10_000})
 
-		// Check pagination controls - format is "01 de 05" not "Página 1 de 5"
+		// Check pagination controls - format is "01 de 05" not "Page 1 of 5"
 		await expect(page.getByText(/\d{2} de \d{2}/)).toBeVisible({
 			timeout: 10_000
 		})

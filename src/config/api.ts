@@ -1,10 +1,9 @@
-// Configuração da API
+// API configuration
 
-// Definir se deve usar mocks ou API real
-export const USE_MOCK_API = false // Mudar para false para usar o backend real
+export const USE_MOCK_API = true // Enable MSW for mock data
 
-// URL base da API
+// API base URL
 export const API_BASE_URL = USE_MOCK_API ? '' : '/api'
 
-// Configuração para desabilitar MSW quando usando API real
+// MSW configuration - disabled when using real API
 export const ENABLE_MSW = USE_MOCK_API

@@ -24,7 +24,7 @@ export async function login(data: AuthInput): Promise<LoginResponse> {
 
 	if (!response.ok) {
 		const error = (await response.json()) as ErrorResponse
-		throw new Error(error.errors[0]?.message || 'Falha ao fazer login')
+		throw new Error(error.errors[0]?.message || 'Login failed')
 	}
 
 	const result = (await response.json()) as ApiResponse<LoginResponse>
@@ -52,7 +52,7 @@ export async function getMe(): Promise<User> {
 	})
 
 	if (!response.ok) {
-		throw new Error('Não autorizado')
+		throw new Error('Unauthorized')
 	}
 
 	const result = (await response.json()) as ApiResponse<User>
@@ -60,13 +60,13 @@ export async function getMe(): Promise<User> {
 }
 
 function getStoredToken(): string {
-	// todo: implements function to get token from storage
+	// TODO: implement function to get token from storage
 	// This is a mock function, in a real app you would retrieve the token from localStorage or cookies
 	return 'mock-jwt-token'
 }
 
 function clearStoredToken(): void {
-	//todo: implements function to clear token from storage
+	// TODO: implement function to clear token from storage
 	// This is a mock function, in a real app you would clear the token from localStorage or cookies
 	// localStorage.removeItem('token')
 	// or
