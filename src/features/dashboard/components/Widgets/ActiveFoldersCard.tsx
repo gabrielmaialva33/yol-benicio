@@ -27,7 +27,7 @@ export function ActiveFoldersCard() {
 	})
 
 	return (
-		<div className='bg-white rounded-lg p-6 shadow-sm border border-gray-200 flex flex-col justify-between'>
+		<div className='bg-white rounded-xl p-6 shadow-[0px_4px_4px_0px_rgba(0,0,0,0.03)] flex flex-col justify-between'>
 			<div>
 				<h3 className='text-lg font-semibold text-gray-900 mb-2'>
 					Pastas ativas

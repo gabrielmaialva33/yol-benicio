@@ -47,7 +47,7 @@ export function RequestsCard() {
 	const currentRequest = requests[currentMonthIndex]
 
 	return (
-		<div className='bg-white rounded-lg p-6 shadow-sm border border-gray-200'>
+		<div className='bg-white rounded-xl p-6 shadow-[0px_4px_4px_0px_rgba(0,0,0,0.03)]'>
 			<div className='flex items-center justify-between mb-4'>
 				<div>
 					<h3 className='text-lg font-semibold text-gray-900'>Requisições</h3>

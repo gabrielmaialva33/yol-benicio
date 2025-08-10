@@ -52,7 +52,9 @@ export function TaskItem({task, toggleTask}: TaskItemProps) {
 					<img
 						alt='Comentário'
 						className='w-4 h-4'
+						height={16}
 						src={commentIcon || '/placeholder.svg'}
+						width={16}
 					/>
 				</button>
 				<button
@@ -62,7 +64,9 @@ export function TaskItem({task, toggleTask}: TaskItemProps) {
 					<img
 						alt='Anexo'
 						className='w-4 h-4'
+						height={16}
 						src={attachmentIcon || '/placeholder.svg'}
+						width={16}
 					/>
 				</button>
 			</div>

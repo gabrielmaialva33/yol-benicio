@@ -18,7 +18,7 @@ export function BirthdaysCard() {
 	})
 
 	return (
-		<div className='bg-white rounded-lg p-6 shadow-sm border border-gray-200'>
+		<div className='bg-white rounded-xl p-6 shadow-[0px_4px_4px_0px_rgba(0,0,0,0.03)]'>
 			<div className='flex items-center justify-between mb-4'>
 				<h3 className='text-lg font-semibold text-gray-900'>Aniversariantes</h3>
 				<button
@@ -37,7 +37,9 @@ export function BirthdaysCard() {
 						<img
 							alt={user.name}
 							className='w-10 h-10 rounded-full'
+							height={40}
 							src={user.avatar || '/placeholder.svg'}
+							width={40}
 						/>
 						<div className='flex-1'>
 							<div className='font-medium text-gray-900'>{user.name}</div>
