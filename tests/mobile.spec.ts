@@ -23,9 +23,10 @@ test.describe('Mobile Responsiveness', () => {
 		// On mobile, sidebar is collapsed by default, so search input is hidden
 		// Expand sidebar first to see search input
 		const expandButton = page.locator('button img[alt="Alternar Sidebar"]')
+		const ANIMATION_DURATION = 300
 		if (await expandButton.isVisible()) {
 			await expandButton.click()
-			await page.waitForTimeout(300) // Wait for animation
+			await page.waitForTimeout(ANIMATION_DURATION) // Wait for animation
 		}
 		await expect(page.getByPlaceholder('Pesquisar')).toBeVisible()
 
