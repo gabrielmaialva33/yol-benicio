@@ -126,7 +126,9 @@ export function FolderTable({
 								<img
 									alt='Sort'
 									className='w-4 h-4 ml-1 opacity-50'
+									height={16}
 									src={downIcon || '/placeholder.svg'}
+									width={16}
 								/>
 							</div>
 						</th>
@@ -195,10 +197,12 @@ export function FolderTable({
 											<img
 												alt={folder.responsible_lawyer.full_name}
 												className='h-10 w-10 rounded-full'
+												height={40}
 												src={
 													folder.responsible_lawyer.avatar_url ||
 													'/placeholder.svg'
 												}
+												width={40}
 											/>
 										</div>
 										<div className='ml-4'>
@@ -246,7 +250,9 @@ export function FolderTable({
 											<img
 												alt='Go'
 												className='w-4 h-4'
+												height={16}
 												src={arrowRightIcon || '/placeholder.svg'}
+												width={16}
 											/>
 										</Link>
 										<button
@@ -256,7 +262,9 @@ export function FolderTable({
 											<img
 												alt='More'
 												className='w-5 h-5'
+												height={20}
 												src={moreIcon || '/placeholder.svg'}
+												width={20}
 											/>
 										</button>
 									</div>

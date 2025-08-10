@@ -193,10 +193,12 @@ export function ProcessTimeline({folderId: _folderId}: ProcessTimelineProps) {
 														<img
 															alt={event.addedBy.name}
 															className='h-5 w-5 rounded-full'
+															height={20}
 															src={
 																event.addedBy.avatar ||
 																`https://ui-avatars.com/api/?name=${encodeURIComponent(event.addedBy.name)}`
 															}
+															width={20}
 														/>
 													</div>
 												</div>
