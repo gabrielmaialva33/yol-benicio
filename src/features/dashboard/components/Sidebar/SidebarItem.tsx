@@ -37,7 +37,9 @@ const renderIcon = (props: SidebarItemProps) => {
 		<img
 			alt={props.text}
 			className={getIconClasses(props.isCollapsed, props.active)}
+			height={24}
 			src={props.icon || '/placeholder.svg'}
+			width={24}
 		/>
 	)
 }
@@ -45,12 +47,12 @@ const renderIcon = (props: SidebarItemProps) => {
 const SidebarItem = (props: SidebarItemProps) => {
 	const [showTooltip, setShowTooltip] = useState(false)
 	const activeClasses = props.active
-		? 'bg-orange-500 text-white'
+		? 'bg-[#F97316] text-white'
 		: 'text-white hover:bg-gray-700'
 
 	const className = `
-    relative flex items-center py-2 px-3 my-1
-    font-semibold rounded-md cursor-pointer
+    relative flex items-center py-[14px] px-3 gap-[7px]
+    font-semibold rounded-[10px] cursor-pointer
     transition-colors group text-base w-full
     ${props.isCollapsed ? 'justify-center' : ''}
     ${activeClasses}
@@ -60,7 +62,7 @@ const SidebarItem = (props: SidebarItemProps) => {
 		<>
 			{renderIcon(props)}
 			<span
-				className={`overflow-hidden transition-all ${props.isCollapsed ? 'w-0' : 'w-52 ml-4'}`}
+				className={`overflow-hidden transition-all ${props.isCollapsed ? 'w-0' : 'w-52'}`}
 			>
 				{props.text}
 			</span>
@@ -68,11 +70,13 @@ const SidebarItem = (props: SidebarItemProps) => {
 				<img
 					alt='Dropdown'
 					className={`w-5 h-5 ml-auto transition-transform ${props.isOpen ? 'rotate-180' : ''}`}
+					height={20}
 					src={downIcon || '/placeholder.svg'}
+					width={20}
 				/>
 			)}
 			{!props.isCollapsed && props.badge && (
-				<div className='ml-auto text-xs bg-[#475569] text-white rounded-md px-2 py-1'>
+				<div className='ml-auto text-xs bg-[#BABBC1] text-[#1E293B] font-semibold rounded-md px-2 py-1.5'>
 					{props.badge}
 				</div>
 			)}
@@ -91,7 +95,7 @@ const SidebarItem = (props: SidebarItemProps) => {
 			<style>
 				{`
       .filter-orange {
-        filter: invert(55%) sepia(98%) saturate(1268%) hue-rotate(359deg) brightness(101%) contrast(101%);
+        filter: brightness(0) saturate(100%) invert(69%) sepia(70%) saturate(1364%) hue-rotate(346deg) brightness(100%) contrast(97%);
       }
     `}
 			</style>

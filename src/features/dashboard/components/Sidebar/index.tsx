@@ -58,22 +58,30 @@ const pages: MenuItem[] = [
 
 const DROPDOWN_VISIBLE_ITEMS_LIMIT = 3
 const MOBILE_BREAKPOINT = 768
+const LOGO_COLLAPSED_WIDTH = 42
+const LOGO_COLLAPSED_HEIGHT = 35
+const LOGO_EXPANDED_WIDTH = 159
+const LOGO_EXPANDED_HEIGHT = 60
 
 const SidebarHeader = (props: {isCollapsed: boolean; toggle: () => void}) => (
 	<div
-		className={`flex items-center ${props.isCollapsed ? 'justify-center' : 'justify-between px-4'}`}
+		className={`flex items-center ${props.isCollapsed ? 'justify-center' : 'justify-between px-10 pr-[17px]'} gap-[78px]`}
 	>
 		<img
 			alt='Logo'
-			className={`cursor-pointer duration-500 ${props.isCollapsed ? 'w-10' : 'w-[159px]'}`}
+			className={`cursor-pointer duration-500 ${props.isCollapsed ? 'w-[42px] h-[35px]' : 'w-[159px]'}`}
+			height={props.isCollapsed ? LOGO_COLLAPSED_HEIGHT : LOGO_EXPANDED_HEIGHT}
 			src={props.isCollapsed ? logoCollapsed : logoExpanded}
+			width={props.isCollapsed ? LOGO_COLLAPSED_WIDTH : LOGO_EXPANDED_WIDTH}
 		/>
 		{!props.isCollapsed && (
 			<button onClick={props.toggle} type='button'>
 				<img
 					alt='Alternar Barra Lateral'
 					className='transition-transform duration-300'
+					height={24}
 					src={leftSquareIcon || '/placeholder.svg'}
+					width={24}
 				/>
 			</button>
 		)}
@@ -82,15 +90,17 @@ const SidebarHeader = (props: {isCollapsed: boolean; toggle: () => void}) => (
 
 const SearchInput = (props: {isCollapsed: boolean}) =>
 	props.isCollapsed ? null : (
-		<div className='flex items-center rounded-md bg-[#475569] mt-6 px-4 py-2'>
+		<div className='flex items-center rounded-md bg-[#86878B] px-3 py-[13px] gap-2'>
 			<img
 				alt='Pesquisar'
 				className='w-4 h-4 text-white'
+				height={16}
 				src={magnifierIcon || '/placeholder.svg'}
+				width={16}
 			/>
 			<input
 				className='text-sm bg-transparent w-full text-white focus:outline-none ml-2 placeholder:text-white'
-				placeholder='Pesquisar'
+				placeholder='Search'
 				type='search'
 			/>
 		</div>
@@ -212,7 +222,9 @@ const MenuList = (props: {
 						<img
 							alt='Mostrar mais'
 							className={`w-4 h-4 transition-transform ${showAll ? 'rotate-180' : ''}`}
+							height={16}
 							src={downIcon || '/placeholder.svg'}
+							width={16}
 						/>
 						<span className='ml-2 text-sm text-[#A1A5B7] font-semibold'>
 							{showAll ? 'Mostrar menos' : 'Mostrar mais'}
@@ -246,45 +258,44 @@ const Sidebar = () => {
 
 	return (
 		<aside
-			className={`bg-[#1F2A37] text-white ${
-				isCollapsed ? 'w-16 md:w-24 items-center' : 'w-[280px] md:w-[340px]'
-			} py-10 transition-all duration-300 ease-in-out flex flex-col gap-y-6`}
+			className={`bg-[#373737] text-white ${
+				isCollapsed ? 'w-[93px] items-center' : 'w-[340px]'
+			} py-10 transition-all duration-300 ease-in-out flex flex-col gap-[25px]`}
 		>
 			<SidebarHeader isCollapsed={isCollapsed} toggle={toggleSidebar} />
 			{isCollapsed && (
 				<button
-					className='bg-[#1F2A37] text-white rounded-full p-1'
+					className='bg-[#373737] text-white rounded-full p-1'
 					onClick={toggleSidebar}
 					type='button'
 				>
 					<img
 						alt='Alternar Sidebar'
 						className='transition-transform duration-300 rotate-180'
+						height={24}
 						src={leftSquareIcon || '/placeholder.svg'}
+						width={24}
 					/>
 				</button>
 			)}
-			<nav className='w-full'>
-				<div className={`${isCollapsed ? '' : 'px-10'}`}>
+			<nav className='w-full flex flex-col gap-[25px]'>
+				<div className={`${isCollapsed ? '' : 'px-10 pr-[60px]'}`}>
 					<SearchInput isCollapsed={isCollapsed} />
 				</div>
 				<div
-					className={`${isCollapsed ? 'flex flex-col items-center' : 'px-10'}`}
+					className={`${isCollapsed ? 'flex flex-col items-center' : 'px-10 pr-[60px] border-b border-[#BABBC1] pb-[25px]'}`}
 				>
 					<MenuList isCollapsed={isCollapsed} items={pages} title='PÁGINAS' />
 				</div>
 				{!isCollapsed && favorites.length > 0 && (
-					<>
-						<div className='border-b border-solid border-[#334155] mx-10 my-4' />
-						<div className='px-10'>
-							<MenuList
-								isCollapsed={isCollapsed}
-								isDropdown={true}
-								items={favorites}
-								title='CLIENTES FAVORITOS'
-							/>
-						</div>
-					</>
+					<div className='px-10 pr-[60px]'>
+						<MenuList
+							isCollapsed={isCollapsed}
+							isDropdown={true}
+							items={favorites}
+							title='FAVORITOS'
+						/>
+					</div>
 				)}
 			</nav>
 		</aside>
