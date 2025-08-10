@@ -13,7 +13,9 @@ export function MessagesDropdown() {
 						<img
 							alt='Avatar'
 							className='w-10 h-10 rounded-full'
+							height={40}
 							src={item.avatar}
+							width={40}
 						/>
 						<div>
 							<p className='text-sm font-semibold text-gray-800'>{item.name}</p>
