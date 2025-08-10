@@ -46,9 +46,11 @@ const renderIcon = (props: SidebarItemProps) => {
 
 const SidebarItem = (props: SidebarItemProps) => {
 	const [showTooltip, setShowTooltip] = useState(false)
-	const activeClasses = props.active
-		? 'bg-[#F97316] text-white'
-		: 'text-white hover:bg-gray-700'
+
+	let activeClasses = 'text-white hover:bg-gray-700'
+	if (props.active && !props.isCollapsed) {
+		activeClasses = 'bg-[#F97316] text-white'
+	}
 
 	const className = `
     relative flex items-center py-[14px] px-3 gap-[7px]

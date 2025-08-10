@@ -195,7 +195,7 @@ const MenuList = (props: {
 	}
 
 	return (
-		<ul className='pt-2'>
+		<ul className={`pt-2 ${props.isCollapsed ? 'space-y-1' : ''}`}>
 			<p
 				className={`text-sm font-semibold text-[#A1A5B7] mt-4 mb-2 ${props.isCollapsed ? 'hidden' : 'block'}`}
 			>
@@ -259,29 +259,33 @@ const Sidebar = () => {
 	return (
 		<aside
 			className={`bg-[#373737] text-white ${
-				isCollapsed ? 'w-[93px] items-center' : 'w-[340px]'
-			} py-10 transition-all duration-300 ease-in-out flex flex-col gap-[25px]`}
+				isCollapsed ? 'w-[93px]' : 'w-[340px]'
+			} h-screen py-10 transition-all duration-300 ease-in-out flex flex-col`}
 		>
-			<SidebarHeader isCollapsed={isCollapsed} toggle={toggleSidebar} />
-			{isCollapsed && (
-				<button
-					className='bg-[#373737] text-white rounded-full p-1'
-					onClick={toggleSidebar}
-					type='button'
-				>
-					<img
-						alt='Alternar Sidebar'
-						className='transition-transform duration-300 rotate-180'
-						height={24}
-						src={leftSquareIcon || '/placeholder.svg'}
-						width={24}
-					/>
-				</button>
-			)}
-			<nav className='w-full flex flex-col gap-[25px]'>
-				<div className={`${isCollapsed ? '' : 'px-10 pr-[60px]'}`}>
-					<SearchInput isCollapsed={isCollapsed} />
-				</div>
+			<div className='flex flex-col gap-[25px] items-center'>
+				<SidebarHeader isCollapsed={isCollapsed} toggle={toggleSidebar} />
+				{isCollapsed && (
+					<button
+						className='bg-[#373737] text-white rounded-full p-1'
+						onClick={toggleSidebar}
+						type='button'
+					>
+						<img
+							alt='Alternar Sidebar'
+							className='transition-transform duration-300 rotate-180'
+							height={24}
+							src={leftSquareIcon || '/placeholder.svg'}
+							width={24}
+						/>
+					</button>
+				)}
+			</div>
+			<nav className={`flex-1 flex flex-col ${isCollapsed ? 'items-center mt-[40px]' : 'gap-[25px] mt-[25px]'}`}>
+				{!isCollapsed && (
+					<div className='px-10 pr-[60px]'>
+						<SearchInput isCollapsed={isCollapsed} />
+					</div>
+				)}
 				<div
 					className={`${isCollapsed ? 'flex flex-col items-center' : 'px-10 pr-[60px] border-b border-[#BABBC1] pb-[25px]'}`}
 				>
