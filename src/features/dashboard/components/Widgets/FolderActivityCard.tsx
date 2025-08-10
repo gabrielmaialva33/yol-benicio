@@ -1,4 +1,10 @@
 import {useQuery} from '@tanstack/react-query'
+import {
+	Card,
+	CardContent,
+	CardHeader,
+	CardTitle
+} from '../../../../shared/ui/primitives/Card'
 
 interface FolderActivity {
 	label: string
@@ -19,11 +25,11 @@ export function FolderActivityCard() {
 	})
 
 	return (
-		<div className='bg-white rounded-xl p-6 shadow-[0px_4px_4px_0px_rgba(0,0,0,0.03)]'>
-			<h3 className='text-lg font-semibold text-gray-900 mb-4'>
-				Atividade de Pastas
-			</h3>
-			<div className='space-y-4'>
+		<Card>
+			<CardHeader className='mb-4'>
+				<CardTitle>Atividade de Pastas</CardTitle>
+			</CardHeader>
+			<CardContent className='space-y-4'>
 				{activities.map(activity => (
 					<div key={activity.label}>
 						<div className='flex justify-between items-center mb-2'>
@@ -42,7 +48,7 @@ export function FolderActivityCard() {
 						</div>
 					</div>
 				))}
-			</div>
-		</div>
+			</CardContent>
+		</Card>
 	)
 }

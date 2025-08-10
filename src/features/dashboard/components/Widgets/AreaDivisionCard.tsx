@@ -1,5 +1,11 @@
 import {useQuery} from '@tanstack/react-query'
 import {Cell, Pie, PieChart, ResponsiveContainer, Tooltip} from 'recharts'
+import {
+	Card,
+	CardContent,
+	CardHeader,
+	CardTitle
+} from '../../../../shared/ui/primitives/Card'
 
 interface AreaDivision {
 	name: string
@@ -24,11 +30,11 @@ export function AreaDivisionCard() {
 	})
 
 	return (
-		<div className='bg-white rounded-xl p-6 shadow-[0px_4px_4px_0px_rgba(0,0,0,0.03)]'>
-			<h3 className='text-lg font-semibold text-gray-900 mb-4'>
-				Divisão por áreas
-			</h3>
-			<div className='flex items-center justify-between'>
+		<Card>
+			<CardHeader className='mb-4'>
+				<CardTitle>Divisão por áreas</CardTitle>
+			</CardHeader>
+			<CardContent className='flex items-center justify-between'>
 				<div className='w-40 h-40'>
 					<ResponsiveContainer height='100%' width='100%'>
 						<PieChart>
@@ -93,7 +99,7 @@ export function AreaDivisionCard() {
 						</div>
 					))}
 				</div>
-			</div>
-		</div>
+			</CardContent>
+		</Card>
 	)
 }

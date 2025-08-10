@@ -1,5 +1,11 @@
 import {useQuery} from '@tanstack/react-query'
 import {CartesianGrid, Line, LineChart, ResponsiveContainer} from 'recharts'
+import {
+	Card,
+	CardContent,
+	CardHeader,
+	CardTitle
+} from '../../../../shared/ui/primitives/Card'
 
 interface FolderData {
 	active: number
@@ -27,38 +33,36 @@ export function ActiveFoldersCard() {
 	})
 
 	return (
-		<div className='bg-white rounded-xl p-6 shadow-[0px_4px_4px_0px_rgba(0,0,0,0.03)] flex flex-col justify-between'>
-			<div>
-				<h3 className='text-lg font-semibold text-gray-900 mb-2'>
-					Pastas ativas
-				</h3>
-				<div className='text-5xl font-bold text-[#1F2A37]'>
+		<Card className='justify-between'>
+			<CardHeader className='mb-0'>
+				<CardTitle className='mb-2'>Pastas ativas</CardTitle>
+				<div className='text-[48px] leading-none font-bold text-[var(--color-text-primary)]'>
 					{folders?.active}
 				</div>
-				<div className='text-sm text-[#5E6278]'>
+				<div className='text-sm text-[var(--color-text-secondary)]'>
 					{folders?.newThisMonth} novos neste mês
 				</div>
-			</div>
-			<div className='h-24 -mx-6 mb-2'>
+			</CardHeader>
+			<CardContent className='h-24 -mx-6 mb-2'>
 				<ResponsiveContainer height='100%' width='100%'>
 					<LineChart data={folders?.history}>
 						<CartesianGrid strokeDasharray='3 3' vertical={false} />
 						<Line
 							dataKey='value'
 							dot={false}
-							stroke='#06B6D4'
+							stroke='var(--color-brand-teal)'
 							strokeWidth={2}
 							type='monotone'
 						/>
 					</LineChart>
 				</ResponsiveContainer>
-			</div>
+			</CardContent>
 			<button
-				className='text-sm font-medium text-[#1CD6F4] underline'
+				className='text-sm font-medium text-[var(--color-brand-cyan)] underline'
 				type='button'
 			>
 				Visualizar pastas
 			</button>
-		</div>
+		</Card>
 	)
 }

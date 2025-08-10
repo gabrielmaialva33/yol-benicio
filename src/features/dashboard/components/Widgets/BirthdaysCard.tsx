@@ -1,4 +1,10 @@
 import {useQuery} from '@tanstack/react-query'
+import {
+	Card,
+	CardContent,
+	CardHeader,
+	CardTitle
+} from '../../../../shared/ui/primitives/Card'
 
 interface Birthday {
 	avatar: string
@@ -18,20 +24,20 @@ export function BirthdaysCard() {
 	})
 
 	return (
-		<div className='bg-white rounded-xl p-6 shadow-[0px_4px_4px_0px_rgba(0,0,0,0.03)]'>
-			<div className='flex items-center justify-between mb-4'>
-				<h3 className='text-lg font-semibold text-gray-900'>Aniversariantes</h3>
+		<Card>
+			<CardHeader className='flex items-center justify-between mb-4'>
+				<CardTitle>Aniversariantes</CardTitle>
 				<button
 					className='text-sm font-medium text-cyan-500 hover:text-cyan-600 cursor-pointer'
 					type='button'
 				>
 					Ver todos
 				</button>
-			</div>
+			</CardHeader>
 			<p className='text-sm text-gray-500 mb-4'>
 				Colegas que fazem aniversário este mês
 			</p>
-			<div className='space-y-4'>
+			<CardContent className='space-y-4'>
 				{birthdays.slice(0, 2).map(user => (
 					<div className='flex items-center space-x-3' key={user.email}>
 						<img
@@ -55,7 +61,7 @@ export function BirthdaysCard() {
 								stroke='currentColor'
 								viewBox='0 0 24 24'
 							>
-								<title>Go</title>
+								<title>Ir</title>
 								<path
 									d='M9 5l7 7-7 7'
 									strokeLinecap='round'
@@ -66,7 +72,7 @@ export function BirthdaysCard() {
 						</button>
 					</div>
 				))}
-			</div>
-		</div>
+			</CardContent>
+		</Card>
 	)
 }

@@ -1,5 +1,11 @@
 import {Line, LineChart, ResponsiveContainer} from 'recharts'
 import {billingData} from '../../../../mocks/data/billing'
+import {
+	Card,
+	CardContent,
+	CardHeader,
+	CardTitle
+} from '../../../../shared/ui/primitives/Card'
 
 export function BillingCard() {
 	const percentageColor =
@@ -38,9 +44,11 @@ export function BillingCard() {
 		)
 
 	return (
-		<div className='bg-[#E6F8F3] text-[#004B50] rounded-xl p-6 shadow-[0px_4px_4px_0px_rgba(0,0,0,0.03)]'>
-			<div className='flex items-start justify-between mb-4'>
-				<h3 className='text-lg font-semibold'>Faturamento</h3>
+		<Card className='card-tinted'>
+			<CardHeader className='flex items-start justify-between mb-4'>
+				<CardTitle className='text-[var(--color-text-primary)]'>
+					Faturamento
+				</CardTitle>
 				<div className='text-right'>
 					<div
 						className={`flex items-center space-x-1 font-semibold ${percentageColor}`}
@@ -50,9 +58,11 @@ export function BillingCard() {
 					</div>
 					<div className='text-sm'>Último mês</div>
 				</div>
+			</CardHeader>
+			<div className='text-[40px] font-bold mb-4 leading-none'>
+				{billingData.value}
 			</div>
-			<div className='text-4xl font-bold mb-4'>{billingData.value}</div>
-			<div className='h-16 -mx-6 -mb-6'>
+			<CardContent className='h-16 -mx-6 -mb-6'>
 				<ResponsiveContainer height='100%' width='100%'>
 					<LineChart data={billingData.chart}>
 						<Line
@@ -64,7 +74,7 @@ export function BillingCard() {
 						/>
 					</LineChart>
 				</ResponsiveContainer>
-			</div>
-		</div>
+			</CardContent>
+		</Card>
 	)
 }

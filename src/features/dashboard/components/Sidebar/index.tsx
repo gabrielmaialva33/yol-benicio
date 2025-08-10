@@ -280,7 +280,9 @@ const Sidebar = () => {
 					</button>
 				)}
 			</div>
-			<nav className={`flex-1 flex flex-col ${isCollapsed ? 'items-center mt-[40px]' : 'gap-[25px] mt-[25px]'}`}>
+			<nav
+				className={`flex-1 flex flex-col ${isCollapsed ? 'items-center mt-[40px]' : 'gap-[25px] mt-[25px]'}`}
+			>
 				{!isCollapsed && (
 					<div className='px-10 pr-[60px]'>
 						<SearchInput isCollapsed={isCollapsed} />

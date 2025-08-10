@@ -9,6 +9,12 @@ import {
 	XAxis,
 	YAxis
 } from 'recharts'
+import {
+	Card,
+	CardContent,
+	CardHeader,
+	CardTitle
+} from '../../../../shared/ui/primitives/Card'
 
 interface Request {
 	month: string
@@ -47,15 +53,16 @@ export function RequestsCard() {
 	const currentRequest = requests[currentMonthIndex]
 
 	return (
-		<div className='bg-white rounded-xl p-6 shadow-[0px_4px_4px_0px_rgba(0,0,0,0.03)]'>
-			<div className='flex items-center justify-between mb-4'>
+		<Card>
+			<CardHeader className='flex items-center justify-between mb-4'>
 				<div>
-					<h3 className='text-lg font-semibold text-gray-900'>Requisições</h3>
+					<CardTitle>Requisições</CardTitle>
 					<p className='text-sm text-gray-500'>Requisições por período</p>
 				</div>
 				<div className='flex items-center space-x-2'>
 					<div className='bg-gray-100 rounded p-1'>
 						<button
+							aria-label='Mês anterior'
 							className='p-1 text-gray-400 hover:text-gray-600'
 							onClick={handlePrevMonth}
 							type='button'
@@ -66,7 +73,7 @@ export function RequestsCard() {
 								stroke='currentColor'
 								viewBox='0 0 24 24'
 							>
-								<title>Left</title>
+								<title>Anterior</title>
 								<path
 									d='M15 19l-7-7 7-7'
 									strokeLinecap='round'
@@ -78,6 +85,7 @@ export function RequestsCard() {
 					</div>
 					<div className='bg-gray-100 rounded p-1'>
 						<button
+							aria-label='Próximo mês'
 							className='p-1 text-gray-400 hover:text-gray-600'
 							onClick={handleNextMonth}
 							type='button'
@@ -88,7 +96,7 @@ export function RequestsCard() {
 								stroke='currentColor'
 								viewBox='0 0 24 24'
 							>
-								<title>Right</title>
+								<title>Próximo</title>
 								<path
 									d='M9 5l7 7-7 7'
 									strokeLinecap='round'
@@ -99,7 +107,7 @@ export function RequestsCard() {
 						</button>
 					</div>
 				</div>
-			</div>
+			</CardHeader>
 			{currentRequest && (
 				<div className='mb-4'>
 					<div className='text-base font-semibold text-gray-800 mb-1'>
@@ -114,18 +122,14 @@ export function RequestsCard() {
 						<div className='flex-1 bg-gray-200 rounded-full h-2'>
 							<div
 								className='h-2 rounded-full bg-teal-500'
-								style={{
-									width: `${currentRequest.percentage}%`
-								}}
+								style={{width: `${currentRequest.percentage}%`}}
 							/>
 						</div>
-						<span className='text-sm font-medium text-gray-500'>
-							{`${Math.round(currentRequest.percentage)}%`}
-						</span>
+						<span className='text-sm font-medium text-gray-500'>{`${Math.round(currentRequest.percentage)}%`}</span>
 					</div>
 				</div>
 			)}
-			<div className='h-64'>
+			<CardContent className='h-64'>
 				<ResponsiveContainer height='100%' width='100%'>
 					<AreaChart data={requests}>
 						<defs>
@@ -158,7 +162,7 @@ export function RequestsCard() {
 						/>
 					</AreaChart>
 				</ResponsiveContainer>
-			</div>
-		</div>
+			</CardContent>
+		</Card>
 	)
 }

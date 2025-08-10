@@ -3,6 +3,12 @@ import {DateTime} from 'luxon'
 import {useState} from 'react'
 import type {DateRange} from 'react-day-picker'
 import {DateRangePicker} from '../../../../shared/ui/DateRangePicker'
+import {
+	Card,
+	CardContent,
+	CardHeader,
+	CardTitle
+} from '../../../../shared/ui/primitives/Card'
 
 interface Hearing {
 	label: string
@@ -45,11 +51,9 @@ export function HearingsCard() {
 	})
 
 	return (
-		<div className='bg-white rounded-xl p-6 shadow-[0px_4px_4px_0px_rgba(0,0,0,0.03)] relative'>
-			<div className='flex items-center justify-between mb-4'>
-				<h3 className='text-lg font-semibold text-gray-900'>
-					Audiências e Prazos
-				</h3>
+		<Card>
+			<CardHeader className='flex items-center justify-between mb-4'>
+				<CardTitle>Audiências e Prazos</CardTitle>
 				<div className='cursor-pointer'>
 					<DateRangePicker
 						dateRange={dateRange}
@@ -58,8 +62,8 @@ export function HearingsCard() {
 						onToggle={handleToggleDatePicker}
 					/>
 				</div>
-			</div>
-			<div className='space-y-6'>
+			</CardHeader>
+			<CardContent className='space-y-6'>
 				{filteredHearings.map(item => (
 					<div className='flex items-center' key={item.label}>
 						<div className='w-1/4 pr-4'>
@@ -85,7 +89,7 @@ export function HearingsCard() {
 						</div>
 					</div>
 				))}
-			</div>
-		</div>
+			</CardContent>
+		</Card>
 	)
 }

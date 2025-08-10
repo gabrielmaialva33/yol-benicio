@@ -1,6 +1,12 @@
 import {useState} from 'react'
 import {useTasks} from '../../../../shared/hooks/use-tasks'
 import {DateRangePicker} from '../../../../shared/ui/DateRangePicker'
+import {
+	Card,
+	CardContent,
+	CardHeader,
+	CardTitle
+} from '../../../../shared/ui/primitives/Card'
 import {TaskItem} from './TaskItem'
 
 export function TasksCard() {
@@ -12,21 +18,21 @@ export function TasksCard() {
 	}
 
 	return (
-		<div className='bg-white rounded-xl p-6 shadow-[0px_4px_4px_0px_rgba(0,0,0,0.03)] relative'>
-			<div className='flex items-center justify-between mb-4'>
-				<h3 className='text-lg font-semibold text-gray-900'>Suas tarefas</h3>
+		<Card>
+			<CardHeader className='flex items-center justify-between mb-4'>
+				<CardTitle>Suas tarefas</CardTitle>
 				<DateRangePicker
 					dateRange={dateRange}
 					isOpen={showDatePicker}
 					onDateRangeChange={setDateRange}
 					onToggle={handleToggleDatePicker}
 				/>
-			</div>
-			<div className='space-y-3'>
+			</CardHeader>
+			<CardContent className='space-y-3'>
 				{displayTasks.map(task => (
 					<TaskItem key={task.id} task={task} toggleTask={toggleTask} />
 				))}
-			</div>
-		</div>
+			</CardContent>
+		</Card>
 	)
 }
