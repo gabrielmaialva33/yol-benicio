@@ -11,7 +11,10 @@ import {ENABLE_MSW} from './config/api'
 const queryClient = new QueryClient()
 
 // Start MSW only if enabled
-if (ENABLE_MSW && (import.meta.env.DEV || window.location.hostname.includes('github.io'))) {
+if (
+	ENABLE_MSW &&
+	(import.meta.env.DEV || window.location.hostname.includes('github.io'))
+) {
 	worker.start({
 		serviceWorker: {
 			url: '/yol-benicio/mock-service-worker.js'
