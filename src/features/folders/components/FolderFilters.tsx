@@ -6,7 +6,7 @@ interface FolderFiltersProps {
 		dateRange: string
 		area: string
 		status: string
-		search?: string
+		search: string
 	}
 	setFilters: (
 		filters:
@@ -15,20 +15,20 @@ interface FolderFiltersProps {
 					dateRange: string
 					area: string
 					status: string
-					search?: string
+					search: string
 			  }
 			| ((prevFilters: {
 					clientNumber: string
 					dateRange: string
 					area: string
 					status: string
-					search?: string
+					search: string
 			  }) => {
 					clientNumber: string
 					dateRange: string
 					area: string
 					status: string
-					search?: string
+					search: string
 			  })
 	) => void
 }
@@ -78,7 +78,7 @@ export function FolderFilters({filters, setFilters}: FolderFiltersProps) {
 					onChange={handleInputChange}
 					placeholder='Buscar'
 					type='text'
-					value={filters.search || ''}
+					value={filters.search}
 				/>
 				<button
 					className='px-4 py-2 text-sm font-semibold text-red-500 border border-red-500 rounded-md hover:bg-red-50'

@@ -1,6 +1,10 @@
 interface FolderTabsProps {
 	filters: {
 		status: string
+		clientNumber: string
+		dateRange: string
+		area: string
+		search: string
 	}
 	setFilters: (
 		filters:
@@ -9,17 +13,20 @@ interface FolderTabsProps {
 					dateRange: string
 					area: string
 					status: string
+					search: string
 			  }
 			| ((prevFilters: {
 					clientNumber: string
 					dateRange: string
 					area: string
 					status: string
+					search: string
 			  }) => {
 					clientNumber: string
 					dateRange: string
 					area: string
 					status: string
+					search: string
 			  })
 	) => void
 }
