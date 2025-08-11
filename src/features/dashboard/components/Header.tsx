@@ -44,17 +44,18 @@ export function Header() {
 		pageTitles['/dashboard']) as {title: string; description: string}
 
 	return (
-		// Header usa o mesmo background do container principal e mantém a linha de separação inferior
-		<header className='bg-[#F1F1F2] border-b border-gray-300 px-6 py-4'>
+		// Header alinhado ao design: padding lateral 30px, gap 24px entre ações, fundo igual ao body e linha sutil
+		<header className='bg-[#F1F1F2] border-b border-gray-200 px-[30px] py-4'>
 			<div className='flex items-center justify-between'>
 				<div>
 					<h1 className='text-2xl font-semibold text-gray-900'>{title}</h1>
 					{description && <p className='text-gray-500 mt-1'>{description}</p>}
 				</div>
-				<div className='flex items-center space-x-4'>
+				<div className='flex items-center space-x-6'>
 					<div className='relative' ref={notificationsRef}>
 						<button
-							className='p-2 text-gray-400 hover:text-gray-600'
+							aria-label='Notificações'
+							className='w-9 h-9 flex items-center justify-center rounded-md text-gray-500 hover:text-gray-700 hover:bg-white/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-300 transition'
 							ref={notificationsTriggerRef}
 							type='button'
 						>
@@ -66,13 +67,14 @@ export function Header() {
 								width={20}
 							/>
 							{notifications.unread > 0 && (
-								<span className='absolute top-0 right-0 block h-2 w-2 rounded-full bg-red-600 ring-2 ring-white' />
+								<span className='absolute top-1 right-1 block h-2 w-2 rounded-full bg-red-600 ring-2 ring-[#F1F1F2]' />
 							)}
 						</button>
 						{showNotifications && <NotificationsDropdown />}
 					</div>
 					<button
-						className='p-2 text-gray-400 hover:text-gray-600'
+						aria-label='Calendário'
+						className='w-9 h-9 flex items-center justify-center rounded-md text-gray-500 hover:text-gray-700 hover:bg-white/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-300 transition'
 						type='button'
 					>
 						<img
@@ -85,7 +87,8 @@ export function Header() {
 					</button>
 					<div className='relative' ref={messagesRef}>
 						<button
-							className='p-2 text-gray-400 hover:text-gray-600'
+							aria-label='Mensagens'
+							className='w-9 h-9 flex items-center justify-center rounded-md text-gray-500 hover:text-gray-700 hover:bg-white/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-300 transition'
 							ref={messagesTriggerRef}
 							type='button'
 						>
@@ -97,20 +100,21 @@ export function Header() {
 								width={20}
 							/>
 							{messages.unread > 0 && (
-								<span className='absolute top-0 right-0 block h-2 w-2 rounded-full bg-red-600 ring-2 ring-white' />
+								<span className='absolute top-1 right-1 block h-2 w-2 rounded-full bg-red-600 ring-2 ring-[#F1F1F2]' />
 							)}
 						</button>
 						{showMessages && <MessagesDropdown />}
 					</div>
 					<img
 						alt='Avatar do usuário'
-						className='w-8 h-8 rounded-full'
-						height={32}
+						className='w-9 h-9 rounded-lg object-cover'
+						height={36}
 						src='https://avataaars.io/?avatarStyle=Circle&topType=ShortHairShortCurly&accessoriesType=Prescription01&hairColor=Blonde&facialHairType=MoustacheMagnum&facialHairColor=Blonde&clotheType=GraphicShirt&clotheColor=Red&graphicType=Skull&eyeType=EyeRoll&eyebrowType=FlatNatural&mouthType=Sad&skinColor=Pale'
-						width={32}
+						width={36}
 					/>
 					<button
-						className='p-2 text-gray-400 hover:text-gray-600'
+						aria-label='Sair'
+						className='w-9 h-9 flex items-center justify-center rounded-md text-gray-500 hover:text-gray-700 hover:bg-white/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-300 transition'
 						onClick={handleLogout}
 						type='button'
 					>

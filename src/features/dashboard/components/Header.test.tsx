@@ -118,7 +118,7 @@ describe('Header', () => {
 		const {container} = render(<Header />)
 
 		const header = container.firstChild
-		expect(header).toHaveClass('bg-[#F1F1F2]', 'border-b', 'border-gray-300')
+		expect(header).toHaveClass('bg-[#F1F1F2]', 'border-b', 'border-gray-200')
 	})
 
 	it('should render all action buttons', () => {
