@@ -5,8 +5,8 @@ import {Link} from 'react-router'
 import arrowRightIcon from '/icons/arrow-right.svg'
 import downIcon from '/icons/down.svg'
 import moreIcon from '/icons/more-horizontal.svg'
-import type {Folder} from '../../../shared/types/domain'
-import {FolderArea, FolderStatus} from '../../../shared/types/domain'
+import type {Folder} from '@shared/types'
+import {FolderArea, FolderStatus} from '@shared/types'
 
 const areaNames: Record<FolderArea, string> = {
 	[FolderArea.CIVIL_LITIGATION]: 'Cível Contencioso',
@@ -104,11 +104,12 @@ export function FolderTable({
 	}
 
 	return (
-		<div className='overflow-x-auto'>
-			<table className='min-w-full divide-y divide-gray-200'>
-				<thead className='bg-gray-50'>
+		<div className='bg-white rounded-lg shadow-sm overflow-hidden'>
+			<div className='overflow-x-auto'>
+				<table className='min-w-full divide-y divide-gray-200'>
+				<thead className='bg-[#F4F6F8]'>
 					<tr>
-						<th className='px-6 py-3' scope='col'>
+						<th className='px-6 py-4 w-12' scope='col'>
 							<input
 								checked={selectedFolders.length === folders.length}
 								className='h-4 w-4 text-cyan-600 border-gray-300 rounded focus:ring-cyan-500'
@@ -117,7 +118,7 @@ export function FolderTable({
 							/>
 						</th>
 						<th
-							className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer'
+							className='px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer w-32'
 							onClick={() => handleSort('code')}
 							scope='col'
 						>
@@ -133,37 +134,37 @@ export function FolderTable({
 							</div>
 						</th>
 						<th
-							className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'
+							className='px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'
 							scope='col'
 						>
 							Responsável
 						</th>
 						<th
-							className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer'
+							className='px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer'
 							onClick={() => handleSort('created_at')}
 							scope='col'
 						>
 							Data de inclusão
 						</th>
 						<th
-							className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'
+							className='px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'
 							scope='col'
 						>
 							Docs
 						</th>
 						<th
-							className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'
+							className='px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'
 							scope='col'
 						>
 							Área
 						</th>
 						<th
-							className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'
+							className='px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'
 							scope='col'
 						>
 							Status
 						</th>
-						<th className='relative px-6 py-3' scope='col'>
+						<th className='relative px-6 py-4' scope='col'>
 							<span className='sr-only'>Actions</span>
 						</th>
 					</tr>
@@ -274,6 +275,7 @@ export function FolderTable({
 					})}
 				</tbody>
 			</table>
+			</div>
 		</div>
 	)
 }
