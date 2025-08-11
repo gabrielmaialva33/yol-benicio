@@ -4,6 +4,7 @@ import {server} from 'mocks/server'
 import {HttpResponse, http} from 'msw'
 import {MemoryRouter} from 'react-router'
 import {vi} from 'vitest'
+import {AuthProvider} from '../../../shared/hooks/use-auth'
 import {LoginForm} from './LoginForm'
 
 const queryClient = new QueryClient()
@@ -11,9 +12,11 @@ const queryClient = new QueryClient()
 const renderLoginForm = () => {
 	return render(
 		<QueryClientProvider client={queryClient}>
-			<MemoryRouter>
-				<LoginForm />
-			</MemoryRouter>
+			<AuthProvider>
+				<MemoryRouter>
+					<LoginForm />
+				</MemoryRouter>
+			</AuthProvider>
 		</QueryClientProvider>
 	)
 }

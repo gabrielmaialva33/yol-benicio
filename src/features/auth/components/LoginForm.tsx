@@ -1,7 +1,6 @@
-import {useMutation} from '@tanstack/react-query'
 import {useId, useState} from 'react'
 import {useNavigate} from 'react-router'
-import {login} from '../../../shared/api/auth'
+import {useAuth} from '../../../shared/hooks/auth-context'
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
@@ -10,12 +9,7 @@ export function LoginForm() {
 	const passwordId = useId()
 	const navigate = useNavigate()
 	const [errors, setErrors] = useState({email: '', password: ''})
-	const {mutateAsync, isError, error} = useMutation({
-		mutationFn: login,
-		onSuccess: () => {
-			void navigate('/dashboard')
-		}
-	})
+	const {login, error: authError, loading} = useAuth()
 
 	const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault()
@@ -40,9 +34,10 @@ export function LoginForm() {
 
 		setErrors({email: '', password: ''})
 		try {
-			await mutateAsync({email, password})
+			await login(email, password)
+			void navigate('/dashboard')
 		} catch {
-			// error is indicated by isError, swallow to prevent unhandled rejection
+			// erro já tratado via estado
 		}
 	}
 
@@ -91,11 +86,7 @@ export function LoginForm() {
 						</div>
 					</div>
 					{errors.password && <p className='text-red-500'>{errors.password}</p>}
-					{isError && (
-						<p className='text-red-500'>
-							{error?.message || 'E-mail ou senha inválidos'}
-						</p>
-					)}
+					{authError && <p className='text-red-500'>{authError}</p>}
 					<a
 						className='self-stretch text-right text-base font-medium text-gray-500 underline'
 						href='/#'
@@ -104,10 +95,13 @@ export function LoginForm() {
 					</a>
 				</div>
 				<button
-					className='flex h-[50px] items-center justify-center gap-2.5 self-stretch rounded-full bg-gray-900 px-4 py-3 font-work-sans'
+					className='flex h-[50px] items-center justify-center gap-2.5 self-stretch rounded-full bg-gray-900 px-4 py-3 font-work-sans disabled:opacity-50'
+					disabled={loading}
 					type='submit'
 				>
-					<span className='text-base font-semibold text-white'>Entrar</span>
+					<span className='text-base font-semibold text-white'>
+						{loading ? 'Entrando...' : 'Entrar'}
+					</span>
 				</button>
 			</form>
 		</div>
