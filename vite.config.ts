@@ -20,7 +20,15 @@ export default defineConfig({
 		coverage: {
 			provider: 'v8',
 			enabled: true,
-			exclude: ['src/main.tsx', 'src/mocks/browser.ts'],
+			exclude: [
+				'src/main.tsx',
+				'src/**/*.d.ts',
+				'src/mocks/**',
+				'src/shared/types/**',
+				'src/**/types/**',
+				'src/**/data/**',
+				'src/**/generators/**'
+			],
 			include: ['src/**/*'],
 			reporter: ['text', 'lcov'],
 			reportsDirectory: 'coverage',

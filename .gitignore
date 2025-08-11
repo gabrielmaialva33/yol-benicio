@@ -14,3 +14,4 @@ tmp
 logs
 .claude
 .env
+coverage-summary.json

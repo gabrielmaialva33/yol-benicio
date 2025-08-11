@@ -100,7 +100,7 @@ const SearchInput = (props: {isCollapsed: boolean}) =>
 			/>
 			<input
 				className='text-sm bg-transparent w-full text-white focus:outline-none ml-2 placeholder:text-white'
-				placeholder='Search'
+				placeholder='Pesquisar'
 				type='search'
 			/>
 		</div>
@@ -258,8 +258,8 @@ const Sidebar = () => {
 
 	return (
 		<aside
-			className={`bg-[#373737] text-white ${
-				isCollapsed ? 'w-[93px]' : 'w-[340px]'
+			className={`bg-[#1F2A37] text-white ${
+				isCollapsed ? 'w-16 md:w-24' : 'w-[280px] md:w-[340px]'
 			} h-screen py-10 transition-all duration-300 ease-in-out flex flex-col`}
 		>
 			<div className='flex flex-col gap-[25px] items-center'>
