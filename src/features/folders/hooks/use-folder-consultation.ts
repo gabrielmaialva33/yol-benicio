@@ -54,7 +54,7 @@ export function useFolderConsultation() {
 			parseDateRange(debouncedFilters.dateRange))
 	}
 
-	const {data, isLoading, isError} = useFolderConsultationApi(queryParams)
+	const {data, isLoading, isError, isRefetching, isInitialLoading} = useFolderConsultationApi(queryParams)
 
 	return {
 		folders: data?.data ?? [],
@@ -69,6 +69,8 @@ export function useFolderConsultation() {
 		sort,
 		setSort,
 		isLoading,
+		isInitialLoading,
+		isRefetching,
 		isError,
 		setPage,
 		setLimit

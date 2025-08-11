@@ -79,7 +79,8 @@ export function createApiHooks<T>({baseUrl, token}: UseApiOptions) {
 	const useList = (params?: QueryParams) => {
 		return useQuery<PaginatedResponse<T>>({
 			queryKey: [baseUrl, 'list', params],
-			queryFn: () => fetcher(buildUrl('', params))
+			queryFn: () => fetcher(buildUrl('', params)),
+			placeholderData: previousData => previousData
 		})
 	}
 

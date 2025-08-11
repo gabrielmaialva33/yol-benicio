@@ -2,6 +2,7 @@ import {useState} from 'react'
 import {AppliedFilters} from '../components/AppliedFilters'
 import {FolderFilters} from '../components/FolderFilters'
 import {FolderTable} from '../components/FolderTable'
+import {FolderTableSkeleton} from '../components/FolderTableSkeleton'
 import {FolderTabs} from '../components/FolderTabs'
 import {Pagination} from '../components/Pagination'
 import {useFolderConsultation} from '../hooks/use-folder-consultation'
@@ -11,6 +12,8 @@ export function FolderConsultationPage() {
 		folders,
 		pagination,
 		isLoading,
+		isInitialLoading,
+		isRefetching,
 		isError,
 		setPage,
 		setLimit,
@@ -21,11 +24,29 @@ export function FolderConsultationPage() {
 	} = useFolderConsultation()
 	const [selectedFolders, setSelectedFolders] = useState<string[]>([])
 
-	if (isLoading) {
-		return <div>Carregando...</div>
+	if (isInitialLoading) {
+		return (
+			<div className='p-4 sm:p-6 lg:p-8 bg-[#F1F1F2] min-h-full'>
+				<div className='bg-white rounded-2xl shadow-sm border border-gray-100'>
+					<div className='px-4 sm:px-6 lg:px-8 pt-6 lg:pt-8 pb-4'>
+						<FolderTabs filters={filters} setFilters={setFilters} />
+					</div>
+					<div className='px-2 pb-6 lg:pb-8'>
+						<div className='flex flex-col lg:flex-row lg:items-center justify-between mb-6 gap-4'>
+							<div className='flex-1 min-w-0'>
+								<FolderFilters filters={filters} setFilters={setFilters} isLoading={false} />
+							</div>
+						</div>
+						<div className='mt-6'>
+							<FolderTableSkeleton />
+						</div>
+					</div>
+				</div>
+			</div>
+		)
 	}
 
-	if (isError) {
+	if (isError && !folders.length) {
 		return <div>Ocorreu um erro ao buscar as pastas.</div>
 	}
 
@@ -38,7 +59,7 @@ export function FolderConsultationPage() {
 				<div className='px-2 pb-6 lg:pb-8'>
 					<div className='flex flex-col lg:flex-row lg:items-center justify-between mb-6 gap-4'>
 						<div className='flex-1 min-w-0'>
-							<FolderFilters filters={filters} setFilters={setFilters} />
+							<FolderFilters filters={filters} setFilters={setFilters} isLoading={isRefetching} />
 						</div>
 						<div className='flex items-center space-x-3 px-4 sm:px-6 shrink-0'>
 							<button
@@ -63,7 +84,15 @@ export function FolderConsultationPage() {
 							setFilters={setFilters}
 						/>
 					</div>
-					<div className='mt-6'>
+					<div className='mt-6 relative'>
+						{isRefetching && (
+							<div className='absolute inset-0 bg-white/60 z-10 flex items-center justify-center'>
+								<div className='flex items-center space-x-2'>
+									<div className='animate-spin rounded-full h-6 w-6 border-b-2 border-[#00B8D9]' />
+									<span className='text-sm text-gray-600'>Atualizando...</span>
+								</div>
+							</div>
+						)}
 						<FolderTable
 							folders={folders}
 							selectedFolders={selectedFolders}

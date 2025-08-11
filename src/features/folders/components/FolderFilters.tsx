@@ -9,6 +9,7 @@ interface FolderFiltersProps {
 		status: string
 		search: string
 	}
+	isLoading?: boolean
 	setFilters: (
 		filters:
 			| {
@@ -34,7 +35,7 @@ interface FolderFiltersProps {
 	) => void
 }
 
-export function FolderFilters({filters, setFilters}: FolderFiltersProps) {
+export function FolderFilters({filters, setFilters, isLoading}: FolderFiltersProps) {
 	const handleInputChange = (
 		e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
 	) => {
@@ -109,7 +110,13 @@ export function FolderFilters({filters, setFilters}: FolderFiltersProps) {
 					<ChevronDown className='absolute right-4 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400 pointer-events-none' />
 				</div>
 				<div className='relative sm:col-span-2 lg:col-span-1'>
-					<Search className='absolute left-4 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400' />
+					{isLoading ? (
+						<div className='absolute left-4 top-1/2 transform -translate-y-1/2 h-4 w-4'>
+							<div className='animate-spin rounded-full h-4 w-4 border-b-2 border-[#00B8D9]' />
+						</div>
+					) : (
+						<Search className='absolute left-4 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400' />
+					)}
 					<input
 						className='px-4 py-3 pl-12 border border-gray-300 rounded-lg bg-white text-gray-900 placeholder-gray-500 w-full text-sm focus:outline-none focus:ring-2 focus:ring-[#00B8D9] focus:border-[#00B8D9] transition-colors'
 						name='search'
