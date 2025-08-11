@@ -17,3 +17,5 @@ const Dashboard = () => {
 }
 
 export {Dashboard}
+export * from './components'
+export * from './hooks'

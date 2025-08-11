@@ -24,3 +24,5 @@ export function LoginPage() {
 		</div>
 	)
 }
+
+export * from './components'

@@ -1,12 +1,12 @@
-import * as v from 'valibot'
+import {z} from 'zod'
 import type {ApiResponse, ErrorResponse} from '../types/api'
 import type {User} from '../types/domain'
 
-const AuthSchema = v.object({
-	email: v.string(),
-	password: v.string()
+const AuthSchema = z.object({
+	email: z.string().email('Email inválido'),
+	password: z.string().min(6, 'Senha deve ter no mínimo 6 caracteres')
 })
-export type AuthInput = v.InferOutput<typeof AuthSchema>
+export type AuthInput = z.infer<typeof AuthSchema>
 
 interface LoginResponse {
 	user: User
