@@ -62,12 +62,12 @@ export function AreaDivisionCard() {
 									outerRadius,
 									value
 								}) => {
-																if (midAngle === undefined || value === undefined) {
-																	return null
-																}
-																if (value < MINIMUM_PERCENTAGE_TO_DISPLAY) {
-																	return null
-																}
+									if (midAngle === undefined || value === undefined) {
+										return null
+									}
+									if (value < MINIMUM_PERCENTAGE_TO_DISPLAY) {
+										return null
+									}
 									const radian = Math.PI / DEGREES_IN_HALF_CIRCLE
 									const radius =
 										innerRadius +
