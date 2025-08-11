@@ -36,7 +36,7 @@ export function ActiveFoldersCard() {
 		<Card className='justify-between'>
 			<CardHeader className='mb-0'>
 				<CardTitle className='mb-2'>Pastas ativas</CardTitle>
-				<div className='text-[48px] leading-none font-bold text-[var(--color-text-primary)]'>
+				<div className='text-5xl font-bold text-[#1F2A37]'>
 					{folders?.active}
 				</div>
 				<div className='text-sm text-[var(--color-text-secondary)]'>
@@ -58,7 +58,7 @@ export function ActiveFoldersCard() {
 				</ResponsiveContainer>
 			</CardContent>
 			<button
-				className='text-sm font-medium text-[var(--color-brand-cyan)] underline'
+				className='text-sm font-medium text-[#1CD6F4] underline'
 				type='button'
 			>
 				Visualizar pastas

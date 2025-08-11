@@ -20,7 +20,7 @@ export function TasksCard() {
 	return (
 		<Card>
 			<CardHeader className='flex items-center justify-between mb-4'>
-				<CardTitle>Suas tarefas</CardTitle>
+				<CardTitle className='title-accent'>Suas tarefas</CardTitle>
 				<DateRangePicker
 					dateRange={dateRange}
 					isOpen={showDatePicker}
