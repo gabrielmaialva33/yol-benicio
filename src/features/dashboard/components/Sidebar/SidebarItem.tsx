@@ -49,7 +49,7 @@ const SidebarItem = (props: SidebarItemProps) => {
 
 	let activeClasses = 'text-white hover:bg-gray-700'
 	if (props.active && !props.isCollapsed) {
-		activeClasses = 'bg-[#F97316] text-white'
+		activeClasses = 'bg-orange-500 text-white'
 	}
 
 	const className = `
