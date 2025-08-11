@@ -2,7 +2,16 @@
 	"$schema": "https://json.schemastore.org/tsconfig",
 	"compilerOptions": {
 		"allowUnreachableCode": false,
-		"baseUrl": "src",
+		"baseUrl": ".",
+		"paths": {
+			"@features/*": ["src/features/*"],
+			"@shared/*": ["src/shared/*"],
+			"@ui/*": ["src/shared/ui/*"],
+			"@hooks/*": ["src/shared/hooks/*"],
+			"@types/*": ["src/shared/types/*"],
+			"@mocks/*": ["src/mocks/*"],
+			"@app/*": ["src/app/*"]
+		},
 		"erasableSyntaxOnly": true,
 		"exactOptionalPropertyTypes": true,
 		"forceConsistentCasingInFileNames": true,
