@@ -1,5 +1,5 @@
-import type {Folder} from '@shared/types'
-import {FolderArea, FolderStatus} from '@shared/types'
+import type {Folder} from '@shared/types/domain'
+import {FolderArea, FolderStatus} from '@shared/types/domain'
 import {DateTime} from 'luxon'
 import type React from 'react'
 import {Link} from 'react-router'
