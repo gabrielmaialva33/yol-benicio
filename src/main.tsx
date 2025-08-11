@@ -12,12 +12,14 @@ import {AuthProvider} from './shared/hooks/use-auth'
 const queryClient = new QueryClient()
 
 // Start MSW only if enabled
-if (ENABLE_MSW) {
-	const swUrl = import.meta.env.DEV
-		? '/mock-service-worker.js'
-		: '/yol-benicio/mock-service-worker.js'
-	worker.start({serviceWorker: {url: swUrl}}).catch(() => {
-		/* MSW opcional em produção */
+if (
+	ENABLE_MSW &&
+	(import.meta.env.DEV || window.location.hostname.includes('github.io'))
+) {
+	worker.start({
+		serviceWorker: {
+			url: '/yol-benicio/mock-service-worker.js'
+		}
 	})
 }
 
