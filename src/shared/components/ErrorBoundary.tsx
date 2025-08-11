@@ -1,5 +1,5 @@
-import {Component, type ReactNode} from 'react'
 import {AlertTriangle, RefreshCw} from 'lucide-react'
+import {Component, type ReactNode} from 'react'
 
 interface ErrorBoundaryState {
 	hasError: boolean
@@ -20,6 +20,8 @@ interface ErrorBoundaryProps {
 /**
  * Error Boundary reutilizável com diferentes níveis de granularidade
  */
+const AUTO_RESET_TIMEOUT = 10_000
+
 export class ErrorBoundary extends Component<
 	ErrorBoundaryProps,
 	ErrorBoundaryState
@@ -36,7 +38,7 @@ export class ErrorBoundary extends Component<
 		return {hasError: true, error}
 	}
 
-	componentDidUpdate(prevProps: ErrorBoundaryProps) {
+	componentDidUpdate(_prevProps: ErrorBoundaryProps) {
 		const {resetKeys = [], resetOnPropsChange = true} = this.props
 		const hasResetKeysChanged = resetKeys.some(
 			(key, index) => key !== this.previousResetKeys[index]
@@ -50,20 +52,15 @@ export class ErrorBoundary extends Component<
 
 	componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
 		const {onError} = this.props
-		
-		// Log para desenvolvimento
-		if (import.meta.env.DEV) {
-			console.error('ErrorBoundary caught:', error, errorInfo)
-		}
-		
+
 		// Callback customizado
 		onError?.(error, errorInfo)
-		
+
 		// Auto-reset após 10 segundos em componentes isolados
 		if (this.props.isolate && this.props.level === 'component') {
 			this.resetTimeoutId = window.setTimeout(() => {
 				this.resetErrorBoundary()
-			}, 10000)
+			}, AUTO_RESET_TIMEOUT)
 		}
 	}
 
@@ -83,8 +80,12 @@ export class ErrorBoundary extends Component<
 
 	render() {
 		const {hasError, error} = this.state
-		const {children, fallback, level = 'component', showDetails = false} =
-			this.props
+		const {
+			children,
+			fallback,
+			level = 'component',
+			showDetails = false
+		} = this.props
 
 		if (hasError && error) {
 			// Fallback customizado
@@ -97,14 +98,16 @@ export class ErrorBoundary extends Component<
 				<div className={this.getContainerClasses(level)}>
 					<div className='flex flex-col items-center justify-center gap-4 p-8'>
 						<AlertTriangle
-							className={this.getIconClasses(level)}
 							aria-hidden='true'
+							className={this.getIconClasses(level)}
 						/>
 						<div className='text-center'>
 							<h2 className={this.getTitleClasses(level)}>
 								{this.getErrorTitle(level)}
 							</h2>
-							<p className='text-gray-600 mt-2'>{this.getErrorMessage(level)}</p>
+							<p className='text-gray-600 mt-2'>
+								{this.getErrorMessage(level)}
+							</p>
 							{showDetails && import.meta.env.DEV && (
 								<details className='mt-4 text-left'>
 									<summary className='cursor-pointer text-sm text-gray-500 hover:text-gray-700'>
@@ -117,8 +120,8 @@ export class ErrorBoundary extends Component<
 							)}
 						</div>
 						<button
-							onClick={this.resetErrorBoundary}
 							className='flex items-center gap-2 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors'
+							onClick={this.resetErrorBoundary}
 							type='button'
 						>
 							<RefreshCw className='w-4 h-4' />
@@ -133,7 +136,8 @@ export class ErrorBoundary extends Component<
 	}
 
 	private getContainerClasses(level: string): string {
-		const base = 'flex items-center justify-center bg-white rounded-lg shadow-sm'
+		const base =
+			'flex items-center justify-center bg-white rounded-lg shadow-sm'
 		switch (level) {
 			case 'page':
 				return `${base} min-h-screen`
@@ -187,24 +191,4 @@ export class ErrorBoundary extends Component<
 				return 'Este componente encontrou um problema.'
 		}
 	}
-}
-
-/**
- * Hook para usar com function components
- */
-export function withErrorBoundary<P extends object>(
-	Component: React.ComponentType<P>,
-	errorBoundaryProps?: Omit<ErrorBoundaryProps, 'children'>
-) {
-	const WrappedComponent = (props: P) => (
-		<ErrorBoundary {...errorBoundaryProps}>
-			<Component {...props} />
-		</ErrorBoundary>
-	)
-	
-	WrappedComponent.displayName = `withErrorBoundary(${
-		Component.displayName || Component.name
-	})`
-	
-	return WrappedComponent
 }

@@ -2,9 +2,13 @@ import {z} from 'zod'
 import type {ApiResponse, ErrorResponse} from '../types/api'
 import type {User} from '../types/domain'
 
+const MIN_PASSWORD_LENGTH = 6
+
 const AuthSchema = z.object({
 	email: z.string().email('Email inválido'),
-	password: z.string().min(6, 'Senha deve ter no mínimo 6 caracteres')
+	password: z
+		.string()
+		.min(MIN_PASSWORD_LENGTH, 'Senha deve ter no mínimo 6 caracteres')
 })
 export type AuthInput = z.infer<typeof AuthSchema>
 

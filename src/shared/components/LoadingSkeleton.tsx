@@ -67,12 +67,12 @@ export function CardSkeleton({className}: {className?: string}) {
 	return (
 		<div className={cn('bg-white rounded-lg shadow-sm p-6', className)}>
 			<SkeletonContainer>
-				<Skeleton variant='rectangular' height={20} width='40%' />
-				<Skeleton variant='text' height={16} />
-				<Skeleton variant='text' height={16} width='80%' />
+				<Skeleton height={20} variant='rectangular' width='40%' />
+				<Skeleton height={16} variant='text' />
+				<Skeleton height={16} variant='text' width='80%' />
 				<div className='flex gap-4 mt-4'>
-					<Skeleton variant='rounded' height={32} width={100} />
-					<Skeleton variant='rounded' height={32} width={100} />
+					<Skeleton height={32} variant='rounded' width={100} />
+					<Skeleton height={32} variant='rounded' width={100} />
 				</div>
 			</SkeletonContainer>
 		</div>
@@ -86,17 +86,17 @@ export function TableSkeleton({rows = 5}: {rows?: number}) {
 	return (
 		<div className='bg-white rounded-lg shadow-sm overflow-hidden'>
 			<div className='border-b bg-gray-50 p-4'>
-				<Skeleton variant='rectangular' height={20} width='30%' />
+				<Skeleton height={20} variant='rectangular' width='30%' />
 			</div>
 			<div className='divide-y'>
-				{Array.from({length: rows}).map((_, index) => (
-					<div key={index} className='p-4 flex gap-4'>
-						<Skeleton variant='circular' width={40} height={40} />
+				{Array.from({length: rows}, (_, index) => index).map(index => (
+					<div className='p-4 flex gap-4' key={`skeleton-table-${index}`}>
+						<Skeleton height={40} variant='circular' width={40} />
 						<div className='flex-1 space-y-2'>
-							<Skeleton variant='text' height={16} width='60%' />
-							<Skeleton variant='text' height={14} width='40%' />
+							<Skeleton height={16} variant='text' width='60%' />
+							<Skeleton height={14} variant='text' width='40%' />
 						</div>
-						<Skeleton variant='rounded' height={32} width={80} />
+						<Skeleton height={32} variant='rounded' width={80} />
 					</div>
 				))}
 			</div>
@@ -110,12 +110,15 @@ export function TableSkeleton({rows = 5}: {rows?: number}) {
 export function ListSkeleton({items = 3}: {items?: number}) {
 	return (
 		<div className='space-y-3'>
-			{Array.from({length: items}).map((_, index) => (
-				<div key={index} className='flex items-center gap-3 p-3'>
-					<Skeleton variant='circular' width={48} height={48} />
+			{Array.from({length: items}, (_, index) => index).map(index => (
+				<div
+					className='flex items-center gap-3 p-3'
+					key={`skeleton-list-${index}`}
+				>
+					<Skeleton height={48} variant='circular' width={48} />
 					<div className='flex-1 space-y-2'>
-						<Skeleton variant='text' height={16} width='70%' />
-						<Skeleton variant='text' height={14} width='50%' />
+						<Skeleton height={16} variant='text' width='70%' />
+						<Skeleton height={14} variant='text' width='50%' />
 					</div>
 				</div>
 			))}
@@ -130,23 +133,23 @@ export function WidgetSkeleton() {
 	return (
 		<div className='bg-white rounded-lg shadow-sm p-6'>
 			<div className='flex items-center justify-between mb-4'>
-				<Skeleton variant='rectangular' height={24} width='40%' />
-				<Skeleton variant='rounded' height={32} width={100} />
+				<Skeleton height={24} variant='rectangular' width='40%' />
+				<Skeleton height={32} variant='rounded' width={100} />
 			</div>
-			<Skeleton variant='text' height={14} width='60%' className='mb-4' />
+			<Skeleton className='mb-4' height={14} variant='text' width='60%' />
 			<div className='space-y-3'>
 				<div className='flex items-center gap-3'>
-					<Skeleton variant='circular' width={40} height={40} />
+					<Skeleton height={40} variant='circular' width={40} />
 					<div className='flex-1'>
-						<Skeleton variant='text' height={16} width='50%' />
-						<Skeleton variant='text' height={14} width='30%' />
+						<Skeleton height={16} variant='text' width='50%' />
+						<Skeleton height={14} variant='text' width='30%' />
 					</div>
 				</div>
 				<div className='flex items-center gap-3'>
-					<Skeleton variant='circular' width={40} height={40} />
+					<Skeleton height={40} variant='circular' width={40} />
 					<div className='flex-1'>
-						<Skeleton variant='text' height={16} width='60%' />
-						<Skeleton variant='text' height={14} width='40%' />
+						<Skeleton height={16} variant='text' width='60%' />
+						<Skeleton height={14} variant='text' width='40%' />
 					</div>
 				</div>
 			</div>
