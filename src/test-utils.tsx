@@ -3,6 +3,7 @@ import {type RenderOptions, render as rtlRender} from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import type {PropsWithChildren, ReactElement} from 'react'
 import {BrowserRouter} from 'react-router'
+import {AuthProvider} from './shared/hooks/use-auth'
 
 export const queryClient = new QueryClient({
 	defaultOptions: {
@@ -23,7 +24,9 @@ export function render(
 		...rtlRender(ui, {
 			wrapper: ({children}: PropsWithChildren) => (
 				<QueryClientProvider client={queryClient}>
-					<BrowserRouter>{children}</BrowserRouter>
+					<BrowserRouter>
+						<AuthProvider>{children}</AuthProvider>
+					</BrowserRouter>
 				</QueryClientProvider>
 			),
 			...options
