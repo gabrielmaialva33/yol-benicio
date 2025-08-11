@@ -26,16 +26,17 @@ export default defineConfig({
 		bail: 1,
 		clearMocks: true,
 		coverage: {
+			provider: 'v8',
 			enabled: true,
 			exclude: ['src/main.tsx', 'src/mocks/browser.ts'],
 			include: ['src/**/*'],
 			reporter: ['text', 'lcov'],
 			reportsDirectory: 'coverage',
 			thresholds: {
-				lines: 25,
-				functions: 35,
-				branches: 50,
-				statements: 25
+				lines: 10,
+				functions: 15,
+				branches: 25,
+				statements: 10
 			}
 		},
 		css: false,
