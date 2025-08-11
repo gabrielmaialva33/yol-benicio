@@ -44,7 +44,7 @@ export function BillingCard() {
 		)
 
 	return (
-		<Card className='card-tinted'>
+		<Card tinted={true}>
 			<CardHeader className='flex items-start justify-between mb-4'>
 				<CardTitle className='text-[var(--color-text-primary)]'>
 					Faturamento

@@ -86,11 +86,10 @@ describe('BillingCard', () => {
 		const {container} = render(<BillingCard />)
 
 		const card = container.firstChild
-		expect(card).toHaveClass(
-			'bg-[#E6F8F3]',
-			'text-[#004B50]',
-			'rounded-lg',
-			'p-6'
-		)
+		// Checa classes estruturais e variante sem depender de cores hex específicas
+		expect(card).toHaveClass('card')
+		expect(card).toHaveClass('card-tinted')
+		expect(card).toHaveClass('rounded-lg')
+		expect(card).toHaveClass('p-6')
 	})
 })
