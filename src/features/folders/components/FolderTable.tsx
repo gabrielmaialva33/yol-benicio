@@ -33,10 +33,10 @@ const statusNames: Record<FolderStatus, string> = {
 
 const statusColors: Record<FolderStatus, string> = {
 	[FolderStatus.ACTIVE]: 'bg-blue-100 text-blue-800',
-	[FolderStatus.COMPLETED]: 'bg-green-100 text-green-800',
-	[FolderStatus.PENDING]: 'bg-yellow-100 text-yellow-800',
-	[FolderStatus.CANCELLED]: 'bg-red-100 text-red-800',
-	[FolderStatus.ARCHIVED]: 'bg-gray-100 text-gray-800'
+	[FolderStatus.COMPLETED]: 'bg-green-500 text-white',
+	[FolderStatus.PENDING]: 'bg-orange-400 text-white',
+	[FolderStatus.CANCELLED]: 'bg-red-500 text-white',
+	[FolderStatus.ARCHIVED]: 'bg-gray-400 text-white'
 }
 
 interface FolderTableProps {
@@ -140,31 +140,31 @@ export function FolderTable({
 							Responsável
 						</th>
 						<th
-							className='px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer'
+							className='px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer w-36'
 							onClick={() => handleSort('created_at')}
 							scope='col'
 						>
 							Data de inclusão
 						</th>
 						<th
-							className='px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'
+							className='px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-20'
 							scope='col'
 						>
 							Docs
 						</th>
 						<th
-							className='px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'
+							className='px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-40'
 							scope='col'
 						>
 							Área
 						</th>
 						<th
-							className='px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'
+							className='px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-28'
 							scope='col'
 						>
 							Status
 						</th>
-						<th className='relative px-6 py-4' scope='col'>
+						<th className='relative px-6 py-4 w-24' scope='col'>
 							<span className='sr-only'>Actions</span>
 						</th>
 					</tr>
@@ -181,7 +181,7 @@ export function FolderTable({
 
 						return (
 							<tr className={isSelected ? 'bg-cyan-50' : ''} key={folder.id}>
-								<td className='px-6 py-4 whitespace-nowrap'>
+								<td className='px-6 py-5 whitespace-nowrap'>
 									<input
 										checked={isSelected}
 										className='h-4 w-4 text-cyan-600 border-gray-300 rounded focus:ring-cyan-500'
@@ -189,15 +189,15 @@ export function FolderTable({
 										type='checkbox'
 									/>
 								</td>
-								<td className='px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900'>
+								<td className='px-6 py-5 whitespace-nowrap text-sm font-medium text-gray-900'>
 									#{folder.code}
 								</td>
-								<td className='px-6 py-4 whitespace-nowrap'>
+								<td className='px-6 py-5 whitespace-nowrap'>
 									<div className='flex items-center'>
 										<div className='flex-shrink-0 h-10 w-10'>
 											<img
 												alt={folder.responsible_lawyer.full_name}
-												className='h-10 w-10 rounded-full'
+												className='h-10 w-10 rounded-full object-cover'
 												height={40}
 												src={
 													folder.responsible_lawyer.avatar_url ||
@@ -216,20 +216,20 @@ export function FolderTable({
 										</div>
 									</div>
 								</td>
-								<td className='px-6 py-4 whitespace-nowrap'>
+								<td className='px-6 py-5 whitespace-nowrap'>
 									<div className='text-sm text-gray-900'>{dateStr}</div>
 									<div className='text-sm text-gray-500'>{timeStr}</div>
 								</td>
-								<td className='px-6 py-4 whitespace-nowrap text-sm text-gray-500'>
+								<td className='px-6 py-5 whitespace-nowrap text-sm text-gray-500'>
 									{folder.documents_count}
 								</td>
-								<td className='px-6 py-4 whitespace-nowrap text-sm text-gray-500'>
+								<td className='px-6 py-5 whitespace-nowrap text-sm text-gray-500'>
 									{areaNames[folder.area]}
 								</td>
-								<td className='px-6 py-4 whitespace-nowrap'>
+								<td className='px-6 py-5 whitespace-nowrap'>
 									<StatusBadge status={folder.status} />
 								</td>
-								<td className='px-6 py-4 whitespace-nowrap text-right text-sm font-medium'>
+								<td className='px-6 py-5 whitespace-nowrap text-right text-sm font-medium'>
 									<div className='flex items-center justify-end space-x-2'>
 										<button
 											className='p-2 rounded-full hover:bg-gray-200'
