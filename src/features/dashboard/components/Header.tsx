@@ -44,7 +44,8 @@ export function Header() {
 		pageTitles['/dashboard']) as {title: string; description: string}
 
 	return (
-		<header className='bg-white border-b border-gray-200 px-6 py-4'>
+		// Header usa o mesmo background do container principal e mantém a linha de separação inferior
+		<header className='bg-[#F1F1F2] border-b border-gray-300 px-6 py-4'>
 			<div className='flex items-center justify-between'>
 				<div>
 					<h1 className='text-2xl font-semibold text-gray-900'>{title}</h1>
