@@ -40,11 +40,11 @@ export function createPaginatedResponse<T>({
 export function applyFilters<T>(
 	data: T[],
 	filters: Record<string, unknown>,
-	filterFunctions: Record<string, (item: T, value: string) => boolean>
+	filterFunctions: Record<string, (item: T, value: unknown) => boolean>
 ): T[] {
 	return data.filter(item => {
 		return Object.entries(filters).every(([key, value]) => {
-			if (!value || value === '' || value === 'all') {
+			if (!value || value === '' || value === 'all' || value === 'Total') {
 				return true
 			}
 
@@ -53,7 +53,7 @@ export function applyFilters<T>(
 				return true
 			}
 
-			return filterFn(item, String(value))
+			return filterFn(item, value)
 		})
 	})
 }
@@ -101,9 +101,8 @@ export function parseQueryParams(url: URL) {
 	const perPage = Number(url.searchParams.get('per_page')) || 10
 	const sortBy = url.searchParams.get('sort_by') || undefined
 	const order = (url.searchParams.get('order') || 'asc') as 'asc' | 'desc'
-	const search = url.searchParams.get('search') || undefined
 
-	// Parse other filters
+	// Parse all filters including search
 	const filters: Record<string, unknown> = {}
 	for (const [key, value] of url.searchParams.entries()) {
 		if (!['page', 'per_page', 'sort_by', 'order'].includes(key)) {
@@ -116,7 +115,6 @@ export function parseQueryParams(url: URL) {
 		perPage,
 		sortBy,
 		order,
-		search,
 		filters
 	}
 }

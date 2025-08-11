@@ -117,14 +117,57 @@ const folderFilters = {
 			folder.code.toLowerCase().includes(searchLower) ||
 			folder.title.toLowerCase().includes(searchLower) ||
 			folder.client.name.toLowerCase().includes(searchLower) ||
+			folder.responsible_lawyer.full_name.toLowerCase().includes(searchLower) ||
 			(folder.case_number?.toLowerCase().includes(searchLower) ?? false)
 		)
 	},
 	status: (folder: Folder, value: unknown) => {
-		return folder.status === value
+		const statusValue = String(value)
+		if (statusValue === 'Total') {
+			return true
+		}
+
+		// Mapear português para inglês (enum values)
+		const statusMap: Record<string, string> = {
+			Ativo: 'active',
+			Pendente: 'pending',
+			Concluído: 'completed',
+			Cancelado: 'cancelled',
+			Arquivado: 'archived'
+		}
+
+		const mappedStatus = statusMap[statusValue]
+		return mappedStatus
+			? folder.status === mappedStatus
+			: folder.status === value
 	},
 	area: (folder: Folder, value: unknown) => {
-		return folder.area === value
+		const areaValue = String(value)
+		if (areaValue === '' || areaValue === 'Total') {
+			return true
+		}
+
+		// Map area names to enum values
+		const areaMap: Record<string, FolderArea> = {
+			'Cível contencioso': FolderArea.CIVIL_LITIGATION,
+			Trabalhista: FolderArea.LABOR,
+			Penal: FolderArea.CRIMINAL,
+			Empresarial: FolderArea.CORPORATE,
+			Tributário: FolderArea.TAX,
+			Família: FolderArea.FAMILY,
+			Consumidor: FolderArea.CONSUMER,
+			Ambiental: FolderArea.ENVIRONMENTAL
+		}
+
+		const mappedArea = areaMap[areaValue]
+		return mappedArea ? folder.area === mappedArea : folder.area === value
+	},
+	client_number: (folder: Folder, value: unknown) => {
+		const clientNumber = String(value)
+		if (!clientNumber) {
+			return true
+		}
+		return folder.client.id.toString().includes(clientNumber)
 	},
 	client_id: (folder: Folder, value: unknown) => {
 		return folder.client.id === Number(value)
@@ -136,14 +179,52 @@ const folderFilters = {
 		return folder.is_favorite === (value === 'true')
 	},
 	date_from: (folder: Folder, value: unknown) => {
-		return (
-			DateTime.fromISO(folder.created_at) >= DateTime.fromISO(String(value))
-		)
+		const dateStr = String(value)
+		if (!dateStr) {
+			return true
+		}
+
+		// Parse DD/MM/YYYY format
+		const [day, month, year] = dateStr.split('/')
+		if (!(day && month && year)) {
+			return true
+		}
+
+		const filterDate = DateTime.fromObject({
+			day: Number.parseInt(day, 10),
+			month: Number.parseInt(month, 10),
+			year: Number.parseInt(year, 10)
+		})
+
+		if (!filterDate.isValid) {
+			return true
+		}
+
+		return DateTime.fromISO(folder.created_at) >= filterDate.startOf('day')
 	},
 	date_to: (folder: Folder, value: unknown) => {
-		return (
-			DateTime.fromISO(folder.created_at) <= DateTime.fromISO(String(value))
-		)
+		const dateStr = String(value)
+		if (!dateStr) {
+			return true
+		}
+
+		// Parse DD/MM/YYYY format
+		const [day, month, year] = dateStr.split('/')
+		if (!(day && month && year)) {
+			return true
+		}
+
+		const filterDate = DateTime.fromObject({
+			day: Number.parseInt(day, 10),
+			month: Number.parseInt(month, 10),
+			year: Number.parseInt(year, 10)
+		})
+
+		if (!filterDate.isValid) {
+			return true
+		}
+
+		return DateTime.fromISO(folder.created_at) <= filterDate.endOf('day')
 	}
 }
 
@@ -154,6 +235,7 @@ export const folderHandlers = [
 		const {page, perPage, sortBy, order, filters} = parseQueryParams(url)
 
 		let filteredFolders = applyFilters(allFolders, filters, folderFilters)
+
 		filteredFolders = applySorting(filteredFolders, sortBy, order)
 
 		const response = createPaginatedResponse({
