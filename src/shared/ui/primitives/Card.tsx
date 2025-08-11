@@ -11,7 +11,14 @@ export function Card({
 	...rest
 }: PropsWithChildren<CardProps>) {
 	return (
-		<div className={cn('card', tinted && 'card-tinted', className)} {...rest} />
+		<div
+			className={cn(
+				'card bg-white rounded-lg p-6 shadow-sm border border-gray-200 relative flex flex-col',
+				tinted && 'card-tinted',
+				className
+			)}
+			{...rest}
+		/>
 	)
 }
 
