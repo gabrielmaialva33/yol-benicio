@@ -39,7 +39,7 @@ export function AppliedFilters({
 	setFilters,
 	resultCount
 }: AppliedFiltersProps) {
-	const appliedFilters = []
+	const appliedFilters: Array<{key: string; label: string; value: string}> = []
 
 	if (filters.area && filters.area !== '') {
 		appliedFilters.push({
@@ -79,7 +79,7 @@ export function AppliedFilters({
 	}
 
 	return (
-		<div className='px-6 py-3 bg-gray-50 border-b'>
+		<div className='px-6 py-3 bg-white border-b'>
 			<div className='flex items-center justify-between'>
 				<div className='flex items-center space-x-4'>
 					<span className='text-sm text-gray-600'>
@@ -88,7 +88,7 @@ export function AppliedFilters({
 					<div className='flex items-center space-x-2'>
 						{appliedFilters.map(filter => (
 							<div
-								className='inline-flex items-center px-3 py-1 rounded-md text-xs font-medium bg-gray-200 text-gray-700'
+								className='inline-flex items-center px-3 py-1 rounded-md text-xs font-medium bg-blue-100 text-blue-700'
 								key={filter.key}
 							>
 								{filter.label}

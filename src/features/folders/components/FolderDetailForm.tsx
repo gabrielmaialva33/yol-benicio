@@ -16,6 +16,7 @@ const SelectInput = (props: {
 				className='w-full appearance-none bg-white border border-gray-300 rounded-md px-3 py-2 text-gray-700 focus:outline-none focus:ring-1 focus:ring-cyan-500'
 				defaultValue={props.defaultValue}
 				id={props.label}
+				readOnly={true}
 				value={props.value}
 			>
 				{props.options.map(option => (
@@ -42,6 +43,7 @@ const TextInput = (props: {
 			className='w-full bg-white border border-gray-300 rounded-md px-3 py-2 text-gray-700 focus:outline-none focus:ring-1 focus:ring-cyan-500'
 			id={props.label}
 			placeholder={props.placeholder}
+			readOnly={true}
 			type='text'
 			value={props.value}
 		/>
@@ -57,6 +59,7 @@ const DateInput = (props: {label: string; value?: string}) => (
 			<input
 				className='w-full bg-white border border-gray-300 rounded-md pl-3 pr-10 py-2 text-gray-700 focus:outline-none focus:ring-1 focus:ring-cyan-500'
 				id={props.label}
+				readOnly={true}
 				type='text'
 				value={props.value}
 			/>

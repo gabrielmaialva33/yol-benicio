@@ -1,5 +1,5 @@
 import {ErrorBoundary} from '@shared/components/ErrorBoundary'
-import {Folder, AlertCircle} from 'lucide-react'
+import {AlertCircle, Folder} from 'lucide-react'
 import type {ReactNode} from 'react'
 import {useNavigate} from 'react-router'
 
@@ -56,7 +56,6 @@ export function FolderErrorBoundary({
 
 	return (
 		<ErrorBoundary
-			level={getContextLevel()}
 			fallback={(error, reset) => (
 				<div className='flex items-center justify-center min-h-[400px] bg-white rounded-lg shadow-sm'>
 					<div className='max-w-md w-full p-8 text-center'>
@@ -67,19 +66,19 @@ export function FolderErrorBoundary({
 							{getContextMessage()}
 						</h2>
 						<p className='text-gray-600 mb-6'>{getActionMessage()}</p>
-						
+
 						<div className='flex flex-col sm:flex-row gap-3 justify-center'>
 							<button
-								onClick={reset}
 								className='px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors'
+								onClick={reset}
 								type='button'
 							>
 								Tentar novamente
 							</button>
 							{context === 'detail' && (
 								<button
-									onClick={() => navigate('/dashboard/folders/consultation')}
 									className='px-4 py-2 bg-gray-200 text-gray-800 rounded-lg hover:bg-gray-300 transition-colors'
+									onClick={() => navigate('/dashboard/folders/consultation')}
 									type='button'
 								>
 									Voltar para lista
@@ -116,16 +115,11 @@ export function FolderErrorBoundary({
 					</div>
 				</div>
 			)}
-			onError={(error, errorInfo) => {
-				// Log específico para pastas
-				console.error(`Folder Error [${context}]:`, error, errorInfo)
-				
-				// Telemetria específica para erros de pastas
-				if (folderId) {
-					console.error(`Folder ID: ${folderId}`)
-				}
+			level={getContextLevel()}
+			onError={(_error, _errorInfo) => {
+				// Error logging handled by parent ErrorBoundary component
 			}}
-			resetKeys={[folderId, context]}
+			resetKeys={[folderId || '', context]}
 			resetOnPropsChange={true}
 		>
 			{children}

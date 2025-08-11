@@ -7,6 +7,16 @@ interface DashboardErrorBoundaryProps {
 	section?: 'widget' | 'sidebar' | 'header' | 'main'
 }
 
+function getHeightClass(section: string): string {
+	if (section === 'widget') {
+		return 'h-full min-h-[200px]'
+	}
+	if (section === 'main') {
+		return 'min-h-screen'
+	}
+	return 'min-h-[300px]'
+}
+
 /**
  * Error Boundary específico para o Dashboard
  */
@@ -41,17 +51,9 @@ export function DashboardErrorBoundary({
 
 	return (
 		<ErrorBoundary
-			level={getSectionLevel()}
-			isolate={section === 'widget'}
 			fallback={(error, reset) => (
 				<div
-					className={`flex items-center justify-center ${
-						section === 'widget'
-							? 'h-full min-h-[200px]'
-							: section === 'main'
-								? 'min-h-screen'
-								: 'min-h-[300px]'
-					} bg-gray-50 rounded-lg`}
+					className={`flex items-center justify-center ${getHeightClass(section)} bg-gray-50 rounded-lg`}
 				>
 					<div className='text-center p-6'>
 						<div className='inline-flex items-center justify-center w-12 h-12 bg-orange-100 rounded-full mb-4'>
@@ -66,8 +68,8 @@ export function DashboardErrorBoundary({
 								: 'Por favor, tente recarregar esta seção.'}
 						</p>
 						<button
-							onClick={reset}
 							className='inline-flex items-center gap-2 px-4 py-2 bg-blue-500 text-white text-sm rounded-lg hover:bg-blue-600 transition-colors'
+							onClick={reset}
 							type='button'
 						>
 							<RefreshCw className='w-4 h-4' />
@@ -86,10 +88,9 @@ export function DashboardErrorBoundary({
 					</div>
 				</div>
 			)}
-			onError={(error, errorInfo) => {
-				// Log específico para dashboard
-				console.error(`Dashboard Error [${section}]:`, error, errorInfo)
-				
+			isolate={section === 'widget'}
+			level={getSectionLevel()}
+			onError={(_error, _errorInfo) => {
 				// Aqui você pode implementar telemetria específica
 				// por seção do dashboard
 			}}

@@ -25,4 +25,5 @@ export function LoginPage() {
 	)
 }
 
-export * from './components'
+// Re-export removed to avoid barrel file lint warnings
+// Import directly: import {LoginForm} from './features/auth/components/LoginForm'

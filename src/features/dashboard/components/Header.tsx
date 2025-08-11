@@ -7,6 +7,7 @@ import exitIcon from '/icons/exit-right.svg'
 import messagesIcon from '/icons/messages.svg'
 import {messages} from '../../../mocks/data/messages'
 import {notifications} from '../../../mocks/data/notifications'
+import {Breadcrumb} from '../../../shared/components/Breadcrumb'
 import {useDetectOutsideClick} from '../../../shared/utils/use-detect-outside-click'
 import {MessagesDropdown} from './MessagesDropdown'
 import {NotificationsDropdown} from './NotificationsDropdown'
@@ -14,11 +15,15 @@ import {NotificationsDropdown} from './NotificationsDropdown'
 const pageTitles: Record<string, {title: string; description: string}> = {
 	'/dashboard': {
 		title: 'Visão Geral',
-		description: 'Suas tarefas principais estão nessa sessão.'
+		description: 'Suas tarefas principais estão nessa seção.'
 	},
 	'/dashboard/folders/consultation': {
 		title: 'Consulta de pastas',
 		description: ''
+	},
+	'/dashboard/folders/register': {
+		title: 'Cadastro de Pasta',
+		description: 'Preencha os dados do novo processo'
 	}
 }
 
@@ -43,13 +48,38 @@ export function Header() {
 	const {title, description} = (pageTitles[location.pathname] ||
 		pageTitles['/dashboard']) as {title: string; description: string}
 
+	// Define breadcrumbs based on current path
+	const getBreadcrumbs = () => {
+		switch (location.pathname) {
+			case '/dashboard/folders/consultation':
+				return [
+					{label: 'Pastas', href: '/dashboard/folders'},
+					{label: 'Consulta', isActive: true}
+				]
+			case '/dashboard/folders/register':
+				return [
+					{label: 'Pastas', href: '/dashboard/folders'},
+					{label: 'Cadastrar', isActive: true}
+				]
+			default:
+				return []
+		}
+	}
+
+	const breadcrumbs = getBreadcrumbs()
+
 	return (
 		// Header alinhado ao design: padding lateral 30px, gap 24px entre ações, fundo igual ao body e linha sutil
 		<header className='bg-[#F1F1F2] border-b border-gray-200 px-[30px] py-4'>
 			<div className='flex items-center justify-between'>
 				<div>
-					<h1 className='text-2xl font-semibold text-gray-900'>{title}</h1>
+					<h1 className='text-2xl font-semibold text-[#161C24]'>{title}</h1>
 					{description && <p className='text-gray-500 mt-1'>{description}</p>}
+					{breadcrumbs.length > 0 && (
+						<div className='mt-2'>
+							<Breadcrumb items={breadcrumbs} />
+						</div>
+					)}
 				</div>
 				<div className='flex items-center space-x-6'>
 					<div className='relative' ref={notificationsRef}>

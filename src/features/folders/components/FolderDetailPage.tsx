@@ -27,27 +27,29 @@ export function FolderDetailPage() {
 				return <ProcessTimeline folderId={folder.id} />
 			case 'informacoes':
 				return (
-					<div className='bg-white rounded-lg p-6 shadow-sm'>
-						<h3 className='text-lg font-semibold text-gray-900 mb-4'>
+					<div className='bg-white rounded-2xl p-8 shadow-sm border border-gray-100'>
+						<h3 className='text-lg font-semibold text-[#161C24] mb-6'>
 							Informações Gerais
 						</h3>
-						<p className='text-gray-600'>Conteúdo das informações gerais...</p>
+						<p className='text-[#919EAB]'>Conteúdo das informações gerais...</p>
 					</div>
 				)
 			case 'publicacoes':
 				return (
-					<div className='bg-white rounded-lg p-6 shadow-sm'>
-						<h3 className='text-lg font-semibold text-gray-900 mb-4'>
+					<div className='bg-white rounded-2xl p-8 shadow-sm border border-gray-100'>
+						<h3 className='text-lg font-semibold text-[#161C24] mb-6'>
 							Publicações
 						</h3>
-						<p className='text-gray-600'>Lista de publicações...</p>
+						<p className='text-[#919EAB]'>Lista de publicações...</p>
 					</div>
 				)
 			case 'agenda':
 				return (
-					<div className='bg-white rounded-lg p-6 shadow-sm'>
-						<h3 className='text-lg font-semibold text-gray-900 mb-4'>Agenda</h3>
-						<p className='text-gray-600'>Eventos agendados...</p>
+					<div className='bg-white rounded-2xl p-8 shadow-sm border border-gray-100'>
+						<h3 className='text-lg font-semibold text-[#161C24] mb-6'>
+							Agenda
+						</h3>
+						<p className='text-[#919EAB]'>Eventos agendados...</p>
 					</div>
 				)
 			default:
@@ -56,9 +58,9 @@ export function FolderDetailPage() {
 	}
 
 	return (
-		<div className='p-6 bg-[#F1F1F2] min-h-full'>
+		<div className='p-8 bg-[#F1F1F2] min-h-full'>
 			<FolderDetailHeader folder={folder} />
-			<div className='mt-6 flex gap-6'>
+			<div className='mt-8 flex gap-8'>
 				<FolderDetailSidebar activeTab={activeTab} onTabChange={setActiveTab} />
 				<div className='flex-1'>{renderContent()}</div>
 			</div>

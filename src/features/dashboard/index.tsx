@@ -17,5 +17,5 @@ const Dashboard = () => {
 }
 
 export {Dashboard}
-export * from './components'
-export * from './hooks'
+// Re-exports removed to avoid barrel file lint warnings
+// Import components directly from their individual files when needed

@@ -1,1 +1,11 @@
-export * from './folder.types'
+export type {
+	FolderConsultationResponse,
+	FolderDetail,
+	FolderDocument,
+	FolderFilters,
+	FolderMovement,
+	FolderPagination,
+	FolderParty,
+	FolderResponsible,
+	FolderSummary
+} from './folder.types'

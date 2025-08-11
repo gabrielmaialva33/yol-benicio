@@ -71,13 +71,13 @@ const SelectInput = (props: {
 }) => {
 	const id = toKebabCase(props.label)
 	return (
-		<div className='flex flex-col gap-1'>
-			<label className='text-sm font-medium text-gray-700' htmlFor={id}>
+		<div className='flex flex-col gap-2'>
+			<label className='text-sm font-medium text-[#161C24]' htmlFor={id}>
 				{props.label}
 			</label>
 			<div className='relative'>
 				<select
-					className='w-full appearance-none bg-white border border-gray-300 rounded-md px-3 py-2 text-gray-700 focus:outline-none focus:ring-1 focus:ring-cyan-500'
+					className='w-full appearance-none bg-white border border-gray-300 rounded-lg px-4 py-3 text-gray-900 text-sm focus:outline-none focus:ring-2 focus:ring-[#00B8D9] focus:border-[#00B8D9] transition-colors'
 					id={id}
 					onChange={e => props.onChange(e.target.value)}
 					value={props.value}
@@ -89,7 +89,7 @@ const SelectInput = (props: {
 						</option>
 					))}
 				</select>
-				<ChevronDown className='absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none' />
+				<ChevronDown className='absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none' />
 			</div>
 		</div>
 	)
@@ -103,12 +103,12 @@ const TextInput = (props: {
 }) => {
 	const id = toKebabCase(props.label)
 	return (
-		<div className='flex flex-col gap-1'>
-			<label className='text-sm font-medium text-gray-700' htmlFor={id}>
+		<div className='flex flex-col gap-2'>
+			<label className='text-sm font-medium text-[#161C24]' htmlFor={id}>
 				{props.label}
 			</label>
 			<input
-				className='w-full bg-white border border-gray-300 rounded-md px-3 py-2 text-gray-700 focus:outline-none focus:ring-1 focus:ring-cyan-500'
+				className='w-full bg-white border border-gray-300 rounded-lg px-4 py-3 text-gray-900 text-sm focus:outline-none focus:ring-2 focus:ring-[#00B8D9] focus:border-[#00B8D9] transition-colors'
 				id={id}
 				onChange={e => props.onChange(e.target.value)}
 				placeholder={props.placeholder}
@@ -126,19 +126,19 @@ const DateInput = (props: {
 }) => {
 	const id = toKebabCase(props.label)
 	return (
-		<div className='flex flex-col gap-1'>
-			<label className='text-sm font-medium text-gray-700' htmlFor={id}>
+		<div className='flex flex-col gap-2'>
+			<label className='text-sm font-medium text-[#161C24]' htmlFor={id}>
 				{props.label}
 			</label>
 			<div className='relative'>
 				<input
-					className='w-full bg-white border border-gray-300 rounded-md pl-3 pr-10 py-2 text-gray-700 focus:outline-none focus:ring-1 focus:ring-cyan-500'
+					className='w-full bg-white border border-gray-300 rounded-lg pl-4 pr-12 py-3 text-gray-900 text-sm focus:outline-none focus:ring-2 focus:ring-[#00B8D9] focus:border-[#00B8D9] transition-colors'
 					id={id}
 					onChange={e => props.onChange(e.target.value)}
 					type='date'
 					value={props.value}
 				/>
-				<Calendar className='absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none' />
+				<Calendar className='absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none' />
 			</div>
 		</div>
 	)
@@ -151,12 +151,12 @@ const TextareaInput = (props: {
 }) => {
 	const id = toKebabCase(props.label)
 	return (
-		<div className='flex flex-col gap-1'>
-			<label className='text-sm font-medium text-gray-700' htmlFor={id}>
+		<div className='flex flex-col gap-2'>
+			<label className='text-sm font-medium text-[#161C24]' htmlFor={id}>
 				{props.label}
 			</label>
 			<textarea
-				className='w-full bg-gray-100 border border-gray-200 rounded-md px-3 py-2 text-gray-700 focus:outline-none focus:ring-1 focus:ring-cyan-500 h-24 resize-none'
+				className='w-full bg-white border border-gray-300 rounded-lg px-4 py-3 text-gray-900 text-sm focus:outline-none focus:ring-2 focus:ring-[#00B8D9] focus:border-[#00B8D9] transition-colors h-24 resize-none'
 				id={id}
 				onChange={e => props.onChange(e.target.value)}
 				placeholder='Digite aqui...'
@@ -171,11 +171,11 @@ const ToggleSwitch = (props: {
 	checked: boolean
 	onChange: (checked: boolean) => void
 }) => (
-	<div className='flex items-center gap-2'>
+	<div className='flex items-center gap-3'>
 		<button
 			aria-pressed={props.checked}
-			className={`relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2 ${
-				props.checked ? 'bg-cyan-500' : 'bg-gray-200'
+			className={`relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-[#00B8D9] focus:ring-offset-2 ${
+				props.checked ? 'bg-[#00B8D9]' : 'bg-gray-200'
 			}`}
 			onClick={() => props.onChange(!props.checked)}
 			type='button'
@@ -187,7 +187,7 @@ const ToggleSwitch = (props: {
 				}`}
 			/>
 		</button>
-		<span className='text-sm text-gray-700'>{props.label}</span>
+		<span className='text-sm font-medium text-[#161C24]'>{props.label}</span>
 	</div>
 )
 
@@ -271,23 +271,23 @@ export function FolderRegisterPage() {
 	}
 
 	return (
-		<div className='p-6 bg-[#F1F1F2] min-h-full'>
-			<div className='mb-6'>
-				<h1 className='text-2xl font-semibold text-gray-900'>
+		<div className='p-8 bg-[#F1F1F2] min-h-full'>
+			<div className='mb-8'>
+				<h1 className='text-2xl font-semibold text-[#161C24]'>
 					Cadastro de Pasta
 				</h1>
-				<p className='text-sm text-gray-500 mt-1'>
+				<p className='text-sm text-[#919EAB] mt-2'>
 					Preencha os dados do novo processo
 				</p>
 			</div>
 
 			<form onSubmit={handleSubmit}>
 				{/* Informações Básicas */}
-				<div className='bg-white rounded-lg p-6 shadow-sm mb-6'>
-					<h2 className='text-lg font-semibold text-gray-900 mb-4'>
+				<div className='bg-white rounded-2xl p-8 shadow-sm border border-gray-100 mb-8'>
+					<h2 className='text-lg font-semibold text-[#161C24] mb-6'>
 						Informações Básicas
 					</h2>
-					<div className='grid grid-cols-1 md:grid-cols-4 gap-4'>
+					<div className='grid grid-cols-1 md:grid-cols-4 gap-6'>
 						<TextInput
 							label='Nº Processo'
 							onChange={value => updateField('processNumber', value)}
@@ -376,11 +376,11 @@ export function FolderRegisterPage() {
 				</div>
 
 				{/* Informações do Tribunal */}
-				<div className='bg-white rounded-lg p-6 shadow-sm mb-6'>
-					<h2 className='text-lg font-semibold text-gray-900 mb-4'>
+				<div className='bg-white rounded-2xl p-8 shadow-sm border border-gray-100 mb-8'>
+					<h2 className='text-lg font-semibold text-[#161C24] mb-6'>
 						Informações do Tribunal
 					</h2>
-					<div className='grid grid-cols-1 md:grid-cols-4 gap-4'>
+					<div className='grid grid-cols-1 md:grid-cols-4 gap-6'>
 						<SelectInput
 							label='Órgão'
 							onChange={value => updateField('organ', value)}
@@ -439,11 +439,11 @@ export function FolderRegisterPage() {
 				</div>
 
 				{/* Localização e Responsáveis */}
-				<div className='bg-white rounded-lg p-6 shadow-sm mb-6'>
-					<h2 className='text-lg font-semibold text-gray-900 mb-4'>
+				<div className='bg-white rounded-2xl p-8 shadow-sm border border-gray-100 mb-8'>
+					<h2 className='text-lg font-semibold text-[#161C24] mb-6'>
 						Localização e Responsáveis
 					</h2>
-					<div className='grid grid-cols-1 md:grid-cols-3 gap-4'>
+					<div className='grid grid-cols-1 md:grid-cols-3 gap-6'>
 						<SelectInput
 							label='Área'
 							onChange={value => updateField('area', value)}
@@ -503,16 +503,16 @@ export function FolderRegisterPage() {
 				</div>
 
 				{/* Partes */}
-				<div className='bg-white rounded-lg p-6 shadow-sm mb-6'>
-					<h2 className='text-lg font-semibold text-gray-900 mb-4'>
+				<div className='bg-white rounded-2xl p-8 shadow-sm border border-gray-100 mb-8'>
+					<h2 className='text-lg font-semibold text-[#161C24] mb-6'>
 						Partes do Processo
 					</h2>
 
-					<div className='mb-6'>
-						<h3 className='text-md font-semibold text-gray-800 mb-3'>
+					<div className='mb-8'>
+						<h3 className='text-md font-semibold text-[#161C24] mb-4'>
 							Polo Ativo
 						</h3>
-						<div className='grid grid-cols-1 md:grid-cols-3 gap-4'>
+						<div className='grid grid-cols-1 md:grid-cols-3 gap-6'>
 							<TextInput
 								label='Nome'
 								onChange={value =>
@@ -539,10 +539,10 @@ export function FolderRegisterPage() {
 					</div>
 
 					<div>
-						<h3 className='text-md font-semibold text-gray-800 mb-3'>
+						<h3 className='text-md font-semibold text-[#161C24] mb-4'>
 							Polo Passivo
 						</h3>
-						<div className='grid grid-cols-1 md:grid-cols-3 gap-4'>
+						<div className='grid grid-cols-1 md:grid-cols-3 gap-6'>
 							<TextInput
 								label='Nome'
 								onChange={value =>
@@ -570,9 +570,9 @@ export function FolderRegisterPage() {
 				</div>
 
 				{/* Valores */}
-				<div className='bg-white rounded-lg p-6 shadow-sm mb-6'>
-					<h2 className='text-lg font-semibold text-gray-900 mb-4'>Valores</h2>
-					<div className='grid grid-cols-1 md:grid-cols-3 gap-4'>
+				<div className='bg-white rounded-2xl p-8 shadow-sm border border-gray-100 mb-8'>
+					<h2 className='text-lg font-semibold text-[#161C24] mb-6'>Valores</h2>
+					<div className='grid grid-cols-1 md:grid-cols-3 gap-6'>
 						<TextInput
 							label='Valor da Causa'
 							onChange={value => updateField('caseValue', value)}
@@ -595,11 +595,11 @@ export function FolderRegisterPage() {
 				</div>
 
 				{/* Informações Detalhadas */}
-				<div className='bg-white rounded-lg p-6 shadow-sm mb-6'>
-					<h2 className='text-lg font-semibold text-gray-900 mb-4'>
+				<div className='bg-white rounded-2xl p-8 shadow-sm border border-gray-100 mb-8'>
+					<h2 className='text-lg font-semibold text-[#161C24] mb-6'>
 						Informações Detalhadas
 					</h2>
-					<div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
+					<div className='grid grid-cols-1 md:grid-cols-2 gap-6'>
 						<TextareaInput
 							label='Observação'
 							onChange={value => updateField('observation', value)}
@@ -616,14 +616,14 @@ export function FolderRegisterPage() {
 				{/* Buttons */}
 				<div className='flex justify-end gap-4'>
 					<button
-						className='px-4 py-2 text-sm font-semibold text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50'
+						className='px-6 py-3 text-sm font-semibold text-[#637381] bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors'
 						onClick={() => navigate('/dashboard/folders/consultation')}
 						type='button'
 					>
 						Cancelar
 					</button>
 					<button
-						className='px-4 py-2 text-sm font-semibold text-white bg-cyan-500 rounded-md hover:bg-cyan-600'
+						className='px-6 py-3 text-sm font-semibold text-white bg-[#00B8D9] rounded-lg hover:bg-[#00B8D9]/90 transition-colors'
 						type='submit'
 					>
 						Salvar Pasta

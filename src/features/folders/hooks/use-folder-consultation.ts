@@ -1,6 +1,8 @@
-import {useState} from 'react'
+import {useEffect, useState} from 'react'
 import type {QueryParams} from '../../../shared/types/api'
 import {useFolderConsultation as useFolderConsultationApi} from './use-folders-api'
+
+const DEBOUNCE_DELAY = 300
 
 export function useFolderConsultation() {
 	const [page, setPage] = useState(1)
@@ -12,10 +14,27 @@ export function useFolderConsultation() {
 		status: 'Total',
 		search: ''
 	})
+	const [debouncedFilters, setDebouncedFilters] = useState(filters)
 	const [sort, setSort] = useState({
 		column: 'created_at',
 		direction: 'desc'
 	})
+
+	// Debounce filters to avoid excessive API calls
+	useEffect(() => {
+		const timer = setTimeout(() => {
+			setDebouncedFilters(filters)
+		}, DEBOUNCE_DELAY)
+
+		return () => clearTimeout(timer)
+	}, [
+		filters.clientNumber,
+		filters.dateRange,
+		filters.area,
+		filters.status,
+		filters.search,
+		filters
+	])
 
 	// Convert filters to API standard
 	const queryParams: QueryParams = {
@@ -23,12 +42,16 @@ export function useFolderConsultation() {
 		per_page: limit,
 		sort_by: sort.column,
 		order: sort.direction as 'asc' | 'desc',
-		...(filters.search && {search: filters.search}),
-		...(filters.clientNumber && {client_number: filters.clientNumber}),
-		...(filters.area && filters.area !== 'Total' && {area: filters.area}),
-		...(filters.status &&
-			filters.status !== 'Total' && {status: filters.status}),
-		...(filters.dateRange && parseDateRange(filters.dateRange))
+		...(debouncedFilters.search && {search: debouncedFilters.search}),
+		...(debouncedFilters.clientNumber && {
+			client_number: debouncedFilters.clientNumber
+		}),
+		...(debouncedFilters.area &&
+			debouncedFilters.area !== 'Total' && {area: debouncedFilters.area}),
+		...(debouncedFilters.status &&
+			debouncedFilters.status !== 'Total' && {status: debouncedFilters.status}),
+		...(debouncedFilters.dateRange &&
+			parseDateRange(debouncedFilters.dateRange))
 	}
 
 	const {data, isLoading, isError} = useFolderConsultationApi(queryParams)

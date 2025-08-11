@@ -1,3 +1,4 @@
+import {Calendar, ChevronDown, Search} from 'lucide-react'
 import type React from 'react'
 
 interface FolderFiltersProps {
@@ -44,64 +45,80 @@ export function FolderFilters({filters, setFilters}: FolderFiltersProps) {
 		})
 	}
 
+	const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		const DAY_LENGTH = 2
+		const MONTH_POSITION = 5
+		const START_YEAR_POSITION = 5
+		const END_YEAR_POSITION = 9
+
+		let value = e.target.value.replace(/\D/g, '')
+
+		if (value.length >= DAY_LENGTH) {
+			value = `${value.slice(0, DAY_LENGTH)}/${value.slice(DAY_LENGTH)}`
+		}
+		if (value.length >= MONTH_POSITION) {
+			value = `${value.slice(0, MONTH_POSITION)}/${value.slice(START_YEAR_POSITION, END_YEAR_POSITION)}`
+		}
+
+		setFilters({
+			...filters,
+			dateRange: value
+		})
+	}
+
 	return (
-		<div className='p-4 bg-white rounded-lg'>
-			<div className='grid grid-cols-1 md:grid-cols-5 gap-4'>
+		<div className='px-4 sm:px-6 py-6'>
+			<div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6'>
 				<input
-					className='p-2 border border-gray-300 rounded-md bg-white text-gray-900 placeholder-gray-500'
+					className='px-4 py-3 border border-gray-300 rounded-lg bg-white text-gray-900 placeholder-gray-500 text-sm focus:outline-none focus:ring-2 focus:ring-[#00B8D9] focus:border-[#00B8D9] transition-colors'
 					name='clientNumber'
 					onChange={handleInputChange}
 					placeholder='N° Cliente'
 					type='text'
 					value={filters.clientNumber}
 				/>
-				<input
-					className='p-2 border border-gray-300 rounded-md bg-white text-gray-900 placeholder-gray-500'
-					name='dateRange'
-					onChange={handleInputChange}
-					placeholder='Data de inclusão'
-					type='text'
-					value={filters.dateRange}
-				/>
-				<select
-					className='p-2 border border-gray-300 rounded-md bg-white text-gray-900 placeholder-gray-500'
-					name='area'
-					onChange={handleInputChange}
-					value={filters.area}
-				>
-					<option value=''>Área</option>
-					<option value='Cível contencioso'>Cível contencioso</option>
-					<option value='Trabalhista'>Trabalhista</option>
-					<option value='Penal'>Penal</option>
-					<option value='Empresarial'>Empresarial</option>
-					<option value='Tributário'>Tributário</option>
-					<option value='Família'>Família</option>
-					<option value='Consumidor'>Consumidor</option>
-					<option value='Ambiental'>Ambiental</option>
-				</select>
-				<input
-					className='p-2 border border-gray-300 rounded-md bg-white text-gray-900 placeholder-gray-500'
-					name='search'
-					onChange={handleInputChange}
-					placeholder='Buscar'
-					type='text'
-					value={filters.search}
-				/>
-				<button
-					className='px-4 py-2 text-sm font-semibold text-red-500 border border-red-500 rounded-md hover:bg-red-50'
-					onClick={() =>
-						setFilters({
-							clientNumber: '',
-							dateRange: '',
-							area: '',
-							status: 'Total',
-							search: ''
-						})
-					}
-					type='button'
-				>
-					Limpar
-				</button>
+				<div className='relative'>
+					<input
+						className='px-4 py-3 pr-12 border border-gray-300 rounded-lg bg-white text-gray-900 placeholder-gray-500 w-full text-sm focus:outline-none focus:ring-2 focus:ring-[#00B8D9] focus:border-[#00B8D9] transition-colors'
+						maxLength={10}
+						name='dateRange'
+						onChange={handleDateChange}
+						placeholder='DD/MM/AAAA'
+						type='text'
+						value={filters.dateRange}
+					/>
+					<Calendar className='absolute right-4 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400' />
+				</div>
+				<div className='relative'>
+					<select
+						className='px-4 py-3 pr-12 border border-gray-300 rounded-lg bg-white text-gray-900 appearance-none w-full text-sm focus:outline-none focus:ring-2 focus:ring-[#00B8D9] focus:border-[#00B8D9] transition-colors'
+						name='area'
+						onChange={handleInputChange}
+						value={filters.area}
+					>
+						<option value=''>Área</option>
+						<option value='Cível contencioso'>Cível contencioso</option>
+						<option value='Trabalhista'>Trabalhista</option>
+						<option value='Penal'>Penal</option>
+						<option value='Empresarial'>Empresarial</option>
+						<option value='Tributário'>Tributário</option>
+						<option value='Família'>Família</option>
+						<option value='Consumidor'>Consumidor</option>
+						<option value='Ambiental'>Ambiental</option>
+					</select>
+					<ChevronDown className='absolute right-4 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400 pointer-events-none' />
+				</div>
+				<div className='relative sm:col-span-2 lg:col-span-1'>
+					<Search className='absolute left-4 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400' />
+					<input
+						className='px-4 py-3 pl-12 border border-gray-300 rounded-lg bg-white text-gray-900 placeholder-gray-500 w-full text-sm focus:outline-none focus:ring-2 focus:ring-[#00B8D9] focus:border-[#00B8D9] transition-colors'
+						name='search'
+						onChange={handleInputChange}
+						placeholder='Buscar'
+						type='text'
+						value={filters.search}
+					/>
+				</div>
 			</div>
 		</div>
 	)

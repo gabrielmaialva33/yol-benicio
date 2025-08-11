@@ -12,7 +12,6 @@ interface AuthErrorBoundaryProps {
 export function AuthErrorBoundary({children}: AuthErrorBoundaryProps) {
 	return (
 		<ErrorBoundary
-			level='page'
 			fallback={(error, reset) => (
 				<div className='flex min-h-screen items-center justify-center bg-[#1F2A37]'>
 					<div className='w-full max-w-md p-8 bg-white rounded-lg shadow-xl'>
@@ -38,15 +37,15 @@ export function AuthErrorBoundary({children}: AuthErrorBoundaryProps) {
 								</details>
 							)}
 							<button
-								onClick={reset}
 								className='w-full px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors'
+								onClick={reset}
 								type='button'
 							>
 								Tentar novamente
 							</button>
 							<button
-								onClick={() => window.location.reload()}
 								className='text-sm text-gray-600 hover:text-gray-800'
+								onClick={() => window.location.reload()}
 								type='button'
 							>
 								Recarregar página
@@ -55,9 +54,9 @@ export function AuthErrorBoundary({children}: AuthErrorBoundaryProps) {
 					</div>
 				</div>
 			)}
-			onError={(error, errorInfo) => {
-				// Aqui você pode enviar erros para um serviço de monitoramento
-				console.error('Auth Error:', error, errorInfo)
+			level='page'
+			onError={(_error, _errorInfo) => {
+				// Intentionally empty - errors are handled by parent component
 			}}
 		>
 			{children}
