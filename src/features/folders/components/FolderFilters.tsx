@@ -69,8 +69,15 @@ export function FolderFilters({filters, setFilters}: FolderFiltersProps) {
 					onChange={handleInputChange}
 					value={filters.area}
 				>
-					<option value=''>Todas as Áreas</option>
-					<option value='Civel contencioso'>Civel contencioso</option>
+					<option value=''>Área</option>
+					<option value='Cível contencioso'>Cível contencioso</option>
+					<option value='Trabalhista'>Trabalhista</option>
+					<option value='Penal'>Penal</option>
+					<option value='Empresarial'>Empresarial</option>
+					<option value='Tributário'>Tributário</option>
+					<option value='Família'>Família</option>
+					<option value='Consumidor'>Consumidor</option>
+					<option value='Ambiental'>Ambiental</option>
 				</select>
 				<input
 					className='p-2 border border-gray-300 rounded-md bg-white text-gray-900 placeholder-gray-500'

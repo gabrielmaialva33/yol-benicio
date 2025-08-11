@@ -56,7 +56,7 @@ export function FolderDetailPage() {
 	}
 
 	return (
-		<div className='p-6 bg-gray-50 min-h-full'>
+		<div className='p-6 bg-[#F1F1F2] min-h-full'>
 			<FolderDetailHeader folder={folder} />
 			<div className='mt-6 flex gap-6'>
 				<FolderDetailSidebar activeTab={activeTab} onTabChange={setActiveTab} />
