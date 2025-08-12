@@ -27,15 +27,16 @@ interface MenuItem {
 	subItems?: SubMenuItem[]
 }
 
-interface FavoriteClient {
+interface FavoriteFolder {
 	id: number
-	name: string
-	folderCount: number
+	title: string
+	code: string
+	client_name: string
 	color: string
 }
 
-async function getFavoriteClients(): Promise<FavoriteClient[]> {
-	const response = await fetch('/api/dashboard/favorite-clients')
+async function getFavoriteFolders(): Promise<FavoriteFolder[]> {
+	const response = await fetch('/api/dashboard/favorite-folders')
 	return response.json()
 }
 
@@ -240,20 +241,20 @@ const Sidebar = () => {
 	const [isCollapsed, setIsCollapsed] = useState(
 		typeof window !== 'undefined' && window.innerWidth < MOBILE_BREAKPOINT
 	)
-	const {data: favoriteClients = []} = useQuery<FavoriteClient[]>({
-		queryKey: ['favorite-clients'],
-		queryFn: getFavoriteClients
+	const {data: favoriteFolders = []} = useQuery<FavoriteFolder[]>({
+		queryKey: ['favorite-folders'],
+		queryFn: getFavoriteFolders
 	})
 
 	const toggleSidebar = () => setIsCollapsed(!isCollapsed)
 
-	// Convert favorite clients to MenuItem format
-	const favorites: MenuItem[] = favoriteClients.map(client => ({
+	// Convert favorite folders to MenuItem format
+	const favorites: MenuItem[] = favoriteFolders.map(folder => ({
 		icon: '',
-		color: client.color,
-		text: client.name,
-		badge: client.folderCount,
-		path: `/dashboard/folders/consultation?clientId=${client.id}`
+		color: folder.color,
+		text: `${folder.code} - ${folder.title}`,
+		badge: undefined,
+		path: `/dashboard/folders/consultation/${folder.id}`
 	}))
 
 	return (
