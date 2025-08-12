@@ -9,17 +9,17 @@ import {
 	TaskStatus
 } from '../../shared/types/domain'
 import {generateClients} from '../generators/clients'
-import {areaNames, generateFolders} from '../generators/folders'
+import {areaNames} from '../generators/folders'
 import {generateTasks} from '../generators/tasks'
+import {allFolders as folders} from './folders'
 
 // Constants
 const _PERCENTAGE_MULTIPLIER = 100
 
 // Generate mock data for statistics
-const TOTAL_FOLDERS = 150
 const TOTAL_TASKS = 200
 const TOTAL_CLIENTS = 80
-const folders = generateFolders(TOTAL_FOLDERS)
+// Using folders from folders.ts to ensure consistency
 const tasks = generateTasks(TOTAL_TASKS)
 const clients = generateClients(TOTAL_CLIENTS)
 
@@ -93,23 +93,29 @@ export const dashboardHandlers = [
 
 	// Favorite folders widget
 	http.get('/api/dashboard/favorite-folders', () => {
-		const FAVORITE_FOLDERS_COUNT = 5
+		const FAVORITE_FOLDERS_COUNT = 6
+		const colors = [
+			'#008980',
+			'#2FAC68',
+			'#F6C000',
+			'#5A5DFF',
+			'#FF5A5D',
+			'#FF8A00'
+		]
 		const favoriteFolders = folders
 			.filter(f => f.is_favorite)
 			.slice(0, FAVORITE_FOLDERS_COUNT)
-			.map(f => ({
+			.map((f, index) => ({
 				id: f.id,
 				code: f.code,
 				title: f.title,
 				client_name: f.client.name,
 				status: f.status,
-				documents_count: f.documents_count
+				documents_count: f.documents_count,
+				color: colors[index] || '#86878B'
 			}))
 
-		const response: ApiResponse<typeof favoriteFolders> = {
-			data: favoriteFolders
-		}
-		return HttpResponse.json(response)
+		return HttpResponse.json(favoriteFolders)
 	}),
 
 	// Urgent tasks widget
