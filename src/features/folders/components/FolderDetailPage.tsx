@@ -1,9 +1,9 @@
 import {useState} from 'react'
 import {useParams} from 'react-router'
 import {useFolderDetail} from '../hooks/use-folder-detail'
-import {FolderDetailForm} from './FolderDetailForm'
 import {FolderDetailHeader} from './FolderDetailHeader'
 import {FolderDetailSidebar} from './FolderDetailSidebar'
+import {FolderProcessForm} from './FolderProcessForm'
 import {ProcessTimeline} from './ProcessTimeline'
 
 export function FolderDetailPage() {
@@ -53,16 +53,16 @@ export function FolderDetailPage() {
 					</div>
 				)
 			default:
-				return <FolderDetailForm folder={folder} />
+				return <FolderProcessForm folder={folder} />
 		}
 	}
 
 	return (
-		<div className='p-8 bg-[#F1F1F2] min-h-full'>
+		<div className='p-4 sm:p-6 lg:p-8 bg-[#F1F1F2] min-h-screen'>
 			<FolderDetailHeader folder={folder} />
-			<div className='mt-8 flex gap-8'>
+			<div className='mt-6 flex flex-col lg:flex-row gap-6'>
 				<FolderDetailSidebar activeTab={activeTab} onTabChange={setActiveTab} />
-				<div className='flex-1'>{renderContent()}</div>
+				<div className='flex-1 min-w-0'>{renderContent()}</div>
 			</div>
 		</div>
 	)

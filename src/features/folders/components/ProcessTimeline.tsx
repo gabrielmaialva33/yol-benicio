@@ -1,10 +1,20 @@
 import {
+	AlertCircle,
+	Bell,
+	CheckCircle,
+	Clock,
 	Download,
 	Edit3,
 	Eye,
 	FileText,
+	Gavel,
 	Link2Off,
-	MessageSquare
+	MessageSquare,
+	Paperclip,
+	Scale,
+	TrendingUp,
+	UserPlus,
+	X
 } from 'lucide-react'
 import {DateTime} from 'luxon'
 import type {FolderMovement} from '../types/folder.types'
@@ -25,12 +35,13 @@ interface TimelineEvent extends FolderMovement {
 		type: 'pdf' | 'doc' | 'image'
 		size: string
 	}[]
-	status?: 'success' | 'info' | 'warning'
+	status?: 'success' | 'info' | 'warning' | 'error' | 'neutral'
 	actionText?: string
 	actionDescription?: string
+	eventType?: 'billing' | 'document' | 'hearing' | 'decision' | 'party' | 'update' | 'deadline' | 'attachment'
 }
 
-// Mock data baseado no design do Figma
+// Mock data with more realistic legal events
 const mockTimelineEvents: TimelineEvent[] = [
 	{
 		id: '1',
@@ -39,6 +50,7 @@ const mockTimelineEvents: TimelineEvent[] = [
 		description: 'A pasta foi encerrada e faturada.',
 		responsible: 'Sistema',
 		type: 'edit',
+		eventType: 'billing',
 		addedBy: {
 			name: 'Ana Silva',
 			avatar: 'https://i.pravatar.cc/150?img=1'
@@ -46,43 +58,48 @@ const mockTimelineEvents: TimelineEvent[] = [
 		status: 'success',
 		actionText: 'A pasta foi encerrada e faturada.',
 		actionDescription:
-			'Login into Admin Dashboard to make sure the data integrity is OK'
+			'Acesse o painel administrativo para verificar os detalhes do faturamento'
 	},
 	{
 		id: '2',
 		date: '2024-11-29T10:00:00',
 		title: 'Acórdão Apelação',
 		referenceNumber: '#7979207',
-		description: 'Documento adicionado ao processo',
+		description: 'Decisão favorável em segunda instância',
 		responsible: 'Dr. Carlos Mendes',
 		type: 'message',
+		eventType: 'decision',
 		addedBy: {
 			name: 'Carlos Mendes',
 			avatar: 'https://i.pravatar.cc/150?img=3'
 		},
-		category: ['Recursal', 'Interno']
+		category: ['Recursal', 'Favorável'],
+		status: 'info'
 	},
 	{
 		id: '3',
 		date: '2024-11-29T09:30:00',
-		title: 'Bônus por improcedência',
+		title: 'Audiência de Conciliação',
 		referenceNumber: '#7966690',
-		description: 'Solicitado encerramento',
+		description: 'Audiência agendada para 15/12/2024',
 		responsible: 'Maria Santos',
 		type: 'message',
+		eventType: 'hearing',
 		addedBy: {
 			name: 'Maria Santos',
 			avatar: 'https://i.pravatar.cc/150?img=5'
 		},
-		category: ['Execução Definitiva', 'Interno']
+		category: ['Audiência', 'Agendada'],
+		status: 'warning'
 	},
 	{
 		id: '4',
 		date: '2024-11-29T08:00:00',
-		title: '2 novos arquivos vinculados ao processo',
-		description: 'Documentos anexados',
+		title: '2 novos documentos anexados',
+		description: 'Petição inicial e procuração',
 		responsible: 'João Pedro',
 		type: 'attachment',
+		eventType: 'attachment',
 		addedBy: {
 			name: 'João Pedro',
 			avatar: 'https://i.pravatar.cc/150?img=8'
@@ -90,43 +107,155 @@ const mockTimelineEvents: TimelineEvent[] = [
 		documents: [
 			{
 				id: 'doc1',
-				name: 'Finance KPI App Guidelines',
+				name: 'Petição Inicial - Ação Ordinária',
 				type: 'pdf',
 				size: '2.5 MB'
 			},
 			{
 				id: 'doc2',
-				name: 'Brand Book - Webpixels',
+				name: 'Procuração Ad Judicia',
 				type: 'doc',
-				size: '1.8 MB'
+				size: '450 KB'
 			}
 		]
+	},
+	{
+		id: '5',
+		date: '2024-11-28T16:45:00',
+		title: 'Novo polo passivo adicionado',
+		description: 'Empresa XYZ Ltda incluída como ré',
+		responsible: 'Sistema',
+		type: 'edit',
+		eventType: 'party',
+		addedBy: {
+			name: 'Pedro Lima',
+			avatar: 'https://i.pravatar.cc/150?img=10'
+		},
+		status: 'neutral'
+	},
+	{
+		id: '6',
+		date: '2024-11-28T14:00:00',
+		title: 'Prazo processual',
+		description: 'Prazo para contestação - 15 dias',
+		responsible: 'Sistema',
+		type: 'edit',
+		eventType: 'deadline',
+		addedBy: {
+			name: 'Sistema',
+			avatar: ''
+		},
+		status: 'error',
+		actionText: 'Prazo expira em 15/12/2024',
+		actionDescription: 'Certifique-se de protocolar a contestação dentro do prazo legal'
 	}
 ]
 
-const getIconForType = (type: string) => {
-	switch (type) {
-		case 'edit':
-			return Edit3
-		case 'message':
-			return MessageSquare
-		case 'attachment':
-			return Link2Off
-		default:
-			return FileText
+// Event type configuration with icons and colors
+const eventTypeConfig = {
+	billing: {
+		icon: TrendingUp,
+		iconBg: 'bg-green-100',
+		iconColor: 'text-green-600',
+		borderColor: 'border-green-200'
+	},
+	document: {
+		icon: FileText,
+		iconBg: 'bg-blue-100',
+		iconColor: 'text-blue-600',
+		borderColor: 'border-blue-200'
+	},
+	hearing: {
+		icon: Gavel,
+		iconBg: 'bg-amber-100',
+		iconColor: 'text-amber-600',
+		borderColor: 'border-amber-200'
+	},
+	decision: {
+		icon: Scale,
+		iconBg: 'bg-purple-100',
+		iconColor: 'text-purple-600',
+		borderColor: 'border-purple-200'
+	},
+	party: {
+		icon: UserPlus,
+		iconBg: 'bg-indigo-100',
+		iconColor: 'text-indigo-600',
+		borderColor: 'border-indigo-200'
+	},
+	update: {
+		icon: Edit3,
+		iconBg: 'bg-gray-100',
+		iconColor: 'text-gray-600',
+		borderColor: 'border-gray-200'
+	},
+	deadline: {
+		icon: Clock,
+		iconBg: 'bg-red-100',
+		iconColor: 'text-red-600',
+		borderColor: 'border-red-200'
+	},
+	attachment: {
+		icon: Paperclip,
+		iconBg: 'bg-cyan-100',
+		iconColor: 'text-cyan-600',
+		borderColor: 'border-cyan-200'
 	}
 }
 
-const getIconBgColor = (type: string) => {
-	switch (type) {
-		case 'edit':
-			return 'bg-gray-100'
-		case 'message':
-			return 'bg-gray-100'
-		case 'attachment':
-			return 'bg-gray-100'
+const getEventConfig = (eventType?: string) => {
+	return eventTypeConfig[eventType as keyof typeof eventTypeConfig] || eventTypeConfig.update
+}
+
+const getStatusIcon = (status?: string) => {
+	switch (status) {
+		case 'success':
+			return CheckCircle
+		case 'warning':
+			return AlertCircle
+		case 'error':
+			return X
+		case 'info':
+			return Bell
 		default:
-			return 'bg-gray-100'
+			return null
+	}
+}
+
+const getStatusColors = (status?: string) => {
+	switch (status) {
+		case 'success':
+			return {
+				bg: 'bg-green-50',
+				border: 'border-green-200',
+				text: 'text-green-900',
+				subtext: 'text-green-700',
+				button: 'bg-green-600 hover:bg-green-700',
+				iconBg: 'bg-green-100',
+				iconColor: 'text-green-600'
+			}
+		case 'warning':
+			return {
+				bg: 'bg-amber-50',
+				border: 'border-amber-200',
+				text: 'text-amber-900',
+				subtext: 'text-amber-700',
+				button: 'bg-amber-600 hover:bg-amber-700',
+				iconBg: 'bg-amber-100',
+				iconColor: 'text-amber-600'
+			}
+		case 'error':
+			return {
+				bg: 'bg-red-50',
+				border: 'border-red-200',
+				text: 'text-red-900',
+				subtext: 'text-red-700',
+				button: 'bg-red-600 hover:bg-red-700',
+				iconBg: 'bg-red-100',
+				iconColor: 'text-red-600'
+			}
+		default:
+			return null
 	}
 }
 
@@ -138,11 +267,18 @@ export function ProcessTimeline({folderId: _folderId}: ProcessTimelineProps) {
 	const events = mockTimelineEvents // In real app, fetch based on folderId
 
 	return (
-		<div className='bg-white rounded-lg'>
-			{/* Header */}
-			<div className='border-b border-gray-200'>
-				<div className='px-6 py-4'>
-					<h3 className='text-lg font-semibold text-gray-900'>Histórico</h3>
+		<div className='bg-white rounded-2xl shadow-sm border border-gray-100'>
+			{/* Header with Search */}
+			<div className='px-6 py-4 border-b border-gray-100'>
+				<div className='flex items-center justify-between'>
+					<h2 className='text-lg font-semibold text-gray-900'>Histórico</h2>
+					<div className='relative w-64'>
+						<input
+							type='text'
+							placeholder='Buscar'
+							className='w-full pl-4 pr-4 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#00B8D9] focus:border-[#00B8D9]'
+						/>
+					</div>
 				</div>
 			</div>
 
@@ -155,17 +291,19 @@ export function ProcessTimeline({folderId: _folderId}: ProcessTimelineProps) {
 					{/* Events */}
 					<div className='space-y-6'>
 						{events.map((event, _index) => {
-							const Icon = getIconForType(event.type || '')
-							const iconBg = getIconBgColor(event.type || '')
+							const config = getEventConfig(event.eventType)
+							const Icon = config.icon
+							const statusColors = getStatusColors(event.status)
+							const StatusIcon = getStatusIcon(event.status)
 							const eventDate = DateTime.fromISO(event.date)
 
 							return (
 								<div className='flex gap-4' key={event.id}>
 									{/* Icon */}
 									<div
-										className={`relative z-10 flex h-16 w-16 items-center justify-center rounded-full ${iconBg}`}
+										className={`relative z-10 flex h-14 w-14 items-center justify-center rounded-full ${config.iconBg} border-2 ${config.borderColor}`}
 									>
-										<Icon className='h-6 w-6 text-gray-600' />
+										<Icon className={`h-6 w-6 ${config.iconColor}`} />
 									</div>
 
 									{/* Content */}
@@ -205,55 +343,76 @@ export function ProcessTimeline({folderId: _folderId}: ProcessTimelineProps) {
 											</div>
 										</div>
 
-										{/* Special content for success status */}
-										{event.status === 'success' && event.actionText && (
-											<div className='mt-3 rounded-lg border border-gray-200 bg-gray-50 p-4'>
+										{/* Status cards with actions */}
+										{statusColors && event.actionText && (
+											<div className={`mt-3 rounded-lg ${statusColors.bg} border ${statusColors.border} p-4`}>
 												<div className='flex items-start gap-3'>
-													<div className='flex h-8 w-8 items-center justify-center rounded-full bg-white'>
-														<div className='flex h-5 w-5 items-center justify-center'>
-															<div className='h-2 w-2 rounded-full bg-green-500' />
-															<div className='ml-0.5 h-2 w-2 rounded-full bg-green-500' />
+													{StatusIcon && (
+														<div className={`flex h-8 w-8 items-center justify-center rounded-full ${statusColors.iconBg}`}>
+															<StatusIcon className={`h-5 w-5 ${statusColors.iconColor}`} />
 														</div>
-													</div>
+													)}
 													<div className='flex-1'>
-														<p className='text-sm font-medium text-gray-900'>
+														<p className={`text-sm font-medium ${statusColors.text}`}>
 															{event.actionText}
 														</p>
-														<p className='mt-1 text-xs text-gray-500'>
-															{event.actionDescription}
-														</p>
+														{event.actionDescription && (
+															<p className={`mt-1 text-xs ${statusColors.subtext}`}>
+																{event.actionDescription}
+															</p>
+														)}
 													</div>
-													<button
-														className='rounded-full bg-cyan-500 px-4 py-1.5 text-xs font-medium text-white hover:bg-cyan-600'
-														type='button'
-													>
-														Proceed
-													</button>
+													{event.status === 'success' && (
+														<button
+															className={`rounded-lg px-4 py-1.5 text-xs font-medium text-white transition-colors ${statusColors.button}`}
+															type='button'
+														>
+															Continuar
+														</button>
+													)}
+													{event.status === 'error' && (
+														<button
+															className={`rounded-lg px-4 py-1.5 text-xs font-medium text-white transition-colors ${statusColors.button}`}
+															type='button'
+														>
+															Resolver
+														</button>
+													)}
 												</div>
 											</div>
 										)}
 
 										{/* Categories and Action */}
-										{event.category && (
-											<div className='mt-3 rounded-lg border border-gray-200 p-4'>
+										{event.category && !statusColors && (
+											<div className='mt-3 rounded-lg border border-gray-200 p-4 hover:border-gray-300 transition-colors'>
 												<div className='flex items-center justify-between'>
-													<div className='flex items-center gap-4'>
-														<span className='text-sm font-medium text-gray-900'>
+													<div className='flex-1'>
+														<p className='text-sm font-medium text-gray-900 mb-2'>
 															{event.description}
-														</span>
-														<div className='flex gap-2'>
-															{event.category.map(cat => (
-																<span
-																	className='rounded-md bg-gray-100 px-2 py-1 text-xs font-medium text-gray-700'
-																	key={cat}
-																>
-																	{cat}
-																</span>
-															))}
+														</p>
+														<div className='flex flex-wrap gap-2'>
+															{event.category.map(cat => {
+																const isPositive = cat.toLowerCase().includes('favorável')
+																const isWarning = cat.toLowerCase().includes('audiência') || cat.toLowerCase().includes('agendada')
+																return (
+																	<span
+																		className={`rounded-full px-3 py-1 text-xs font-medium ${
+																			isPositive 
+																				? 'bg-green-100 text-green-700'
+																				: isWarning
+																				? 'bg-amber-100 text-amber-700'
+																				: 'bg-gray-100 text-gray-700'
+																		}`}
+																		key={cat}
+																	>
+																		{cat}
+																	</span>
+																)
+															})}
 														</div>
 													</div>
 													<button
-														className='rounded-md bg-gray-100 px-3 py-1.5 text-xs font-medium text-gray-700 hover:bg-gray-200'
+														className='rounded-lg bg-white border border-gray-300 px-3 py-1.5 text-xs font-medium text-gray-700 hover:bg-gray-50 transition-colors'
 														type='button'
 													>
 														Visualizar
@@ -267,7 +426,7 @@ export function ProcessTimeline({folderId: _folderId}: ProcessTimelineProps) {
 											<div className='mt-3 space-y-2'>
 												{event.documents.map(doc => (
 													<div
-														className='flex items-center justify-between rounded-lg border border-gray-200 p-3'
+														className='flex items-center justify-between rounded-lg border border-gray-200 p-3 hover:border-gray-300 hover:shadow-sm transition-all'
 														key={doc.id}
 													>
 														<div className='flex items-center gap-3'>
