@@ -132,7 +132,7 @@ describe('Sidebar', () => {
 
 		const sidebar = container.querySelector('aside')
 		expect(sidebar).toHaveClass(
-			'bg-[#1F2A37]',
+			'bg-[#373737]',
 			'transition-all',
 			'duration-300'
 		)
