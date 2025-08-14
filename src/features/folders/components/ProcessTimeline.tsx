@@ -8,8 +8,6 @@ import {
 	Eye,
 	FileText,
 	Gavel,
-	Link2Off,
-	MessageSquare,
 	Paperclip,
 	Scale,
 	TrendingUp,
@@ -38,7 +36,15 @@ interface TimelineEvent extends FolderMovement {
 	status?: 'success' | 'info' | 'warning' | 'error' | 'neutral'
 	actionText?: string
 	actionDescription?: string
-	eventType?: 'billing' | 'document' | 'hearing' | 'decision' | 'party' | 'update' | 'deadline' | 'attachment'
+	eventType?:
+		| 'billing'
+		| 'document'
+		| 'hearing'
+		| 'decision'
+		| 'party'
+		| 'update'
+		| 'deadline'
+		| 'attachment'
 }
 
 // Mock data with more realistic legal events
@@ -147,7 +153,8 @@ const mockTimelineEvents: TimelineEvent[] = [
 		},
 		status: 'error',
 		actionText: 'Prazo expira em 15/12/2024',
-		actionDescription: 'Certifique-se de protocolar a contestação dentro do prazo legal'
+		actionDescription:
+			'Certifique-se de protocolar a contestação dentro do prazo legal'
 	}
 ]
 
@@ -204,7 +211,10 @@ const eventTypeConfig = {
 }
 
 const getEventConfig = (eventType?: string) => {
-	return eventTypeConfig[eventType as keyof typeof eventTypeConfig] || eventTypeConfig.update
+	return (
+		eventTypeConfig[eventType as keyof typeof eventTypeConfig] ||
+		eventTypeConfig.update
+	)
 }
 
 const getStatusIcon = (status?: string) => {
@@ -274,9 +284,9 @@ export function ProcessTimeline({folderId: _folderId}: ProcessTimelineProps) {
 					<h2 className='text-lg font-semibold text-gray-900'>Histórico</h2>
 					<div className='relative w-64'>
 						<input
-							type='text'
-							placeholder='Buscar'
 							className='w-full pl-4 pr-4 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#00B8D9] focus:border-[#00B8D9]'
+							placeholder='Buscar'
+							type='text'
 						/>
 					</div>
 				</div>
@@ -345,19 +355,29 @@ export function ProcessTimeline({folderId: _folderId}: ProcessTimelineProps) {
 
 										{/* Status cards with actions */}
 										{statusColors && event.actionText && (
-											<div className={`mt-3 rounded-lg ${statusColors.bg} border ${statusColors.border} p-4`}>
+											<div
+												className={`mt-3 rounded-lg ${statusColors.bg} border ${statusColors.border} p-4`}
+											>
 												<div className='flex items-start gap-3'>
 													{StatusIcon && (
-														<div className={`flex h-8 w-8 items-center justify-center rounded-full ${statusColors.iconBg}`}>
-															<StatusIcon className={`h-5 w-5 ${statusColors.iconColor}`} />
+														<div
+															className={`flex h-8 w-8 items-center justify-center rounded-full ${statusColors.iconBg}`}
+														>
+															<StatusIcon
+																className={`h-5 w-5 ${statusColors.iconColor}`}
+															/>
 														</div>
 													)}
 													<div className='flex-1'>
-														<p className={`text-sm font-medium ${statusColors.text}`}>
+														<p
+															className={`text-sm font-medium ${statusColors.text}`}
+														>
 															{event.actionText}
 														</p>
 														{event.actionDescription && (
-															<p className={`mt-1 text-xs ${statusColors.subtext}`}>
+															<p
+																className={`mt-1 text-xs ${statusColors.subtext}`}
+															>
 																{event.actionDescription}
 															</p>
 														)}
@@ -392,16 +412,20 @@ export function ProcessTimeline({folderId: _folderId}: ProcessTimelineProps) {
 														</p>
 														<div className='flex flex-wrap gap-2'>
 															{event.category.map(cat => {
-																const isPositive = cat.toLowerCase().includes('favorável')
-																const isWarning = cat.toLowerCase().includes('audiência') || cat.toLowerCase().includes('agendada')
+																const isPositive = cat
+																	.toLowerCase()
+																	.includes('favorável')
+																const isWarning =
+																	cat.toLowerCase().includes('audiência') ||
+																	cat.toLowerCase().includes('agendada')
 																return (
 																	<span
 																		className={`rounded-full px-3 py-1 text-xs font-medium ${
-																			isPositive 
+																			isPositive
 																				? 'bg-green-100 text-green-700'
 																				: isWarning
-																				? 'bg-amber-100 text-amber-700'
-																				: 'bg-gray-100 text-gray-700'
+																					? 'bg-amber-100 text-amber-700'
+																					: 'bg-gray-100 text-gray-700'
 																		}`}
 																		key={cat}
 																	>

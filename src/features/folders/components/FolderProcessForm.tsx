@@ -17,7 +17,7 @@ export function FolderProcessForm({folder}: FolderProcessFormProps) {
 		cnjNumber: folder.cnjNumber || '',
 		instance: folder.instance || 'Primeira Instância',
 		nature: folder.nature || 'Cível',
-		
+
 		// Process Information
 		actionType: folder.actionType || 'Ordinária',
 		phase: folder.phase || 'Conhecimento',
@@ -25,9 +25,9 @@ export function FolderProcessForm({folder}: FolderProcessFormProps) {
 		clientCode: folder.clientCode || '',
 		folderCode: folder.folder || '',
 		defaultBilling: folder.defaultBillingCase || 'Sim',
-		totus: folder.totus || false,
-		migrated: folder.migrated || false,
-		
+		totus: folder.totus,
+		migrated: folder.migrated,
+
 		// Court Information
 		organ: folder.organ || 'TJSP',
 		distribution: folder.distribution || 'Sorteio',
@@ -37,7 +37,7 @@ export function FolderProcessForm({folder}: FolderProcessFormProps) {
 		searchType: folder.searchType || 'Padrão',
 		code: folder.code || '',
 		judge: folder.judge || '',
-		
+
 		// Additional Details
 		area: folder.area || '',
 		comarca: folder.comarca || '',
@@ -48,11 +48,11 @@ export function FolderProcessForm({folder}: FolderProcessFormProps) {
 		nucleus: folder.nucleus || '',
 		stick: folder.stick || '',
 		lawyer: folder.lawyer || '',
-		
+
 		// Poles
-		activePole: folder.activePole || false,
-		passivePole: folder.passivePole || false,
-		
+		activePole: folder.activePole,
+		passivePole: folder.passivePole,
+
 		// Observations
 		observation: folder.observation || '',
 		objectDetail: folder.objectDetail || '',
@@ -75,9 +75,9 @@ export function FolderProcessForm({folder}: FolderProcessFormProps) {
 					<div className='relative w-64'>
 						<Search className='absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400' />
 						<input
-							type='text'
-							placeholder='Buscar'
 							className='w-full pl-10 pr-4 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#00B8D9] focus:border-[#00B8D9]'
+							placeholder='Buscar'
+							type='text'
 						/>
 					</div>
 				</div>
@@ -88,116 +88,119 @@ export function FolderProcessForm({folder}: FolderProcessFormProps) {
 				{/* Identification Section */}
 				<FormSection>
 					<FormField
-						label="N° Processo"
+						label='N° Processo'
+						onChange={value => updateField('processNumber', value)}
+						placeholder='Digite o número do processo'
 						value={formData.processNumber}
-						onChange={(value) => updateField('processNumber', value)}
-						placeholder="Digite o número do processo"
 					/>
 					<FormField
-						label="N° CNJ"
+						label='N° CNJ'
+						onChange={value => updateField('cnjNumber', value)}
+						placeholder='0000000-00.0000.0.00.0000'
 						value={formData.cnjNumber}
-						onChange={(value) => updateField('cnjNumber', value)}
-						placeholder="0000000-00.0000.0.00.0000"
 					/>
 					<FormField
-						label="Instância"
-						type="select"
-						value={formData.instance}
-						onChange={(value) => updateField('instance', value)}
+						label='Instância'
+						onChange={value => updateField('instance', value)}
 						options={[
 							{value: 'Primeira Instância', label: 'Primeira Instância'},
 							{value: 'Segunda Instância', label: 'Segunda Instância'},
 							{value: 'Tribunais Superiores', label: 'Tribunais Superiores'}
 						]}
+						type='select'
+						value={formData.instance}
 					/>
 					<FormField
-						label="Natureza"
-						type="select"
-						value={formData.nature}
-						onChange={(value) => updateField('nature', value)}
+						label='Natureza'
+						onChange={value => updateField('nature', value)}
 						options={[
 							{value: 'Cível', label: 'Cível'},
 							{value: 'Criminal', label: 'Criminal'},
 							{value: 'Trabalhista', label: 'Trabalhista'},
 							{value: 'Tributário', label: 'Tributário'}
 						]}
+						type='select'
+						value={formData.nature}
 					/>
 				</FormSection>
 
 				{/* Process Information */}
 				<FormSection>
 					<FormField
-						label="Tipo ação"
-						type="select"
-						value={formData.actionType}
-						onChange={(value) => updateField('actionType', value)}
+						label='Tipo ação'
+						onChange={value => updateField('actionType', value)}
 						options={[
 							{value: 'Ordinária', label: 'Ordinária'},
 							{value: 'Sumária', label: 'Sumária'},
 							{value: 'Execução', label: 'Execução'},
 							{value: 'Cautelar', label: 'Cautelar'}
 						]}
+						type='select'
+						value={formData.actionType}
 					/>
 					<FormField
-						label="Fase"
-						type="select"
-						value={formData.phase}
-						onChange={(value) => updateField('phase', value)}
+						label='Fase'
+						onChange={value => updateField('phase', value)}
 						options={[
 							{value: 'Conhecimento', label: 'Conhecimento'},
 							{value: 'Recursal', label: 'Recursal'},
 							{value: 'Execução', label: 'Execução'},
-							{value: 'Cumprimento de Sentença', label: 'Cumprimento de Sentença'}
+							{
+								value: 'Cumprimento de Sentença',
+								label: 'Cumprimento de Sentença'
+							}
 						]}
+						type='select'
+						value={formData.phase}
 					/>
 					<FormField
-						label="Eletrônico"
-						type="select"
+						label='Eletrônico'
+						onChange={value => updateField('electronic', value)}
+						options={[
+							{value: 'Sim', label: 'Sim'},
+							{value: 'Não', label: 'Não'}
+						]}
+						type='select'
 						value={formData.electronic}
-						onChange={(value) => updateField('electronic', value)}
-						options={[
-							{value: 'Sim', label: 'Sim'},
-							{value: 'Não', label: 'Não'}
-						]}
 					/>
 					<FormField
-						label="Cod. cliente"
+						label='Cod. cliente'
+						onChange={value => updateField('clientCode', value)}
+						placeholder='Código do cliente'
 						value={formData.clientCode}
-						onChange={(value) => updateField('clientCode', value)}
-						placeholder="Código do cliente"
 					/>
 					<FormField
-						label="Pasta"
+						label='Pasta'
+						onChange={value => updateField('folderCode', value)}
+						placeholder='Código da pasta'
 						value={formData.folderCode}
-						onChange={(value) => updateField('folderCode', value)}
-						placeholder="Código da pasta"
 					/>
 					<FormField
-						label="Caso padrão faturamento"
-						type="select"
-						value={formData.defaultBilling}
-						onChange={(value) => updateField('defaultBilling', value)}
+						label='Caso padrão faturamento'
+						onChange={value => updateField('defaultBilling', value)}
 						options={[
 							{value: 'Sim', label: 'Sim'},
 							{value: 'Não', label: 'Não'}
 						]}
+						type='select'
+						value={formData.defaultBilling}
 					/>
 					<div className='flex items-center gap-6'>
 						<label className='flex items-center gap-2'>
 							<input
-								type='checkbox'
 								checked={formData.totus}
-								onChange={(e) => updateField('totus', e.target.checked)}
 								className='w-4 h-4 text-[#00B8D9] border-gray-300 rounded focus:ring-[#00B8D9]'
+								onChange={e => updateField('totus', e.target.checked)}
+								type='checkbox'
 							/>
 							<span className='text-sm text-gray-700'>TOTUS</span>
 						</label>
 						<label className='flex items-center gap-2'>
 							<input
-								type='checkbox'
 								checked={formData.migrated}
-								onChange={(e) => updateField('migrated', e.target.checked)}
 								className='w-4 h-4 text-[#00B8D9] border-gray-300 rounded focus:ring-[#00B8D9]'
+								onChange={e => updateField('migrated', e.target.checked)}
+								type='checkbox'
 							/>
 							<span className='text-sm text-gray-700'>Migrado</span>
 						</label>
@@ -207,10 +210,8 @@ export function FolderProcessForm({folder}: FolderProcessFormProps) {
 				{/* Court Information */}
 				<FormSection>
 					<FormField
-						label="Órgão"
-						type="select"
-						value={formData.organ}
-						onChange={(value) => updateField('organ', value)}
+						label='Órgão'
+						onChange={value => updateField('organ', value)}
 						options={[
 							{value: 'TJSP', label: 'TJSP'},
 							{value: 'TJRJ', label: 'TJRJ'},
@@ -219,174 +220,176 @@ export function FolderProcessForm({folder}: FolderProcessFormProps) {
 							{value: 'STJ', label: 'STJ'},
 							{value: 'STF', label: 'STF'}
 						]}
+						type='select'
+						value={formData.organ}
 					/>
 					<FormField
-						label="Distribuição"
-						type="select"
-						value={formData.distribution}
-						onChange={(value) => updateField('distribution', value)}
+						icon='calendar'
+						label='Distribuição'
+						onChange={value => updateField('distribution', value)}
 						options={[
 							{value: 'Sorteio', label: 'Sorteio'},
 							{value: 'Dependência', label: 'Dependência'},
 							{value: 'Prevenção', label: 'Prevenção'}
 						]}
-						icon="calendar"
+						type='select'
+						value={formData.distribution}
 					/>
 					<FormField
-						label="Entrada"
-						type="date"
+						icon='calendar'
+						label='Entrada'
+						onChange={value => updateField('entryDate', value)}
+						type='date'
 						value={formData.entryDate}
-						onChange={(value) => updateField('entryDate', value)}
-						icon="calendar"
 					/>
 					<FormField
-						label="Status"
-						type="select"
-						value={formData.status}
-						onChange={(value) => updateField('status', value)}
+						label='Status'
+						onChange={value => updateField('status', value)}
 						options={[
 							{value: 'Ativo', label: 'Ativo'},
 							{value: 'Suspenso', label: 'Suspenso'},
 							{value: 'Arquivado', label: 'Arquivado'},
 							{value: 'Concluído', label: 'Concluído'}
 						]}
+						type='select'
+						value={formData.status}
 					/>
 					<FormField
-						label="Cód.Interno"
+						label='Cód.Interno'
+						onChange={value => updateField('internalCode', value)}
+						placeholder='Código interno'
 						value={formData.internalCode}
-						onChange={(value) => updateField('internalCode', value)}
-						placeholder="Código interno"
 					/>
 					<FormField
-						label="Tipo Pesquisa"
-						type="select"
-						value={formData.searchType}
-						onChange={(value) => updateField('searchType', value)}
+						label='Tipo Pesquisa'
+						onChange={value => updateField('searchType', value)}
 						options={[
 							{value: 'Padrão', label: 'Padrão'},
 							{value: 'Avançada', label: 'Avançada'},
 							{value: 'Personalizada', label: 'Personalizada'}
 						]}
+						type='select'
+						value={formData.searchType}
 					/>
 					<FormField
-						label="Código"
+						label='Código'
+						onChange={value => updateField('code', value)}
+						placeholder='Código'
 						value={formData.code}
-						onChange={(value) => updateField('code', value)}
-						placeholder="Código"
 					/>
 					<FormField
-						label="Juiz"
+						label='Juiz'
+						onChange={value => updateField('judge', value)}
+						placeholder='Nome do juiz'
 						value={formData.judge}
-						onChange={(value) => updateField('judge', value)}
-						placeholder="Nome do juiz"
 					/>
 				</FormSection>
 
 				{/* Additional Details */}
 				<FormSection>
 					<FormField
-						label="Área"
-						type="select"
-						value={formData.area}
-						onChange={(value) => updateField('area', value)}
+						label='Área'
+						onChange={value => updateField('area', value)}
 						options={[
 							{value: 'Cível', label: 'Cível'},
 							{value: 'Trabalhista', label: 'Trabalhista'},
 							{value: 'Criminal', label: 'Criminal'},
 							{value: 'Tributário', label: 'Tributário'}
 						]}
+						type='select'
+						value={formData.area}
 					/>
 					<FormField
-						label="Comarca"
-						type="select"
-						value={formData.comarca}
-						onChange={(value) => updateField('comarca', value)}
-						placeholder="Selecione a comarca"
+						label='Comarca'
+						onChange={value => updateField('comarca', value)}
 						options={[
 							{value: 'São Paulo', label: 'São Paulo'},
 							{value: 'Rio de Janeiro', label: 'Rio de Janeiro'},
 							{value: 'Belo Horizonte', label: 'Belo Horizonte'}
 						]}
+						placeholder='Selecione a comarca'
+						type='select'
+						value={formData.comarca}
 					/>
 					<FormField
-						label="Sócio"
-						type="select"
-						value={formData.partner}
-						onChange={(value) => updateField('partner', value)}
-						placeholder="Selecione o sócio"
+						label='Sócio'
+						onChange={value => updateField('partner', value)}
 						options={[
 							{value: 'Dr. João Silva', label: 'Dr. João Silva'},
 							{value: 'Dra. Maria Santos', label: 'Dra. Maria Santos'}
 						]}
+						placeholder='Selecione o sócio'
+						type='select'
+						value={formData.partner}
 					/>
 					<FormField
-						label="SubÁrea"
-						type="select"
-						value={formData.subArea}
-						onChange={(value) => updateField('subArea', value)}
-						placeholder="Selecione a subárea"
+						label='SubÁrea'
+						onChange={value => updateField('subArea', value)}
 						options={[
 							{value: 'Contratos', label: 'Contratos'},
 							{value: 'Família', label: 'Família'},
 							{value: 'Consumidor', label: 'Consumidor'}
 						]}
+						placeholder='Selecione a subárea'
+						type='select'
+						value={formData.subArea}
 					/>
 					<FormField
-						label="Foro"
-						type="select"
-						value={formData.court}
-						onChange={(value) => updateField('court', value)}
-						placeholder="Selecione o foro"
+						label='Foro'
+						onChange={value => updateField('court', value)}
 						options={[
 							{value: 'Central', label: 'Central'},
 							{value: 'Regional', label: 'Regional'}
 						]}
+						placeholder='Selecione o foro'
+						type='select'
+						value={formData.court}
 					/>
 					<FormField
-						label="Coordenador"
-						type="select"
-						value={formData.coordinator}
-						onChange={(value) => updateField('coordinator', value)}
-						placeholder="Selecione o coordenador"
+						label='Coordenador'
+						onChange={value => updateField('coordinator', value)}
 						options={[
 							{value: 'Carlos Mendes', label: 'Carlos Mendes'},
 							{value: 'Ana Costa', label: 'Ana Costa'}
 						]}
+						placeholder='Selecione o coordenador'
+						type='select'
+						value={formData.coordinator}
 					/>
 					<FormField
-						label="Núcleo"
-						type="select"
-						value={formData.nucleus}
-						onChange={(value) => updateField('nucleus', value)}
-						placeholder="Selecione o núcleo"
+						label='Núcleo'
+						onChange={value => updateField('nucleus', value)}
 						options={[
 							{value: 'Norte', label: 'Norte'},
 							{value: 'Sul', label: 'Sul'},
 							{value: 'Centro', label: 'Centro'}
 						]}
+						placeholder='Selecione o núcleo'
+						type='select'
+						value={formData.nucleus}
 					/>
 					<FormField
-						label="Vara"
-						type="select"
-						value={formData.stick}
-						onChange={(value) => updateField('stick', value)}
-						placeholder="Selecione a vara"
+						label='Vara'
+						onChange={value => updateField('stick', value)}
 						options={[
 							{value: '1ª Vara', label: '1ª Vara'},
 							{value: '2ª Vara', label: '2ª Vara'},
 							{value: '3ª Vara', label: '3ª Vara'}
 						]}
+						placeholder='Selecione a vara'
+						type='select'
+						value={formData.stick}
 					/>
 					<FormField
-						label="Advogado"
-						type="select"
-						value={formData.lawyer}
-						onChange={(value) => updateField('lawyer', value)}
-						placeholder="Selecione o advogado"
+						label='Advogado'
+						onChange={value => updateField('lawyer', value)}
 						options={[
 							{value: 'Dr. Pedro Lima', label: 'Dr. Pedro Lima'},
 							{value: 'Dra. Julia Martins', label: 'Dra. Julia Martins'}
 						]}
+						placeholder='Selecione o advogado'
+						type='select'
+						value={formData.lawyer}
 					/>
 				</FormSection>
 
@@ -395,16 +398,16 @@ export function FolderProcessForm({folder}: FolderProcessFormProps) {
 					<div className='grid grid-cols-1 md:grid-cols-2 gap-6'>
 						<div className='bg-gray-50 rounded-lg p-4'>
 							<ToggleSwitch
-								label="Polo ativo"
 								checked={formData.activePole}
-								onChange={(checked) => updateField('activePole', checked)}
+								label='Polo ativo'
+								onChange={checked => updateField('activePole', checked)}
 							/>
 						</div>
 						<div className='bg-gray-50 rounded-lg p-4'>
 							<ToggleSwitch
-								label="Polo passivo"
 								checked={formData.passivePole}
-								onChange={(checked) => updateField('passivePole', checked)}
+								label='Polo passivo'
+								onChange={checked => updateField('passivePole', checked)}
 							/>
 						</div>
 					</div>
@@ -414,28 +417,28 @@ export function FolderProcessForm({folder}: FolderProcessFormProps) {
 				<div className='border-t border-gray-100 pt-6'>
 					<div className='grid grid-cols-1 md:grid-cols-3 gap-6'>
 						<FormField
-							label="Observação"
-							type="textarea"
+							colSpan={1}
+							label='Observação'
+							onChange={value => updateField('observation', value)}
+							placeholder='Digite aqui...'
+							type='textarea'
 							value={formData.observation}
-							onChange={(value) => updateField('observation', value)}
-							placeholder="Digite aqui..."
-							colSpan={1}
 						/>
 						<FormField
-							label="Detalhamento do objeto"
-							type="textarea"
+							colSpan={1}
+							label='Detalhamento do objeto'
+							onChange={value => updateField('objectDetail', value)}
+							placeholder='Digite aqui...'
+							type='textarea'
 							value={formData.objectDetail}
-							onChange={(value) => updateField('objectDetail', value)}
-							placeholder="Digite aqui..."
-							colSpan={1}
 						/>
 						<FormField
-							label="Último andamento"
-							type="textarea"
-							value={formData.lastUpdate}
-							onChange={(value) => updateField('lastUpdate', value)}
-							placeholder="Digite aqui..."
 							colSpan={1}
+							label='Último andamento'
+							onChange={value => updateField('lastUpdate', value)}
+							placeholder='Digite aqui...'
+							type='textarea'
+							value={formData.lastUpdate}
 						/>
 					</div>
 				</div>

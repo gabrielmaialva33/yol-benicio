@@ -1,4 +1,4 @@
-import {ChevronDown, Calendar, Search} from 'lucide-react'
+import {Calendar, ChevronDown, Search} from 'lucide-react'
 import type React from 'react'
 
 interface FormFieldProps {
@@ -28,9 +28,14 @@ export function FormField({
 	icon,
 	colSpan = 1
 }: FormFieldProps) {
-	const spanClass = colSpan === 3 ? 'lg:col-span-3' : colSpan === 2 ? 'lg:col-span-2' : ''
-	
-	const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+	const spanClass =
+		colSpan === 3 ? 'lg:col-span-3' : colSpan === 2 ? 'lg:col-span-2' : ''
+
+	const handleChange = (
+		e: React.ChangeEvent<
+			HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
+		>
+	) => {
 		if (onChange && !disabled && !readOnly) {
 			onChange(e.target.value)
 		}
@@ -54,9 +59,9 @@ export function FormField({
 					<>
 						<select
 							className={`${baseInputClass} appearance-none pr-10`}
-							value={value}
-							onChange={handleChange}
 							disabled={disabled}
+							onChange={handleChange}
+							value={value}
 						>
 							<option value=''>{placeholder || 'Selecione...'}</option>
 							{options.map(option => (
@@ -70,22 +75,22 @@ export function FormField({
 				) : type === 'textarea' ? (
 					<textarea
 						className={`${baseInputClass} min-h-[80px] resize-none`}
-						value={value}
+						disabled={disabled}
 						onChange={handleChange}
 						placeholder={placeholder || `Digite ${label.toLowerCase()}...`}
-						disabled={disabled}
 						readOnly={readOnly}
+						value={value}
 					/>
 				) : (
 					<>
 						<input
-							type={type === 'date' ? 'date' : 'text'}
 							className={`${baseInputClass} ${icon ? 'pr-10' : ''}`}
-							value={value}
+							disabled={disabled}
 							onChange={handleChange}
 							placeholder={placeholder}
-							disabled={disabled}
 							readOnly={readOnly}
+							type={type === 'date' ? 'date' : 'text'}
+							value={value}
 						/>
 						{icon === 'calendar' && (
 							<Calendar className='absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400 pointer-events-none' />
