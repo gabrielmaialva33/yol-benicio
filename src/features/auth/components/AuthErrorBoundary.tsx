@@ -13,7 +13,7 @@ export function AuthErrorBoundary({children}: AuthErrorBoundaryProps) {
 	return (
 		<ErrorBoundary
 			fallback={(error, reset) => (
-				<div className='flex min-h-screen items-center justify-center bg-[#1F2A37]'>
+				<div className='flex min-h-screen items-center justify-center bg-[#373737]'>
 					<div className='w-full max-w-md p-8 bg-white rounded-lg shadow-xl'>
 						<div className='flex flex-col items-center gap-4'>
 							<div className='p-3 bg-red-100 rounded-full'>
