@@ -261,7 +261,7 @@ const Sidebar = () => {
 
 	return (
 		<aside
-			className={`bg-[#1F2A37] text-white ${
+			className={`bg-[#373737] text-white ${
 				isCollapsed ? 'w-16 md:w-24' : 'w-[280px] md:w-[340px]'
 			} h-screen py-10 transition-all duration-300 ease-in-out flex flex-col overflow-hidden`}
 		>

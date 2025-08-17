@@ -420,15 +420,13 @@ export function ProcessTimeline({folderId: _folderId}: ProcessTimelineProps) {
 																	cat.toLowerCase().includes('agendada')
 																return (
 																	<span
-																		className={`rounded-full px-3 py-1 text-xs font-medium ${(() => {
-																			if (isPositive) {
-																				return 'bg-green-100 text-green-700'
-																			}
-																			if (isWarning) {
-																				return 'bg-amber-100 text-amber-700'
-																			}
-																			return 'bg-gray-100 text-gray-700'
-																		})()}`}
+																		className={`rounded-full px-3 py-1 text-xs font-medium ${
+																			isPositive
+																				? 'bg-green-100 text-green-700'
+																				: isWarning
+																					? 'bg-amber-100 text-amber-700'
+																					: 'bg-gray-100 text-gray-700'
+																		}`}
 																		key={cat}
 																	>
 																		{cat}

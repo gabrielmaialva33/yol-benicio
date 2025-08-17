@@ -28,17 +28,8 @@ export function FormField({
 	icon,
 	colSpan = 1
 }: FormFieldProps) {
-	// Constants for magic numbers
-	const TRIPLE_SPAN = 3
-	const DOUBLE_SPAN = 2
-
-	// Determine span class based on colSpan
-	let spanClass = ''
-	if (colSpan === TRIPLE_SPAN) {
-		spanClass = 'lg:col-span-3'
-	} else if (colSpan === DOUBLE_SPAN) {
-		spanClass = 'lg:col-span-2'
-	}
+	const spanClass =
+		colSpan === 3 ? 'lg:col-span-3' : colSpan === 2 ? 'lg:col-span-2' : ''
 
 	const handleChange = (
 		e: React.ChangeEvent<
@@ -60,71 +51,55 @@ export function FormField({
 
 	return (
 		<div className={`${spanClass} ${className}`}>
-			<label
-				className='block text-xs font-medium text-gray-600 mb-1'
-				htmlFor={`field-${label}`}
-			>
+			<label className='block text-xs font-medium text-gray-600 mb-1'>
 				{label}
 			</label>
 			<div className='relative'>
-				{(() => {
-					if (type === 'select') {
-						return (
-							<>
-								<select
-									className={`${baseInputClass} appearance-none pr-10`}
-									disabled={disabled}
-									id={`field-${label}`}
-									onChange={handleChange}
-									value={value}
-								>
-									<option value=''>{placeholder || 'Selecione...'}</option>
-									{options.map(option => (
-										<option key={option.value} value={option.value}>
-											{option.label}
-										</option>
-									))}
-								</select>
-								<ChevronDown className='absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400 pointer-events-none' />
-							</>
-						)
-					}
-
-					if (type === 'textarea') {
-						return (
-							<textarea
-								className={`${baseInputClass} min-h-[80px] resize-none`}
-								disabled={disabled}
-								id={`field-${label}`}
-								onChange={handleChange}
-								placeholder={placeholder || `Digite ${label.toLowerCase()}...`}
-								readOnly={readOnly}
-								value={value}
-							/>
-						)
-					}
-
-					return (
-						<>
-							<input
-								className={`${baseInputClass} ${icon ? 'pr-10' : ''}`}
-								disabled={disabled}
-								id={`field-${label}`}
-								onChange={handleChange}
-								placeholder={placeholder}
-								readOnly={readOnly}
-								type={type === 'date' ? 'date' : 'text'}
-								value={value}
-							/>
-							{icon === 'calendar' && (
-								<Calendar className='absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400 pointer-events-none' />
-							)}
-							{icon === 'search' && (
-								<Search className='absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400 pointer-events-none' />
-							)}
-						</>
-					)
-				})()}
+				{type === 'select' ? (
+					<>
+						<select
+							className={`${baseInputClass} appearance-none pr-10`}
+							disabled={disabled}
+							onChange={handleChange}
+							value={value}
+						>
+							<option value=''>{placeholder || 'Selecione...'}</option>
+							{options.map(option => (
+								<option key={option.value} value={option.value}>
+									{option.label}
+								</option>
+							))}
+						</select>
+						<ChevronDown className='absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400 pointer-events-none' />
+					</>
+				) : type === 'textarea' ? (
+					<textarea
+						className={`${baseInputClass} min-h-[80px] resize-none`}
+						disabled={disabled}
+						onChange={handleChange}
+						placeholder={placeholder || `Digite ${label.toLowerCase()}...`}
+						readOnly={readOnly}
+						value={value}
+					/>
+				) : (
+					<>
+						<input
+							className={`${baseInputClass} ${icon ? 'pr-10' : ''}`}
+							disabled={disabled}
+							onChange={handleChange}
+							placeholder={placeholder}
+							readOnly={readOnly}
+							type={type === 'date' ? 'date' : 'text'}
+							value={value}
+						/>
+						{icon === 'calendar' && (
+							<Calendar className='absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400 pointer-events-none' />
+						)}
+						{icon === 'search' && (
+							<Search className='absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400 pointer-events-none' />
+						)}
+					</>
+				)}
 			</div>
 		</div>
 	)
