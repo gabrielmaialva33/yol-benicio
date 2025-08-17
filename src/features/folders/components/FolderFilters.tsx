@@ -35,7 +35,11 @@ interface FolderFiltersProps {
 	) => void
 }
 
-export function FolderFilters({filters, setFilters, isLoading}: FolderFiltersProps) {
+export function FolderFilters({
+	filters,
+	setFilters,
+	isLoading
+}: FolderFiltersProps) {
 	const handleInputChange = (
 		e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
 	) => {

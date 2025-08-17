@@ -11,7 +11,6 @@ export function FolderConsultationPage() {
 	const {
 		folders,
 		pagination,
-		isLoading,
 		isInitialLoading,
 		isRefetching,
 		isError,
@@ -34,7 +33,11 @@ export function FolderConsultationPage() {
 					<div className='px-2 pb-6 lg:pb-8'>
 						<div className='flex flex-col lg:flex-row lg:items-center justify-between mb-6 gap-4'>
 							<div className='flex-1 min-w-0'>
-								<FolderFilters filters={filters} setFilters={setFilters} isLoading={false} />
+								<FolderFilters
+									filters={filters}
+									isLoading={false}
+									setFilters={setFilters}
+								/>
 							</div>
 						</div>
 						<div className='mt-6'>
@@ -46,7 +49,7 @@ export function FolderConsultationPage() {
 		)
 	}
 
-	if (isError && !folders.length) {
+	if (isError && folders.length === 0) {
 		return <div>Ocorreu um erro ao buscar as pastas.</div>
 	}
 
@@ -59,7 +62,11 @@ export function FolderConsultationPage() {
 				<div className='px-2 pb-6 lg:pb-8'>
 					<div className='flex flex-col lg:flex-row lg:items-center justify-between mb-6 gap-4'>
 						<div className='flex-1 min-w-0'>
-							<FolderFilters filters={filters} setFilters={setFilters} isLoading={isRefetching} />
+							<FolderFilters
+								filters={filters}
+								isLoading={isRefetching}
+								setFilters={setFilters}
+							/>
 						</div>
 						<div className='flex items-center space-x-3 px-4 sm:px-6 shrink-0'>
 							<button

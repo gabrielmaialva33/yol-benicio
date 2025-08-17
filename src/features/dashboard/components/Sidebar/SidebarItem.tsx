@@ -24,7 +24,8 @@ const getIconClasses = (isCollapsed: boolean, active = false) => {
 }
 
 const renderIcon = (props: SidebarItemProps) => {
-	if (props.color) {
+	// Only render color dot if there's text to go with it
+	if (props.color && props.text) {
 		return (
 			<span
 				className='w-2.5 h-2.5 rounded-full'
@@ -33,19 +34,29 @@ const renderIcon = (props: SidebarItemProps) => {
 		)
 	}
 
-	return (
-		<img
-			alt={props.text}
-			className={getIconClasses(props.isCollapsed, props.active)}
-			height={24}
-			src={props.icon || '/placeholder.svg'}
-			width={24}
-		/>
-	)
+	// Only render icon if there's one provided
+	if (props.icon) {
+		return (
+			<img
+				alt={props.text}
+				className={getIconClasses(props.isCollapsed, props.active)}
+				height={24}
+				src={props.icon}
+				width={24}
+			/>
+		)
+	}
+
+	return null
 }
 
 const SidebarItem = (props: SidebarItemProps) => {
 	const [showTooltip, setShowTooltip] = useState(false)
+
+	// Don't render if there's no text
+	if (!props.text) {
+		return null
+	}
 
 	let activeClasses = 'text-white hover:bg-gray-700'
 	if (props.active && !props.isCollapsed) {
@@ -64,7 +75,7 @@ const SidebarItem = (props: SidebarItemProps) => {
 		<>
 			{renderIcon(props)}
 			<span
-				className={`overflow-hidden transition-all ${props.isCollapsed ? 'w-0' : 'w-52'}`}
+				className={`overflow-hidden text-ellipsis whitespace-nowrap transition-all ${props.isCollapsed ? 'w-0' : 'w-52'}`}
 			>
 				{props.text}
 			</span>

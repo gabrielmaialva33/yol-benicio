@@ -6,7 +6,11 @@ interface FormSectionProps {
 	className?: string
 }
 
-export function FormSection({title, children, className = ''}: FormSectionProps) {
+export function FormSection({
+	title,
+	children,
+	className = ''
+}: FormSectionProps) {
 	return (
 		<div className={`${className}`}>
 			{title && (
