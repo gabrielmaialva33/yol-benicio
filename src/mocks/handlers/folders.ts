@@ -110,8 +110,14 @@ export const allFolders = generateFolders(TOTAL_FOLDERS)
 allFolders.push(generateFolder({id: 1830}))
 
 // Ensure we have specific favorite folders with known IDs
-const favoriteFolderIds = [5055, 5056, 5057, 5058, 5059, 5060]
-favoriteFolderIds.forEach(id => {
+const FAVORITE_FOLDER_START_ID = 5055
+const FAVORITE_FOLDER_COUNT = 6
+const favoriteFolderIds = Array.from(
+	{length: FAVORITE_FOLDER_COUNT},
+	(_, i) => FAVORITE_FOLDER_START_ID + i
+)
+
+for (const id of favoriteFolderIds) {
 	const existingFolder = allFolders.find(f => f.id === id)
 	if (existingFolder) {
 		// Mark existing folder as favorite
@@ -120,7 +126,7 @@ favoriteFolderIds.forEach(id => {
 		// Add new favorite folder if it doesn't exist
 		allFolders.push(generateFolder({id, is_favorite: true}))
 	}
-})
+}
 
 // Filter functions
 const folderFilters = {

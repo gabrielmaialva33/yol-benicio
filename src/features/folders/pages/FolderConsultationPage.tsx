@@ -11,7 +11,6 @@ export function FolderConsultationPage() {
 	const {
 		folders,
 		pagination,
-		isLoading,
 		isInitialLoading,
 		isRefetching,
 		isError,

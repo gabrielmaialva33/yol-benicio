@@ -249,19 +249,21 @@ const Sidebar = () => {
 	const toggleSidebar = () => setIsCollapsed(!isCollapsed)
 
 	// Convert favorite folders to MenuItem format
-	const favorites: MenuItem[] = favoriteFolders.map(folder => ({
-		icon: '',
-		color: folder.color,
-		text: `${folder.code} - ${folder.title}`,
-		badge: undefined,
-		path: `/dashboard/folders/consultation/${folder.id}`
-	}))
+	const favorites: MenuItem[] = favoriteFolders
+		.filter(folder => folder?.code && folder.title) // Filter out invalid items
+		.map(folder => ({
+			icon: '',
+			color: folder.color,
+			text: `${folder.code} - ${folder.title}`,
+			badge: undefined,
+			path: `/dashboard/folders/consultation/${folder.id}`
+		}))
 
 	return (
 		<aside
 			className={`bg-[#373737] text-white ${
 				isCollapsed ? 'w-16 md:w-24' : 'w-[280px] md:w-[340px]'
-			} h-screen py-10 transition-all duration-300 ease-in-out flex flex-col`}
+			} h-screen py-10 transition-all duration-300 ease-in-out flex flex-col overflow-hidden`}
 		>
 			<div className='flex flex-col gap-[25px] items-center'>
 				<SidebarHeader isCollapsed={isCollapsed} toggle={toggleSidebar} />
@@ -282,7 +284,7 @@ const Sidebar = () => {
 				)}
 			</div>
 			<nav
-				className={`flex-1 flex flex-col ${isCollapsed ? 'items-center mt-[40px]' : 'gap-[25px] mt-[25px]'}`}
+				className={`flex-1 flex flex-col overflow-y-auto overflow-x-hidden ${isCollapsed ? 'items-center mt-[40px]' : 'gap-[25px] mt-[25px]'}`}
 			>
 				{!isCollapsed && (
 					<div className='px-10 pr-[60px]'>
