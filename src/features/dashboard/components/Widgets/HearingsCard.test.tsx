@@ -1,5 +1,5 @@
-import {render, screen} from 'test-utils'
 import {vi} from 'vitest'
+import {render, screen} from '../../../../test-utils'
 import {HearingsCard} from './HearingsCard'
 
 describe('HearingsCard', () => {

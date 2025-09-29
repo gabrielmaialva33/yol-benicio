@@ -1,5 +1,5 @@
-import {fireEvent, render, screen} from 'test-utils'
 import {vi} from 'vitest'
+import {fireEvent, render, screen} from '../../../../test-utils'
 import {RequestsCard} from './RequestsCard'
 
 vi.mock('recharts', () => ({

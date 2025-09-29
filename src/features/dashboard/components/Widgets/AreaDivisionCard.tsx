@@ -52,12 +52,22 @@ export function AreaDivisionCard() {
 									outerRadius,
 									value
 								}) => {
-									if (midAngle === undefined || value === undefined) {
+									// Verificar se todos os valores necessários estão definidos e são números
+									if (
+										typeof cx !== 'number' ||
+										typeof cy !== 'number' ||
+										typeof midAngle !== 'number' ||
+										typeof innerRadius !== 'number' ||
+										typeof outerRadius !== 'number' ||
+										typeof value !== 'number'
+									) {
 										return null
 									}
+
 									if (value < MINIMUM_PERCENTAGE_TO_DISPLAY) {
 										return null
 									}
+
 									const radian = Math.PI / DEGREES_IN_HALF_CIRCLE
 									const radius =
 										innerRadius +

@@ -1,5 +1,5 @@
-import {render, screen} from 'test-utils'
 import {vi} from 'vitest'
+import {render, screen} from '../../../../test-utils'
 import {AreaDivisionCard} from './AreaDivisionCard'
 
 vi.mock('recharts', () => ({

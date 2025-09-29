@@ -38,7 +38,7 @@ export class ErrorBoundary extends Component<
 		return {hasError: true, error}
 	}
 
-	componentDidUpdate(_prevProps: ErrorBoundaryProps) {
+	override componentDidUpdate(_prevProps: ErrorBoundaryProps) {
 		const {resetKeys = [], resetOnPropsChange = true} = this.props
 		const hasResetKeysChanged = resetKeys.some(
 			(key, index) => key !== this.previousResetKeys[index]
@@ -50,7 +50,7 @@ export class ErrorBoundary extends Component<
 		this.previousResetKeys = resetKeys
 	}
 
-	componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
+	override componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
 		const {onError} = this.props
 
 		// Callback customizado
@@ -64,7 +64,7 @@ export class ErrorBoundary extends Component<
 		}
 	}
 
-	componentWillUnmount() {
+	override componentWillUnmount() {
 		if (this.resetTimeoutId) {
 			clearTimeout(this.resetTimeoutId)
 		}
@@ -78,7 +78,7 @@ export class ErrorBoundary extends Component<
 		this.setState({hasError: false, error: null})
 	}
 
-	render() {
+	override render() {
 		const {hasError, error} = this.state
 		const {
 			children,
@@ -192,3 +192,5 @@ export class ErrorBoundary extends Component<
 		}
 	}
 }
+
+export type {ErrorBoundaryProps}

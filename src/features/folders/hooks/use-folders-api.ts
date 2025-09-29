@@ -12,46 +12,66 @@ import type {Folder} from '../../../shared/types/domain'
 // Wrapper functions to provide token dynamically
 export function useFoldersList(params?: QueryParams) {
 	const {token} = useAuth()
-	const folderApi = createApiHooks<Folder>({
-		baseUrl: `${API_BASE_URL}/api/v1/folders`,
-		token: token || undefined
-	})
+	const folderApi = token
+		? createApiHooks<Folder>({
+				baseUrl: `${API_BASE_URL}/api/v1/folders`,
+				token
+			})
+		: createApiHooks<Folder>({
+				baseUrl: `${API_BASE_URL}/api/v1/folders`
+			})
 	return folderApi.useList(params)
 }
 
 export function useFolder(id: number | string) {
 	const {token} = useAuth()
-	const folderApi = createApiHooks<Folder>({
-		baseUrl: `${API_BASE_URL}/api/v1/folders`,
-		token: token || undefined
-	})
+	const folderApi = token
+		? createApiHooks<Folder>({
+				baseUrl: `${API_BASE_URL}/api/v1/folders`,
+				token
+			})
+		: createApiHooks<Folder>({
+				baseUrl: `${API_BASE_URL}/api/v1/folders`
+			})
 	return folderApi.useGet(id)
 }
 
 export function useCreateFolder() {
 	const {token} = useAuth()
-	const folderApi = createApiHooks<Folder>({
-		baseUrl: `${API_BASE_URL}/api/v1/folders`,
-		token: token || undefined
-	})
+	const folderApi = token
+		? createApiHooks<Folder>({
+				baseUrl: `${API_BASE_URL}/api/v1/folders`,
+				token
+			})
+		: createApiHooks<Folder>({
+				baseUrl: `${API_BASE_URL}/api/v1/folders`
+			})
 	return folderApi.useCreate()
 }
 
 export function useUpdateFolder() {
 	const {token} = useAuth()
-	const folderApi = createApiHooks<Folder>({
-		baseUrl: `${API_BASE_URL}/api/v1/folders`,
-		token: token || undefined
-	})
+	const folderApi = token
+		? createApiHooks<Folder>({
+				baseUrl: `${API_BASE_URL}/api/v1/folders`,
+				token
+			})
+		: createApiHooks<Folder>({
+				baseUrl: `${API_BASE_URL}/api/v1/folders`
+			})
 	return folderApi.useUpdate()
 }
 
 export function useDeleteFolder() {
 	const {token} = useAuth()
-	const folderApi = createApiHooks<Folder>({
-		baseUrl: `${API_BASE_URL}/api/v1/folders`,
-		token: token || undefined
-	})
+	const folderApi = token
+		? createApiHooks<Folder>({
+				baseUrl: `${API_BASE_URL}/api/v1/folders`,
+				token
+			})
+		: createApiHooks<Folder>({
+				baseUrl: `${API_BASE_URL}/api/v1/folders`
+			})
 	return folderApi.useDelete()
 }
 

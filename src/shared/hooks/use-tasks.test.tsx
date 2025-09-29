@@ -1,6 +1,6 @@
 import {useEffect} from 'react'
-import {render, screen} from 'test-utils'
 import {vi} from 'vitest'
+import {render, screen} from '../../test-utils'
 import {useTasks} from './use-tasks'
 
 function useTasksHarness() {

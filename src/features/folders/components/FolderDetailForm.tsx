@@ -15,8 +15,8 @@ const SelectInput = (props: {
 			<select
 				className='w-full appearance-none bg-white border border-gray-300 rounded-md px-3 py-2 text-gray-700 focus:outline-none focus:ring-1 focus:ring-cyan-500'
 				defaultValue={props.defaultValue}
+				disabled={true}
 				id={props.label}
-				readOnly={true}
 				value={props.value}
 			>
 				{props.options.map(option => (

@@ -1,7 +1,7 @@
-import {App} from 'App'
-import {server} from 'mocks/server'
 import {HttpResponse, http} from 'msw'
-import {queryClient, render, screen} from 'test-utils'
+import {App} from './App'
+import {server} from './mocks/server'
+import {queryClient, render, screen} from './test-utils'
 
 const EXPECTED_LINKS = 1
 

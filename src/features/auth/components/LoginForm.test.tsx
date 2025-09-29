@@ -1,9 +1,9 @@
 import {QueryClient, QueryClientProvider} from '@tanstack/react-query'
 import {fireEvent, render, screen, waitFor} from '@testing-library/react'
-import {server} from 'mocks/server'
 import {HttpResponse, http} from 'msw'
 import {MemoryRouter} from 'react-router'
 import {vi} from 'vitest'
+import {server} from '../../../mocks/server'
 import {AuthProvider} from '../../../shared/hooks/use-auth'
 import {LoginForm} from './LoginForm'
 

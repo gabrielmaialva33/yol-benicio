@@ -255,7 +255,6 @@ const Sidebar = () => {
 			icon: '',
 			color: folder.color,
 			text: `${folder.code} - ${folder.title}`,
-			badge: undefined,
 			path: `/dashboard/folders/consultation/${folder.id}`
 		}))
 
