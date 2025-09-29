@@ -167,9 +167,9 @@ export const authHandlers = [
 	}),
 
 	// Logout
-	http.post('/api/auth/logout', () => {
-		return HttpResponse.json({data: {message: 'Logout successful'}})
-	}),
+	http.post('/api/auth/logout', () =>
+		HttpResponse.json({data: {message: 'Logout successful'}})
+	),
 
 	// Me (current user)
 	http.get('/api/auth/me', () => {

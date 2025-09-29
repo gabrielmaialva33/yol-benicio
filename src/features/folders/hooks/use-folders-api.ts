@@ -1,4 +1,6 @@
 import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query'
+import {API_BASE_URL} from '../../../config/api'
+import {useAuth} from '../../../shared/hooks/auth-context'
 import {createApiHooks} from '../../../shared/hooks/use-api'
 import type {
 	ApiResponse,
@@ -7,35 +9,69 @@ import type {
 } from '../../../shared/types/api'
 import type {Folder} from '../../../shared/types/domain'
 
-// Create base hooks
-const folderApi = createApiHooks<Folder>({
-	baseUrl: '/api/folders',
-	// token would be obtained from authentication context in production
-	token: 'mock-jwt-token'
-})
+// Wrapper functions to provide token dynamically
+export function useFoldersList(params?: QueryParams) {
+	const {token} = useAuth()
+	const folderApi = createApiHooks<Folder>({
+		baseUrl: `${API_BASE_URL}/api/v1/folders`,
+		token: token || undefined
+	})
+	return folderApi.useList(params)
+}
 
-// Export base hooks
-export const {
-	useList: useFoldersList,
-	useGet: useFolder,
-	useCreate: useCreateFolder,
-	useUpdate: useUpdateFolder,
-	useDelete: useDeleteFolder
-} = folderApi
+export function useFolder(id: number | string) {
+	const {token} = useAuth()
+	const folderApi = createApiHooks<Folder>({
+		baseUrl: `${API_BASE_URL}/api/v1/folders`,
+		token: token || undefined
+	})
+	return folderApi.useGet(id)
+}
+
+export function useCreateFolder() {
+	const {token} = useAuth()
+	const folderApi = createApiHooks<Folder>({
+		baseUrl: `${API_BASE_URL}/api/v1/folders`,
+		token: token || undefined
+	})
+	return folderApi.useCreate()
+}
+
+export function useUpdateFolder() {
+	const {token} = useAuth()
+	const folderApi = createApiHooks<Folder>({
+		baseUrl: `${API_BASE_URL}/api/v1/folders`,
+		token: token || undefined
+	})
+	return folderApi.useUpdate()
+}
+
+export function useDeleteFolder() {
+	const {token} = useAuth()
+	const folderApi = createApiHooks<Folder>({
+		baseUrl: `${API_BASE_URL}/api/v1/folders`,
+		token: token || undefined
+	})
+	return folderApi.useDelete()
+}
 
 // Custom hook to toggle favorite
 export function useToggleFolderFavorite() {
+	const {token} = useAuth()
 	const queryClient = useQueryClient()
 
 	return useMutation<ApiResponse<Folder>, Error, number>({
 		mutationFn: async id => {
-			const response = await fetch(`/api/folders/${id}/favorite`, {
-				method: 'PATCH',
-				headers: {
-					'Content-Type': 'application/json',
-					Authorization: 'Bearer mock-jwt-token'
+			const response = await fetch(
+				`${API_BASE_URL}/api/v1/folders/${id}/favorite`,
+				{
+					method: 'PATCH',
+					headers: {
+						'Content-Type': 'application/json',
+						...(token && {Authorization: `Bearer ${token}`})
+					}
 				}
-			})
+			)
 
 			if (!response.ok) {
 				throw new Error('Erro ao alterar favorito')
@@ -46,7 +82,7 @@ export function useToggleFolderFavorite() {
 		onSuccess: data => {
 			// Update list cache
 			queryClient.setQueryData<PaginatedResponse<Folder>>(
-				['folders', 'list'],
+				[`${API_BASE_URL}/api/v1/folders`, 'list'],
 				old => {
 					if (!old) {
 						return old
@@ -62,7 +98,7 @@ export function useToggleFolderFavorite() {
 
 			// Atualizar cache individual
 			queryClient.setQueryData<ApiResponse<Folder>>(
-				['folders', 'get', data.data.id],
+				[`${API_BASE_URL}/api/v1/folders`, 'get', data.data.id],
 				data
 			)
 		}
@@ -80,12 +116,15 @@ interface FolderStats {
 
 // Hook for statistics
 export function useFolderStats() {
+	const {token} = useAuth()
+
 	return useQuery({
 		queryKey: ['folders', 'stats'],
 		queryFn: async () => {
-			const response = await fetch('/api/folders/stats', {
+			const response = await fetch(`${API_BASE_URL}/api/v1/folders/stats`, {
 				headers: {
-					Authorization: 'Bearer mock-jwt-token'
+					'Content-Type': 'application/json',
+					...(token && {Authorization: `Bearer ${token}`})
 				}
 			})
 

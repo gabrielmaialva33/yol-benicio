@@ -15,21 +15,10 @@ import {
 	CardHeader,
 	CardTitle
 } from '../../../../shared/ui/primitives/Card'
-
-interface Request {
-	month: string
-	value: number
-	new: number
-	percentage: number
-}
-
-async function getRequests(): Promise<Request[]> {
-	const response = await fetch('/api/requests')
-	return response.json()
-}
+import {getRequests, type RequestData} from '../../api'
 
 export function RequestsCard() {
-	const {data: requests = []} = useQuery<Request[]>({
+	const {data: requests = []} = useQuery<RequestData[]>({
 		queryKey: ['requests'],
 		queryFn: getRequests
 	})

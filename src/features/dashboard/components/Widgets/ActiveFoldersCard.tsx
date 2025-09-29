@@ -6,23 +6,10 @@ import {
 	CardHeader,
 	CardTitle
 } from '../../../../shared/ui/primitives/Card'
-
-interface FolderData {
-	active: number
-	newThisMonth: number
-	history: {
-		month: string
-		value: number
-	}[]
-}
-
-async function getActiveFoldersStats(): Promise<FolderData> {
-	const response = await fetch('/api/dashboard/active-folders')
-	return response.json()
-}
+import {type ActiveFoldersData, getActiveFoldersStats} from '../../api'
 
 export function ActiveFoldersCard() {
-	const {data: folders} = useQuery<FolderData>({
+	const {data: folders} = useQuery<ActiveFoldersData>({
 		queryKey: ['active-folders-stats'],
 		queryFn: getActiveFoldersStats,
 		initialData: {

@@ -2,13 +2,9 @@ import {useQuery} from '@tanstack/react-query'
 import {DateTime} from 'luxon'
 import {useState} from 'react'
 import type {DateRange} from 'react-day-picker'
+import {getTasks} from '../../features/dashboard/api'
 import type {PaginatedResponse} from '../types/api'
 import type {Task} from '../types/domain'
-
-async function getTasks(): Promise<PaginatedResponse<Task>> {
-	const response = await fetch('/api/tasks')
-	return response.json()
-}
 
 const DISPLAY_TASKS_LIMIT = 5
 

@@ -1,7 +1,10 @@
 import {createContext, useContext} from 'react'
-import type {AuthState} from '../api/auth'
+import type {User} from '../types/domain'
 
-export interface AuthContextValue extends AuthState {
+export interface AuthContextValue {
+	user: User | null
+	token: string | null
+	refreshToken: string | null
 	login: (email: string, password: string) => Promise<void>
 	logout: () => Promise<void>
 	loading: boolean

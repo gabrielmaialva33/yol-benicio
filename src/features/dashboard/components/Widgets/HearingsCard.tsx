@@ -9,23 +9,10 @@ import {
 	CardHeader,
 	CardTitle
 } from '../../../../shared/ui/primitives/Card'
-
-interface Hearing {
-	label: string
-	percentage: number
-	total: number
-	completed: number
-	color: string
-	date: string
-}
-
-async function getHearings(): Promise<Hearing[]> {
-	const response = await fetch('/api/hearings')
-	return response.json()
-}
+import {getHearings, type HearingData} from '../../api'
 
 export function HearingsCard() {
-	const {data: hearings = []} = useQuery<Hearing[]>({
+	const {data: hearings = []} = useQuery<HearingData[]>({
 		queryKey: ['hearings'],
 		queryFn: getHearings
 	})

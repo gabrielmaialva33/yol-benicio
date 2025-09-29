@@ -23,9 +23,7 @@ const userFilters = {
 			user.username?.toLowerCase().includes(searchLower)
 		)
 	},
-	role: (user: User, value: string) => {
-		return user.roles.some(r => r.slug === value)
-	}
+	role: (user: User, value: string) => user.roles.some(r => r.slug === value)
 }
 
 // Adonis v6 user format

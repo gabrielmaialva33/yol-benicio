@@ -1,4 +1,6 @@
 import {useQuery} from '@tanstack/react-query'
+import {API_BASE_URL} from '../../../config/api'
+import {useAuth} from '../../../shared/hooks/auth-context'
 
 interface FavoriteFolder {
 	id: string
@@ -6,18 +8,25 @@ interface FavoriteFolder {
 	count: number
 }
 
-async function getFavoriteFolders(): Promise<FavoriteFolder[]> {
-	const response = await fetch('/api/folders/favorites')
-	if (!response.ok) {
-		throw new Error('Failed to fetch favorite folders')
-	}
-	return response.json()
-}
-
 export function useFavoriteFolders() {
+	const {token} = useAuth()
+
 	const {data, isLoading, isError} = useQuery<FavoriteFolder[]>({
 		queryKey: ['favoriteFolders'],
-		queryFn: getFavoriteFolders
+		queryFn: async () => {
+			const response = await fetch(`${API_BASE_URL}/api/v1/folders/favorites`, {
+				headers: {
+					'Content-Type': 'application/json',
+					...(token && {Authorization: `Bearer ${token}`})
+				}
+			})
+
+			if (!response.ok) {
+				throw new Error('Failed to fetch favorite folders')
+			}
+
+			return response.json()
+		}
 	})
 
 	return {

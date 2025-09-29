@@ -129,8 +129,8 @@ const skinColor = [
 	'Black'
 ]
 
-export const generateAvatar = () => {
-	return `https://avataaars.io/?avatarStyle=Circle&topType=${faker.helpers.arrayElement(
+export const generateAvatar = () =>
+	`https://avataaars.io/?avatarStyle=Circle&topType=${faker.helpers.arrayElement(
 		topType
 	)}&accessoriesType=${faker.helpers.arrayElement(
 		accessoriesType
@@ -147,4 +147,3 @@ export const generateAvatar = () => {
 	)}&mouthType=${faker.helpers.arrayElement(
 		mouthType
 	)}&skinColor=${faker.helpers.arrayElement(skinColor)}`
-}

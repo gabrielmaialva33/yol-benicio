@@ -6,17 +6,7 @@ import {
 	CardHeader,
 	CardTitle
 } from '../../../../shared/ui/primitives/Card'
-
-interface AreaDivision {
-	name: string
-	value: number
-	color: string
-}
-
-async function getAreaDivision(): Promise<AreaDivision[]> {
-	const response = await fetch('/api/area-division')
-	return response.json()
-}
+import {type AreaDivisionData, getAreaDivision} from '../../api'
 
 const DEGREES_IN_HALF_CIRCLE = 180
 const LABEL_POSITION_RATIO = 0.5
@@ -25,7 +15,7 @@ const OUTER_RADIUS = 68
 const MINIMUM_PERCENTAGE_TO_DISPLAY = 2
 
 export function AreaDivisionCard() {
-	const {data: areaDivision = []} = useQuery<AreaDivision[]>({
+	const {data: areaDivision = []} = useQuery<AreaDivisionData[]>({
 		queryKey: ['areaDivision'],
 		queryFn: getAreaDivision
 	})

@@ -42,8 +42,8 @@ export function applyFilters<T>(
 	filters: Record<string, unknown>,
 	filterFunctions: Record<string, (item: T, value: unknown) => boolean>
 ): T[] {
-	return data.filter(item => {
-		return Object.entries(filters).every(([key, value]) => {
+	return data.filter(item =>
+		Object.entries(filters).every(([key, value]) => {
 			if (!value || value === '' || value === 'all' || value === 'Total') {
 				return true
 			}
@@ -55,7 +55,7 @@ export function applyFilters<T>(
 
 			return filterFn(item, value)
 		})
-	})
+	)
 }
 
 export function applySorting<T>(

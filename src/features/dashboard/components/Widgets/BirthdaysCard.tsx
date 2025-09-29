@@ -5,20 +5,10 @@ import {
 	CardHeader,
 	CardTitle
 } from '../../../../shared/ui/primitives/Card'
-
-interface Birthday {
-	avatar: string
-	name: string
-	email: string
-}
-
-async function getBirthdays(): Promise<Birthday[]> {
-	const response = await fetch('/api/birthdays')
-	return response.json()
-}
+import {type BirthdayData, getBirthdays} from '../../api'
 
 export function BirthdaysCard() {
-	const {data: birthdays = []} = useQuery<Birthday[]>({
+	const {data: birthdays = []} = useQuery<BirthdayData[]>({
 		queryKey: ['birthdays'],
 		queryFn: getBirthdays
 	})

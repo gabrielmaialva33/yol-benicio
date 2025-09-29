@@ -5,21 +5,10 @@ import {
 	CardHeader,
 	CardTitle
 } from '../../../../shared/ui/primitives/Card'
-
-interface FolderActivity {
-	label: string
-	value: number
-	color: string
-	percentage: number
-}
-
-async function getFolderActivity(): Promise<FolderActivity[]> {
-	const response = await fetch('/api/folder-activity')
-	return response.json()
-}
+import {type FolderActivityData, getFolderActivity} from '../../api'
 
 export function FolderActivityCard() {
-	const {data: activities = []} = useQuery<FolderActivity[]>({
+	const {data: activities = []} = useQuery<FolderActivityData[]>({
 		queryKey: ['folderActivity'],
 		queryFn: getFolderActivity
 	})

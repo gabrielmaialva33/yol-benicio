@@ -24,24 +24,15 @@ const taskFilters = {
 			(task.description?.toLowerCase().includes(searchLower) ?? false)
 		)
 	},
-	status: (task: Task, value: unknown) => {
-		return task.status === value
-	},
-	priority: (task: Task, value: unknown) => {
-		return task.priority === value
-	},
-	assigned_to: (task: Task, value: unknown) => {
-		return task.assigned_to.id === Number(value)
-	},
-	folder_id: (task: Task, value: unknown) => {
-		return task.folder?.id === Number(value)
-	},
-	due_date_from: (task: Task, value: unknown) => {
-		return DateTime.fromISO(task.due_date) >= DateTime.fromISO(String(value))
-	},
-	due_date_to: (task: Task, value: unknown) => {
-		return DateTime.fromISO(task.due_date) <= DateTime.fromISO(String(value))
-	},
+	status: (task: Task, value: unknown) => task.status === value,
+	priority: (task: Task, value: unknown) => task.priority === value,
+	assigned_to: (task: Task, value: unknown) =>
+		task.assigned_to.id === Number(value),
+	folder_id: (task: Task, value: unknown) => task.folder?.id === Number(value),
+	due_date_from: (task: Task, value: unknown) =>
+		DateTime.fromISO(task.due_date) >= DateTime.fromISO(String(value)),
+	due_date_to: (task: Task, value: unknown) =>
+		DateTime.fromISO(task.due_date) <= DateTime.fromISO(String(value)),
 	overdue: (task: Task, value: unknown) => {
 		if (value !== 'true') {
 			return true

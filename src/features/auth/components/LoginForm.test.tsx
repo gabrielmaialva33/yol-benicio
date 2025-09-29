@@ -9,8 +9,8 @@ import {LoginForm} from './LoginForm'
 
 const queryClient = new QueryClient()
 
-const renderLoginForm = () => {
-	return render(
+const renderLoginForm = () =>
+	render(
 		<QueryClientProvider client={queryClient}>
 			<AuthProvider>
 				<MemoryRouter>
@@ -19,7 +19,6 @@ const renderLoginForm = () => {
 			</AuthProvider>
 		</QueryClientProvider>
 	)
-}
 
 describe('LoginForm', () => {
 	it('should render the login form correctly', () => {
@@ -49,9 +48,7 @@ describe('LoginForm', () => {
 
 	it('should display an error message on login failure', async () => {
 		server.use(
-			http.post('/api/login', () => {
-				return new HttpResponse(null, {status: 401})
-			})
+			http.post('/api/login', () => new HttpResponse(null, {status: 401}))
 		)
 
 		renderLoginForm()

@@ -18,9 +18,8 @@ export function createApiHooks<T>({baseUrl, token}: UseApiOptions) {
 	}
 
 	// Helper function to clean base URL
-	const cleanBaseUrl = (url: string) => {
-		return url.endsWith('/') ? url.slice(0, -1) : url
-	}
+	const cleanBaseUrl = (url: string) =>
+		url.endsWith('/') ? url.slice(0, -1) : url
 
 	// Helper function to clean endpoint
 	const cleanEndpoint = (endpoint: string) => {
@@ -31,11 +30,10 @@ export function createApiHooks<T>({baseUrl, token}: UseApiOptions) {
 	}
 
 	// Helper function to construct full URL
-	const constructFullUrl = (base: string, endpoint: string) => {
-		return base.startsWith('http')
+	const constructFullUrl = (base: string, endpoint: string) =>
+		base.startsWith('http')
 			? `${base}${endpoint}`
 			: `${window.location.origin}${base}${endpoint}`
-	}
 
 	// Helper function to add query parameters
 	const addQueryParams = (url: URL, params: QueryParams) => {
@@ -76,22 +74,20 @@ export function createApiHooks<T>({baseUrl, token}: UseApiOptions) {
 	}
 
 	// Hook for listing with pagination
-	const useList = (params?: QueryParams) => {
-		return useQuery<PaginatedResponse<T>>({
+	const useList = (params?: QueryParams) =>
+		useQuery<PaginatedResponse<T>>({
 			queryKey: [baseUrl, 'list', params],
 			queryFn: () => fetcher(buildUrl('', params)),
 			placeholderData: previousData => previousData
 		})
-	}
 
 	// Hook for searching by ID
-	const useGet = (id: number | string) => {
-		return useQuery<ApiResponse<T>>({
+	const useGet = (id: number | string) =>
+		useQuery<ApiResponse<T>>({
 			queryKey: [baseUrl, 'get', id],
 			queryFn: () => fetcher(buildUrl(`/${id}`, undefined)),
 			enabled: Boolean(id)
 		})
-	}
 
 	// Hook for creating
 	const useCreate = () => {

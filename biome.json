@@ -62,14 +62,9 @@
 					},
 					"nursery": {
 						"noUnresolvedImports": "off",
-						"noUnknownAtRule": "off",
 						"useExplicitType": "off",
-						"useForComponent": "off",
-						"useExportsLast": "off",
 						"useSortedClasses": "off",
-						"noSecrets": "off",
-						"noExcessiveLinesPerFunction": "off",
-						"useIterableCallbackReturn": "off"
+						"noSecrets": "off"
 					},
 					"suspicious": {
 						"noReactSpecificProps": "off"
@@ -109,9 +104,7 @@
 			"includes": ["src/**/*.test.tsx", "tests/**/*.spec.ts"],
 			"linter": {
 				"rules": {
-					"nursery": {
-						"noAwaitInLoop": "off"
-					},
+					"nursery": {},
 					"performance": {
 						"useTopLevelRegex": "off"
 					}

@@ -188,15 +188,12 @@ const folderFilters = {
 		}
 		return folder.client.id.toString().includes(clientNumber)
 	},
-	client_id: (folder: Folder, value: unknown) => {
-		return folder.client.id === Number(value)
-	},
-	responsible_id: (folder: Folder, value: unknown) => {
-		return folder.responsible_lawyer.id === Number(value)
-	},
-	is_favorite: (folder: Folder, value: unknown) => {
-		return folder.is_favorite === (value === 'true')
-	},
+	client_id: (folder: Folder, value: unknown) =>
+		folder.client.id === Number(value),
+	responsible_id: (folder: Folder, value: unknown) =>
+		folder.responsible_lawyer.id === Number(value),
+	is_favorite: (folder: Folder, value: unknown) =>
+		folder.is_favorite === (value === 'true'),
 	date_from: (folder: Folder, value: unknown) => {
 		const dateStr = String(value)
 		if (!dateStr) {

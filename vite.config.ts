@@ -9,6 +9,14 @@ import tsconfigPaths from 'vite-tsconfig-paths'
 export default defineConfig({
 	base: '/yol-benicio/',
 	plugins: [tsconfigPaths(), react(), tailwindcss()],
+	server: {
+		proxy: {
+			'/api': {
+				target: 'http://localhost:3333',
+				changeOrigin: true
+			}
+		}
+	},
 	css: {
 		postcss: {
 			plugins: [autoprefixer()]

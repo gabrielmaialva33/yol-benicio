@@ -1,6 +1,6 @@
-import { API_BASE_URL } from '../../config/api'
-import type { ErrorResponse } from '../types/api'
-import type { User, AuthResponse } from '../types/domain'
+import {API_BASE_URL} from '../../config/api'
+import type {ErrorResponse} from '../types/api'
+import type {AuthResponse, User} from '../types/domain'
 
 // Storage keys
 const ACCESS_TOKEN_KEY = 'auth_token'
@@ -12,25 +12,28 @@ function isBrowser() {
 	)
 }
 
-export async function login(email: string, password: string): Promise<AuthResponse> {
+export async function login(
+	email: string,
+	password: string
+): Promise<AuthResponse> {
 	const response = await fetch(`${API_BASE_URL}/api/v1/sessions/sign-in`, {
 		method: 'POST',
 		headers: {
-			'Content-Type': 'application/json',
+			'Content-Type': 'application/json'
 		},
 		credentials: 'include',
 		body: JSON.stringify({
 			uid: email, // backend accepts uid (email or username)
-			password: password
+			password
 		})
 	})
 
 	if (!response.ok) {
-		const error = await response.json() as ErrorResponse
+		const error = (await response.json()) as ErrorResponse
 		throw new Error(error.errors?.[0]?.message || 'Falha no login')
 	}
 
-	const data = await response.json() as AuthResponse
+	const data = (await response.json()) as AuthResponse
 
 	// Save tokens
 	if (data.auth?.access_token) {
@@ -52,7 +55,7 @@ export async function logout(): Promise<void> {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
-					'Authorization': `Bearer ${token}`
+					Authorization: `Bearer ${token}`
 				},
 				credentials: 'include'
 			})
@@ -72,7 +75,7 @@ export async function getMe(): Promise<User> {
 
 	const response = await fetch(`${API_BASE_URL}/api/v1/me`, {
 		headers: {
-			'Authorization': `Bearer ${token}`,
+			Authorization: `Bearer ${token}`,
 			'Content-Type': 'application/json'
 		},
 		credentials: 'include'
@@ -86,7 +89,7 @@ export async function getMe(): Promise<User> {
 		throw new Error('Erro ao buscar dados do usuário')
 	}
 
-	const user = await response.json() as User
+	const user = (await response.json()) as User
 	return user
 }
 
@@ -99,7 +102,7 @@ export async function refreshToken(): Promise<string> {
 	const response = await fetch(`${API_BASE_URL}/api/v1/sessions/refresh`, {
 		method: 'POST',
 		headers: {
-			'Authorization': `Bearer ${refresh}`,
+			Authorization: `Bearer ${refresh}`,
 			'Content-Type': 'application/json'
 		},
 		credentials: 'include'

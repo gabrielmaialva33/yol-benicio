@@ -210,12 +210,9 @@ const eventTypeConfig = {
 	}
 }
 
-const getEventConfig = (eventType?: string) => {
-	return (
-		eventTypeConfig[eventType as keyof typeof eventTypeConfig] ||
-		eventTypeConfig.update
-	)
-}
+const getEventConfig = (eventType?: string) =>
+	eventTypeConfig[eventType as keyof typeof eventTypeConfig] ||
+	eventTypeConfig.update
 
 const getStatusIcon = (status?: string) => {
 	switch (status) {
