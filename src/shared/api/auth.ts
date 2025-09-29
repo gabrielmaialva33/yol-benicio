@@ -1,22 +1,6 @@
-import {z} from 'zod'
-import type {ApiResponse, ErrorResponse} from '../types/api'
-import type {User} from '../types/domain'
-
-const MIN_PASSWORD_LENGTH = 6
-
-const AuthSchema = z.object({
-	email: z.string().email('Email inválido'),
-	password: z
-		.string()
-		.min(MIN_PASSWORD_LENGTH, 'Senha deve ter no mínimo 6 caracteres')
-})
-export type AuthInput = z.infer<typeof AuthSchema>
-
-interface LoginResponse {
-	user: User
-	token: string
-	refreshToken?: string | undefined
-}
+import { API_BASE_URL } from '../../config/api'
+import type { ErrorResponse } from '../types/api'
+import type { User, AuthResponse } from '../types/domain'
 
 // Storage keys
 const ACCESS_TOKEN_KEY = 'auth_token'
@@ -28,101 +12,53 @@ function isBrowser() {
 	)
 }
 
-export async function login(data: AuthInput): Promise<LoginResponse> {
-	const response = await fetch('/api/auth/login', {
+export async function login(email: string, password: string): Promise<AuthResponse> {
+	const response = await fetch(`${API_BASE_URL}/api/v1/sessions/sign-in`, {
 		method: 'POST',
-		headers: {'Content-Type': 'application/json'},
-		body: JSON.stringify(data)
+		headers: {
+			'Content-Type': 'application/json',
+		},
+		credentials: 'include',
+		body: JSON.stringify({
+			uid: email, // backend accepts uid (email or username)
+			password: password
+		})
 	})
 
 	if (!response.ok) {
-		throw new Error(await extractErrorMessage(response))
+		const error = await response.json() as ErrorResponse
+		throw new Error(error.errors?.[0]?.message || 'Falha no login')
 	}
 
-	const raw = (await response.json()) as unknown
-	const result = normalizeLoginResponse(raw)
-	if (result.token) {
-		setStoredToken(result.token)
+	const data = await response.json() as AuthResponse
+
+	// Save tokens
+	if (data.auth?.access_token) {
+		setStoredToken(data.auth.access_token)
 	}
-	if (result.refreshToken) {
-		setStoredRefreshToken(result.refreshToken)
-	}
-	return result
-}
-
-async function extractErrorMessage(r: Response): Promise<string> {
-	try {
-		const error = (await r.json()) as ErrorResponse
-		return error.errors[0]?.message || 'Login failed'
-	} catch {
-		return 'Login failed'
-	}
-}
-
-function extractTokenLike(
-	obj: Record<string, unknown>,
-	key: 'access_token' | 'token'
-): string {
-	const auth = (obj.auth as Record<string, unknown>) || {}
-	const direct = key === 'access_token' ? auth.access_token : obj[key]
-	return typeof direct === 'string' ? (direct as string) : ''
-}
-
-function extractRefreshToken(obj: Record<string, unknown>): string | undefined {
-	const auth = (obj.auth as Record<string, unknown>) || {}
-	if (typeof auth.refresh_token === 'string') {
-		return auth.refresh_token as string
-	}
-	if (typeof obj.refresh_token === 'string') {
-		return obj.refresh_token as string
-	}
-}
-
-function normalizeLoginResponse(raw: unknown): LoginResponse {
-	const obj = (raw || {}) as Record<string, unknown>
-	const token =
-		extractTokenLike(obj, 'access_token') || extractTokenLike(obj, 'token')
-	const refreshToken = extractRefreshToken(obj)
-
-	const roles = Array.isArray(obj.roles) ? (obj.roles as User['roles']) : []
-	const now = new Date().toISOString()
-	const fullName =
-		(obj.full_name as string) || (obj.name as string) || 'Usuário'
-	const avatar = (obj.avatar_url as string) || (obj.avatarUrl as string) || ''
-	const email = String(obj.email || 'unknown@example.com')
-	const username = (obj.username as string) || email.split('@')[0] || 'user'
-	const metadataSource = (obj.metadata as Record<string, unknown>) || {}
-
-	const user: User = {
-		id: Number(obj.id ?? 0),
-		full_name: fullName,
-		email,
-		username,
-		avatar_url: avatar,
-		metadata: {
-			email_verified: Boolean(metadataSource.email_verified ?? true),
-			email_verified_at: (metadataSource.email_verified_at as string) || null,
-			last_login_at: now
-		},
-		roles,
-		created_at: (obj.created_at as string) || now,
-		updated_at: (obj.updated_at as string) || now
+	if (data.auth?.refresh_token) {
+		setStoredRefreshToken(data.auth.refresh_token)
 	}
 
-	return {user, token, refreshToken}
+	return data
 }
 
 export async function logout(): Promise<void> {
+	const token = getStoredToken()
+
 	try {
-		await fetch('/api/auth/logout', {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-				Authorization: `Bearer ${getStoredToken()}`
-			}
-		})
+		if (token) {
+			await fetch(`${API_BASE_URL}/api/v1/sessions/logout`, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+					'Authorization': `Bearer ${token}`
+				},
+				credentials: 'include'
+			})
+		}
 	} catch {
-		// ignorar erros de rede no logout
+		// Ignore network errors on logout
 	} finally {
 		clearStoredToken()
 	}
@@ -131,20 +67,60 @@ export async function logout(): Promise<void> {
 export async function getMe(): Promise<User> {
 	const token = getStoredToken()
 	if (!token) {
-		throw new Error('Unauthorized')
+		throw new Error('Não autenticado')
 	}
-	const response = await fetch('/api/auth/me', {
+
+	const response = await fetch(`${API_BASE_URL}/api/v1/me`, {
 		headers: {
-			Authorization: `Bearer ${token}`
-		}
+			'Authorization': `Bearer ${token}`,
+			'Content-Type': 'application/json'
+		},
+		credentials: 'include'
 	})
 
 	if (!response.ok) {
-		throw new Error('Unauthorized')
+		if (response.status === 401) {
+			clearStoredToken()
+			throw new Error('Token expirado ou inválido')
+		}
+		throw new Error('Erro ao buscar dados do usuário')
 	}
 
-	const result = (await response.json()) as ApiResponse<User>
-	return result.data
+	const user = await response.json() as User
+	return user
+}
+
+export async function refreshToken(): Promise<string> {
+	const refresh = getStoredRefreshToken()
+	if (!refresh) {
+		throw new Error('No refresh token available')
+	}
+
+	const response = await fetch(`${API_BASE_URL}/api/v1/sessions/refresh`, {
+		method: 'POST',
+		headers: {
+			'Authorization': `Bearer ${refresh}`,
+			'Content-Type': 'application/json'
+		},
+		credentials: 'include'
+	})
+
+	if (!response.ok) {
+		clearStoredToken()
+		throw new Error('Failed to refresh token')
+	}
+
+	const data = await response.json()
+
+	if (data.access_token) {
+		setStoredToken(data.access_token)
+		if (data.refresh_token) {
+			setStoredRefreshToken(data.refresh_token)
+		}
+		return data.access_token
+	}
+
+	throw new Error('No access token in refresh response')
 }
 
 export function getStoredToken(): string | null {
@@ -185,10 +161,4 @@ export function clearStoredToken(): void {
 
 export function isAuthenticated(): boolean {
 	return Boolean(getStoredToken())
-}
-
-export interface AuthState {
-	user: User | null
-	token: string | null
-	refreshToken?: string
 }

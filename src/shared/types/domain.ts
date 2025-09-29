@@ -61,16 +61,29 @@ export interface User extends Timestamps {
 	full_name: string
 	email: string
 	username: string
+	user_type?: 'employee' | 'manager' | 'client'
 	avatar_url?: string
 	phone?: string
 	oab_number?: string // OAB number for lawyers
-	metadata: {
+	metadata?: {
 		email_verified: boolean
 		email_verified_at: string | null
+		email_verification_token?: string
+		email_verification_sent_at?: string
 		last_login_at?: string
 		preferences?: Record<string, unknown>
 	}
 	roles: Role[]
+	deleted_at?: string | null
+	is_deleted?: boolean
+}
+
+// Authentication response from backend
+export interface AuthResponse extends User {
+	auth: {
+		access_token: string
+		refresh_token: string
+	}
 }
 
 export interface Role extends Timestamps {

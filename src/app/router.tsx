@@ -1,5 +1,6 @@
 import {lazy, Suspense} from 'react'
 import {Navigate, Route, Routes} from 'react-router'
+import {ProtectedRoute} from '@shared/components/ProtectedRoute'
 
 const LoginPage = lazy(() =>
 	import('../features/auth').then(m => ({default: m.LoginPage}))
@@ -39,7 +40,13 @@ export function AppRouter() {
 		>
 			<Routes>
 				<Route element={<LoginPage />} index={true} />
-				<Route element={<Dashboard />} path='/dashboard'>
+				<Route
+					element={
+						<ProtectedRoute>
+							<Dashboard />
+						</ProtectedRoute>
+					}
+					path='/dashboard'>
 					<Route element={<DashboardContent />} index={true} />
 					<Route
 						element={<FolderConsultationPage />}
