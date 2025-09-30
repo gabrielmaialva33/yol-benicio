@@ -45,8 +45,8 @@ describe('AreaDivisionCard', () => {
 		expect(await screen.findByText('Divisão por áreas')).toBeInTheDocument()
 		// aguarda primeiro item da legenda (primeiro fetch resolvido)
 		expect(await screen.findByText('Trabalhista')).toBeInTheDocument()
-		const MAX_ITEMS = 4
-		for (const item of mockData.slice(0, MAX_ITEMS)) {
+		const MaxItems = 4
+		for (const item of mockData.slice(0, MaxItems)) {
 			expect(screen.getByText(item.name)).toBeInTheDocument()
 		}
 		expect(screen.queryByText('Extra')).not.toBeInTheDocument()

@@ -10,28 +10,30 @@ import {useCallback, useId, useState} from 'react'
 import {useTranslation} from '@/core/i18n'
 import {createCompoundComponentContext} from './CompoundComponent'
 
+const REQUIRED_FIELD_INDICATOR = '*'
+
 // Types
-export interface FormField {
+interface FormField {
 	name: string
 	value: any
 	error?: string
 	touched?: boolean
 }
 
-export interface FormErrors {
+interface FormErrors {
 	[key: string]: string | undefined
 }
 
-export interface FormValues {
+interface FormValues {
 	[key: string]: any
 }
 
-export interface FormValidationRule {
+interface FormValidationRule {
 	validate: (value: any, values?: FormValues) => boolean
 	message: string
 }
 
-export interface FormFieldConfig {
+interface FormFieldConfig {
 	name: string
 	label: string
 	type?:
@@ -300,7 +302,7 @@ Form.Field = function FormField({
 							onChange={handleChange}
 							type='checkbox'
 						/>
-						<label className='ml-2 text-sm text-gray-700' htmlFor={id}>
+						<label className='ml-2 text-gray-700 text-sm' htmlFor={id}>
 							{label}
 						</label>
 					</div>
@@ -322,7 +324,7 @@ Form.Field = function FormField({
 							value={value}
 						/>
 						<button
-							className='absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600'
+							className='-translate-y-1/2 absolute top-1/2 right-3 text-gray-400 hover:text-gray-600'
 							onClick={() => setShowPassword(!showPassword)}
 							type='button'
 						>
@@ -357,7 +359,7 @@ Form.Field = function FormField({
 		return (
 			<div className={className}>
 				{renderInput()}
-				{hasError && <p className='mt-1 text-sm text-red-500'>{error}</p>}
+				{hasError && <p className='mt-1 text-red-500 text-sm'>{error}</p>}
 			</div>
 		)
 	}
@@ -365,15 +367,17 @@ Form.Field = function FormField({
 	return (
 		<div className={className}>
 			<label
-				className='mb-1 block text-sm font-medium text-gray-700'
+				className='mb-1 block font-medium text-gray-700 text-sm'
 				htmlFor={id}
 			>
 				{label}
-				{required && <span className='ml-1 text-red-500'>*</span>}
+				{required && (
+					<span className='ml-1 text-red-500'>{REQUIRED_FIELD_INDICATOR}</span>
+				)}
 			</label>
 			{renderInput()}
 			{hasError && (
-				<p className='mt-1 flex items-center gap-1 text-sm text-red-500'>
+				<p className='mt-1 flex items-center gap-1 text-red-500 text-sm'>
 					<AlertCircle className='h-3 w-3' />
 					{error}
 				</p>
@@ -399,10 +403,10 @@ Form.Section = function FormSection({
 			{(title || description) && (
 				<div>
 					{title && (
-						<h3 className='text-lg font-semibold text-gray-900'>{title}</h3>
+						<h3 className='font-semibold text-gray-900 text-lg'>{title}</h3>
 					)}
 					{description && (
-						<p className='text-sm text-gray-600'>{description}</p>
+						<p className='text-gray-600 text-sm'>{description}</p>
 					)}
 				</div>
 			)}
@@ -428,9 +432,9 @@ Form.Actions = function FormActions({
 				<>
 					<button
 						className={cn(
-							'px-4 py-2 rounded-lg border border-gray-200',
-							'hover:bg-gray-50 transition-colors',
-							'disabled:opacity-50 disabled:cursor-not-allowed'
+							'rounded-lg border border-gray-200 px-4 py-2',
+							'transition-colors hover:bg-gray-50',
+							'disabled:cursor-not-allowed disabled:opacity-50'
 						)}
 						disabled={!isDirty || isSubmitting}
 						onClick={actions.reset}
@@ -440,9 +444,9 @@ Form.Actions = function FormActions({
 					</button>
 					<button
 						className={cn(
-							'px-4 py-2 rounded-lg bg-brand-cyan text-white',
-							'hover:bg-cyan-600 transition-colors',
-							'disabled:opacity-50 disabled:cursor-not-allowed'
+							'rounded-lg bg-brand-cyan px-4 py-2 text-white',
+							'transition-colors hover:bg-cyan-600',
+							'disabled:cursor-not-allowed disabled:opacity-50'
 						)}
 						disabled={!(isDirty && isValid) || isSubmitting}
 						type='submit'
@@ -471,14 +475,14 @@ Form.ErrorSummary = function FormErrorSummary() {
 	return (
 		<div className='rounded-lg border border-red-200 bg-red-50 p-4'>
 			<div className='flex items-start gap-3'>
-				<AlertCircle className='h-5 w-5 text-red-500 shrink-0 mt-0.5' />
+				<AlertCircle className='mt-0.5 h-5 w-5 shrink-0 text-red-500' />
 				<div className='flex-1'>
 					<h4 className='font-semibold text-red-900'>
 						{t('errors.validation')}
 					</h4>
-					<ul className='mt-2 list-disc list-inside space-y-1'>
+					<ul className='mt-2 list-inside list-disc space-y-1'>
 						{visibleErrors.map(([key, error]) => (
-							<li className='text-sm text-red-700' key={key}>
+							<li className='text-red-700 text-sm' key={key}>
 								{error}
 							</li>
 						))}
@@ -501,8 +505,8 @@ Form.Success = function FormSuccess({
 		<div className='rounded-lg border border-green-200 bg-green-50 p-4'>
 			<div className='flex items-start justify-between gap-3'>
 				<div className='flex items-start gap-3'>
-					<Check className='h-5 w-5 text-green-500 shrink-0 mt-0.5' />
-					<p className='text-sm text-green-700'>{message}</p>
+					<Check className='mt-0.5 h-5 w-5 shrink-0 text-green-500' />
+					<p className='text-green-700 text-sm'>{message}</p>
 				</div>
 				{onClose && (
 					<button
@@ -544,3 +548,12 @@ Form.Success = function FormSuccess({
   <Form.Actions />
 </Form>
 */
+
+// Export types
+export type {
+	FormField,
+	FormErrors,
+	FormValues,
+	FormValidationRule,
+	FormFieldConfig
+}

@@ -70,17 +70,17 @@ export function FolderProcessForm({folder}: FolderProcessFormProps) {
 	}
 
 	return (
-		<div className='bg-white rounded-2xl shadow-sm border border-gray-100'>
+		<div className='rounded-2xl border border-gray-100 bg-white shadow-sm'>
 			{/* Header with Search */}
-			<div className='px-6 py-4 border-b border-gray-100'>
+			<div className='border-gray-100 border-b px-6 py-4'>
 				<div className='flex items-center justify-between'>
-					<h2 className='text-lg font-semibold text-gray-900'>
+					<h2 className='font-semibold text-gray-900 text-lg'>
 						{t('folders.process.title')}
 					</h2>
 					<div className='relative w-64'>
-						<Search className='absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400' />
+						<Search className='-translate-y-1/2 absolute top-1/2 left-3 h-4 w-4 text-gray-400' />
 						<input
-							className='w-full pl-10 pr-4 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#00B8D9] focus:border-[#00B8D9]'
+							className='w-full rounded-lg border border-gray-300 py-2 pr-4 pl-10 text-sm focus:border-[#00B8D9] focus:outline-none focus:ring-2 focus:ring-[#00B8D9]'
 							placeholder='Buscar'
 							type='text'
 						/>
@@ -89,7 +89,7 @@ export function FolderProcessForm({folder}: FolderProcessFormProps) {
 			</div>
 
 			{/* Form Content */}
-			<div className='p-6 space-y-8'>
+			<div className='space-y-8 p-6'>
 				{/* Identification Section */}
 				<FormSection>
 					<FormField
@@ -194,22 +194,22 @@ export function FolderProcessForm({folder}: FolderProcessFormProps) {
 						<label className='flex items-center gap-2'>
 							<input
 								checked={formData.totus}
-								className='w-4 h-4 text-[#00B8D9] border-gray-300 rounded focus:ring-[#00B8D9]'
+								className='h-4 w-4 rounded border-gray-300 text-[#00B8D9] focus:ring-[#00B8D9]'
 								onChange={e => updateField('totus', e.target.checked)}
 								type='checkbox'
 							/>
-							<span className='text-sm text-gray-700'>
+							<span className='text-gray-700 text-sm'>
 								{t('folders.process.systems.totus')}
 							</span>
 						</label>
 						<label className='flex items-center gap-2'>
 							<input
 								checked={formData.migrated}
-								className='w-4 h-4 text-[#00B8D9] border-gray-300 rounded focus:ring-[#00B8D9]'
+								className='h-4 w-4 rounded border-gray-300 text-[#00B8D9] focus:ring-[#00B8D9]'
 								onChange={e => updateField('migrated', e.target.checked)}
 								type='checkbox'
 							/>
-							<span className='text-sm text-gray-700'>
+							<span className='text-gray-700 text-sm'>
 								{t('folders.process.systems.migrated')}
 							</span>
 						</label>
@@ -403,16 +403,16 @@ export function FolderProcessForm({folder}: FolderProcessFormProps) {
 				</FormSection>
 
 				{/* Poles Section */}
-				<div className='border-t border-gray-100 pt-6'>
-					<div className='grid grid-cols-1 md:grid-cols-2 gap-6'>
-						<div className='bg-gray-50 rounded-lg p-4'>
+				<div className='border-gray-100 border-t pt-6'>
+					<div className='grid grid-cols-1 gap-6 md:grid-cols-2'>
+						<div className='rounded-lg bg-gray-50 p-4'>
 							<ToggleSwitch
 								checked={formData.activePole}
 								label='Polo ativo'
 								onChange={checked => updateField('activePole', checked)}
 							/>
 						</div>
-						<div className='bg-gray-50 rounded-lg p-4'>
+						<div className='rounded-lg bg-gray-50 p-4'>
 							<ToggleSwitch
 								checked={formData.passivePole}
 								label='Polo passivo'
@@ -423,8 +423,8 @@ export function FolderProcessForm({folder}: FolderProcessFormProps) {
 				</div>
 
 				{/* Observations Section */}
-				<div className='border-t border-gray-100 pt-6'>
-					<div className='grid grid-cols-1 md:grid-cols-3 gap-6'>
+				<div className='border-gray-100 border-t pt-6'>
+					<div className='grid grid-cols-1 gap-6 md:grid-cols-3'>
 						<FormField
 							colSpan={1}
 							label='Observação'

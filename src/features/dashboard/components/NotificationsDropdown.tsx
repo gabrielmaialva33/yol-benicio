@@ -6,31 +6,31 @@ const VIEW_ALL_NOTIFICATIONS = 'Ver todas as notificações'
 
 export function NotificationsDropdown() {
 	return (
-		<div className='absolute top-12 right-0 w-80 bg-gray-50 rounded-lg shadow-lg border border-gray-200 z-10'>
-			<div className='p-4 border-b'>
+		<div className='absolute top-12 right-0 z-10 w-80 rounded-lg border border-gray-200 bg-gray-50 shadow-lg'>
+			<div className='border-b p-4'>
 				<h3 className='font-semibold text-gray-800'>{NOTIFICATIONS_TITLE}</h3>
 			</div>
 			<div className='divide-y'>
 				{notifications.items.map(item => (
-					<div className='p-4 flex items-start space-x-4' key={item.id}>
+					<div className='flex items-start space-x-4 p-4' key={item.id}>
 						<img
 							alt='Avatar'
-							className='w-10 h-10 rounded-full'
+							className='h-10 w-10 rounded-full'
 							height={40}
 							src={item.avatar}
 							width={40}
 						/>
 						<div>
-							<p className='text-sm text-gray-800'>{item.title}</p>
-							<p className='text-xs text-gray-500'>
+							<p className='text-gray-800 text-sm'>{item.title}</p>
+							<p className='text-gray-500 text-xs'>
 								{DateTime.fromJSDate(item.time).toRelative()}
 							</p>
 						</div>
 					</div>
 				))}
 			</div>
-			<div className='p-2 text-center border-t'>
-				<button className='text-sm text-blue-600 hover:underline' type='button'>
+			<div className='border-t p-2 text-center'>
+				<button className='text-blue-600 text-sm hover:underline' type='button'>
 					{VIEW_ALL_NOTIFICATIONS}
 				</button>
 			</div>

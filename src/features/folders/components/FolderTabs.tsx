@@ -90,7 +90,7 @@ export function FolderTabs({filters, setFilters}: FolderTabsProps) {
 	}
 
 	return (
-		<div className='border-b border-gray-200'>
+		<div className='border-gray-200 border-b'>
 			<nav aria-label={TABS_LABEL} className='-mb-px flex space-x-8'>
 				{tabs.map(tab => {
 					const isActive = filters.status === tab.name
@@ -102,14 +102,14 @@ export function FolderTabs({filters, setFilters}: FolderTabsProps) {
 
 					return (
 						<button
-							className={`whitespace-nowrap pb-4 px-1 border-b-2 font-medium text-sm ${borderClass}`}
+							className={`whitespace-nowrap border-b-2 px-1 pb-4 font-medium text-sm ${borderClass}`}
 							key={tab.name}
 							onClick={() => handleTabClick(tab.name)}
 							type='button'
 						>
 							{tab.name}
 							<span
-								className={`ml-2 text-xs font-semibold py-1 px-2.5 rounded-full ${bgClass} ${textClass}`}
+								className={`ml-2 rounded-full px-2.5 py-1 font-semibold text-xs ${bgClass} ${textClass}`}
 							>
 								{tab.count.toString().padStart(2, '0')}
 							</span>

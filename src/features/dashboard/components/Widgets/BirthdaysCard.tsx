@@ -21,36 +21,36 @@ export function BirthdaysCard() {
 
 	return (
 		<Card>
-			<CardHeader className='flex items-center justify-between mb-4'>
+			<CardHeader className='mb-4 flex items-center justify-between'>
 				<CardTitle>{CARD_TITLE}</CardTitle>
 				<button
-					className='text-sm font-medium text-cyan-500 hover:text-cyan-600 cursor-pointer'
+					className='cursor-pointer font-medium text-cyan-500 text-sm hover:text-cyan-600'
 					type='button'
 				>
 					{VIEW_ALL_TEXT}
 				</button>
 			</CardHeader>
-			<p className='text-sm text-gray-500 mb-4'>{DESCRIPTION_TEXT}</p>
+			<p className='mb-4 text-gray-500 text-sm'>{DESCRIPTION_TEXT}</p>
 			<CardContent className='space-y-4'>
 				{birthdays.slice(0, 2).map(user => (
 					<div className='flex items-center space-x-3' key={user.email}>
 						<img
 							alt={user.name}
-							className='w-10 h-10 rounded-full'
+							className='h-10 w-10 rounded-full'
 							height={40}
 							src={user.avatar || PLACEHOLDER_IMAGE}
 							width={40}
 						/>
 						<div className='flex-1'>
 							<div className='font-medium text-gray-900'>{user.name}</div>
-							<div className='text-sm text-gray-500'>{user.email}</div>
+							<div className='text-gray-500 text-sm'>{user.email}</div>
 						</div>
 						<button
-							className='p-1 text-gray-400 hover:text-gray-600 cursor-pointer'
+							className='cursor-pointer p-1 text-gray-400 hover:text-gray-600'
 							type='button'
 						>
 							<svg
-								className='w-5 h-5'
+								className='h-5 w-5'
 								fill='none'
 								stroke='currentColor'
 								viewBox='0 0 24 24'

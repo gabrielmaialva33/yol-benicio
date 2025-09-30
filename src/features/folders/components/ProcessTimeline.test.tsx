@@ -59,8 +59,8 @@ describe('ProcessTimeline - Event Rendering', () => {
 })
 
 describe('ProcessTimeline - Documents and Metadata', () => {
-	const EXPECTED_ADDED_BY_COUNT = 4
-	const EXPECTED_AVATAR_COUNT = 4
+	const ExpectedAddedByCount = 4
+	const ExpectedAvatarCount = 4
 
 	it('should render document attachments', () => {
 		render(<ProcessTimeline folderId='123' />)
@@ -90,14 +90,14 @@ describe('ProcessTimeline - Documents and Metadata', () => {
 		render(<ProcessTimeline folderId='123' />)
 
 		const addedByTexts = screen.getAllByText(/Adicionado 29\/11\/2024 por/)
-		expect(addedByTexts).toHaveLength(EXPECTED_ADDED_BY_COUNT)
+		expect(addedByTexts).toHaveLength(ExpectedAddedByCount)
 	})
 
 	it('should render user avatars', () => {
 		render(<ProcessTimeline folderId='123' />)
 
 		const avatars = screen.getAllByRole('img')
-		expect(avatars).toHaveLength(EXPECTED_AVATAR_COUNT)
+		expect(avatars).toHaveLength(ExpectedAvatarCount)
 		expect(avatars[0]).toHaveAttribute('alt', 'Ana Silva')
 	})
 })

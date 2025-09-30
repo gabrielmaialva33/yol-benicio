@@ -14,6 +14,8 @@ interface DateRangePickerProps {
 	onToggle: () => void
 }
 
+const CALENDAR_ICON_TITLE = 'Calendar'
+
 export function DateRangePicker({
 	dateRange,
 	onDateRangeChange = () => null,
@@ -25,19 +27,19 @@ export function DateRangePicker({
 	return (
 		<div className='relative'>
 			<button
-				className='flex items-center space-x-2 text-sm text-gray-500 bg-gray-100 rounded-md p-2 cursor-pointer'
+				className='flex cursor-pointer items-center space-x-2 rounded-md bg-gray-100 p-2 text-gray-500 text-sm'
 				onClick={onToggle}
 				type='button'
 			>
 				<span>{formatDateRange(dateRange)}</span>
 				<div className='p-1'>
 					<svg
-						className='w-4 h-4'
+						className='h-4 w-4'
 						fill='none'
 						stroke='currentColor'
 						viewBox='0 0 24 24'
 					>
-						<title>Calendar</title>
+						<title>{CALENDAR_ICON_TITLE}</title>
 						<path
 							d='M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z'
 							strokeLinecap='round'
@@ -49,7 +51,7 @@ export function DateRangePicker({
 			</button>
 
 			{isOpen && (
-				<div className='absolute top-12 right-0 bg-white border rounded-lg shadow-lg z-10 p-4'>
+				<div className='absolute top-12 right-0 z-10 rounded-lg border bg-white p-4 shadow-lg'>
 					<DayPicker
 						classNames={{
 							...defaultClassNames,

@@ -21,7 +21,7 @@ export function TasksCard() {
 
 	return (
 		<Card>
-			<CardHeader className='flex items-center justify-between mb-4'>
+			<CardHeader className='mb-4 flex items-center justify-between'>
 				<CardTitle>{TASKS_CARD_TITLE}</CardTitle>
 				<DateRangePicker
 					dateRange={dateRange}

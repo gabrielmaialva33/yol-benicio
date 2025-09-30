@@ -53,7 +53,7 @@ function AreaPieChart({data}: AreaPieChartProps) {
 						const y = cy + radius * Math.sin(-midAngle * radian)
 						return (
 							<text
-								className='text-[10px] font-normal'
+								className='font-normal text-[10px]'
 								dominantBaseline='central'
 								fill='white'
 								textAnchor='middle'
@@ -84,31 +84,31 @@ export function AreaDivisionCard() {
 	})
 
 	// Paleta conforme Figma (ordem: Trabalhista, Cível, Amarelo, Vermelho)
-	const FIGMA_PALETTE = ['#00A76F', '#00B8D9', '#FFAB00', '#FF5630']
-	const MAX_SEGMENTS = 4
+	const FigmaPalette = ['#00A76F', '#00B8D9', '#FFAB00', '#FF5630']
+	const MaxSegments = 4
 	const displayData = areaDivision
-		.slice(0, MAX_SEGMENTS)
-		.map((d, i) => ({...d, color: FIGMA_PALETTE[i] ?? d.color}))
+		.slice(0, MaxSegments)
+		.map((d, i) => ({...d, color: FigmaPalette[i] ?? d.color}))
 
 	return (
 		<Card className='rounded-xl shadow-[0_4px_4px_rgba(0,0,0,0.03)]'>
 			<CardHeader className='mb-2'>
-				<CardTitle className='text-[25px] leading-[1.12] font-semibold tracking-[-0.02em]'>
+				<CardTitle className='font-semibold text-[25px] leading-[1.12] tracking-[-0.02em]'>
 					{TITLE_TEXT}
 				</CardTitle>
 			</CardHeader>
 			<CardContent className='flex items-center justify-between pb-4'>
-				<div className='w-[136px] h-[136px] relative'>
+				<div className='relative h-[136px] w-[136px]'>
 					<AreaPieChart data={displayData} />
 				</div>
 				<div className='space-y-2'>
 					{displayData.map(item => (
 						<div className='flex items-center gap-2' key={item.name}>
 							<div
-								className='w-3 h-3 rounded-[7px]'
+								className='h-3 w-3 rounded-[7px]'
 								style={{backgroundColor: item.color}}
 							/>
-							<span className='text-[13px] font-medium leading-[1.69] text-gray-800'>
+							<span className='font-medium text-[13px] text-gray-800 leading-[1.69]'>
 								{item.name}
 							</span>
 						</div>

@@ -23,15 +23,15 @@ export function FolderActivityCard() {
 			<CardContent className='space-y-4'>
 				{activities.map(activity => (
 					<div key={activity.label}>
-						<div className='flex justify-between items-center mb-2'>
-							<span className='text-sm font-medium text-gray-600'>
+						<div className='mb-2 flex items-center justify-between'>
+							<span className='font-medium text-gray-600 text-sm'>
 								{activity.label}
 							</span>
-							<span className='text-lg font-bold text-gray-900'>
+							<span className='font-bold text-gray-900 text-lg'>
 								{activity.value}
 							</span>
 						</div>
-						<div className='w-full bg-gray-200 rounded-full h-2'>
+						<div className='h-2 w-full rounded-full bg-gray-200'>
 							<div
 								className={`h-2 rounded-full ${activity.color}`}
 								style={{width: `${activity.percentage}%`}}

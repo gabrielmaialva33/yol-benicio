@@ -8,12 +8,12 @@ const SelectInput = (props: {
 	value?: string
 }) => (
 	<div className='flex flex-col gap-1'>
-		<label className='text-sm font-medium text-gray-700' htmlFor={props.label}>
+		<label className='font-medium text-gray-700 text-sm' htmlFor={props.label}>
 			{props.label}
 		</label>
 		<div className='relative'>
 			<select
-				className='w-full appearance-none bg-white border border-gray-300 rounded-md px-3 py-2 text-gray-700 focus:outline-none focus:ring-1 focus:ring-cyan-500'
+				className='w-full appearance-none rounded-md border border-gray-300 bg-white px-3 py-2 text-gray-700 focus:outline-none focus:ring-1 focus:ring-cyan-500'
 				defaultValue={props.defaultValue}
 				disabled={true}
 				id={props.label}
@@ -25,7 +25,7 @@ const SelectInput = (props: {
 					</option>
 				))}
 			</select>
-			<ChevronDown className='absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none' />
+			<ChevronDown className='-translate-y-1/2 pointer-events-none absolute top-1/2 right-3 h-4 w-4 text-gray-400' />
 		</div>
 	</div>
 )
@@ -36,11 +36,11 @@ const TextInput = (props: {
 	value?: string
 }) => (
 	<div className='flex flex-col gap-1'>
-		<label className='text-sm font-medium text-gray-700' htmlFor={props.label}>
+		<label className='font-medium text-gray-700 text-sm' htmlFor={props.label}>
 			{props.label}
 		</label>
 		<input
-			className='w-full bg-white border border-gray-300 rounded-md px-3 py-2 text-gray-700 focus:outline-none focus:ring-1 focus:ring-cyan-500'
+			className='w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-gray-700 focus:outline-none focus:ring-1 focus:ring-cyan-500'
 			id={props.label}
 			placeholder={props.placeholder}
 			readOnly={true}
@@ -52,29 +52,29 @@ const TextInput = (props: {
 
 const DateInput = (props: {label: string; value?: string}) => (
 	<div className='flex flex-col gap-1'>
-		<label className='text-sm font-medium text-gray-700' htmlFor={props.label}>
+		<label className='font-medium text-gray-700 text-sm' htmlFor={props.label}>
 			{props.label}
 		</label>
 		<div className='relative'>
 			<input
-				className='w-full bg-white border border-gray-300 rounded-md pl-3 pr-10 py-2 text-gray-700 focus:outline-none focus:ring-1 focus:ring-cyan-500'
+				className='w-full rounded-md border border-gray-300 bg-white py-2 pr-10 pl-3 text-gray-700 focus:outline-none focus:ring-1 focus:ring-cyan-500'
 				id={props.label}
 				readOnly={true}
 				type='text'
 				value={props.value}
 			/>
-			<Calendar className='absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none' />
+			<Calendar className='-translate-y-1/2 pointer-events-none absolute top-1/2 right-3 h-4 w-4 text-gray-400' />
 		</div>
 	</div>
 )
 
 const TextareaInput = (props: {label: string; value?: string}) => (
 	<div className='flex flex-col gap-1'>
-		<label className='text-sm font-medium text-gray-700' htmlFor={props.label}>
+		<label className='font-medium text-gray-700 text-sm' htmlFor={props.label}>
 			{props.label}
 		</label>
 		<textarea
-			className='w-full bg-gray-100 border border-gray-200 rounded-md px-3 py-2 text-gray-700 focus:outline-none focus:ring-1 focus:ring-cyan-500 h-24 resize-none'
+			className='h-24 w-full resize-none rounded-md border border-gray-200 bg-gray-100 px-3 py-2 text-gray-700 focus:outline-none focus:ring-1 focus:ring-cyan-500'
 			id={props.label}
 			placeholder='Digite aqui...'
 			value={props.value}
@@ -98,12 +98,12 @@ const ToggleSwitch = (props: {label: string; checked?: boolean}) => (
 				}`}
 			/>
 		</button>
-		<span className='text-sm text-gray-700'>{props.label}</span>
+		<span className='text-gray-700 text-sm'>{props.label}</span>
 	</div>
 )
 
 const ProcessInfoSection = (props: {folder: FolderDetail}) => (
-	<div className='grid grid-cols-1 md:grid-cols-4 gap-6 border-b pb-6 mb-6'>
+	<div className='mb-6 grid grid-cols-1 gap-6 border-b pb-6 md:grid-cols-4'>
 		<TextInput label='Nº Processo' value={props.folder.processNumber} />
 		<TextInput label='Nº CNJ' value={props.folder.cnjNumber} />
 		<SelectInput
@@ -172,7 +172,7 @@ const ProcessInfoSection = (props: {folder: FolderDetail}) => (
 )
 
 const OrganizationSection = (props: {folder: FolderDetail}) => (
-	<div className='grid grid-cols-1 md:grid-cols-3 gap-6 border-b pb-6 mb-6'>
+	<div className='mb-6 grid grid-cols-1 gap-6 border-b pb-6 md:grid-cols-3'>
 		<SelectInput
 			label='Área'
 			options={['Cível Contencioso']}
@@ -222,7 +222,7 @@ const OrganizationSection = (props: {folder: FolderDetail}) => (
 )
 
 const PoleSection = () => (
-	<div className='grid grid-cols-1 md:grid-cols-2 gap-6 mb-6'>
+	<div className='mb-6 grid grid-cols-1 gap-6 md:grid-cols-2'>
 		<div className='flex gap-4'>
 			<ToggleSwitch label='Polo Ativo' />
 			<ToggleSwitch label='Polo Passivo' />
@@ -231,7 +231,7 @@ const PoleSection = () => (
 )
 
 const NotesSection = (props: {folder: FolderDetail}) => (
-	<div className='grid grid-cols-1 md:grid-cols-3 gap-6'>
+	<div className='grid grid-cols-1 gap-6 md:grid-cols-3'>
 		<TextareaInput label='Observação' value={props.folder.observation} />
 		<TextareaInput
 			label='Detalhamento do Objeto'
@@ -243,7 +243,7 @@ const NotesSection = (props: {folder: FolderDetail}) => (
 
 export function FolderDetailForm(props: {folder: FolderDetail}) {
 	return (
-		<div className='bg-white rounded-lg p-6 shadow-sm'>
+		<div className='rounded-lg bg-white p-6 shadow-sm'>
 			<ProcessInfoSection folder={props.folder} />
 			<OrganizationSection folder={props.folder} />
 			<PoleSection />

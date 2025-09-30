@@ -65,12 +65,12 @@ export function SkeletonContainer({
  */
 export function CardSkeleton({className}: {className?: string}) {
 	return (
-		<div className={cn('bg-white rounded-lg shadow-sm p-6', className)}>
+		<div className={cn('rounded-lg bg-white p-6 shadow-sm', className)}>
 			<SkeletonContainer>
 				<Skeleton height={20} variant='rectangular' width='40%' />
 				<Skeleton height={16} variant='text' />
 				<Skeleton height={16} variant='text' width='80%' />
-				<div className='flex gap-4 mt-4'>
+				<div className='mt-4 flex gap-4'>
 					<Skeleton height={32} variant='rounded' width={100} />
 					<Skeleton height={32} variant='rounded' width={100} />
 				</div>
@@ -84,13 +84,13 @@ export function CardSkeleton({className}: {className?: string}) {
  */
 export function TableSkeleton({rows = 5}: {rows?: number}) {
 	return (
-		<div className='bg-white rounded-lg shadow-sm overflow-hidden'>
+		<div className='overflow-hidden rounded-lg bg-white shadow-sm'>
 			<div className='border-b bg-gray-50 p-4'>
 				<Skeleton height={20} variant='rectangular' width='30%' />
 			</div>
 			<div className='divide-y'>
 				{Array.from({length: rows}, (_, index) => index).map(index => (
-					<div className='p-4 flex gap-4' key={`skeleton-table-${index}`}>
+					<div className='flex gap-4 p-4' key={`skeleton-table-${index}`}>
 						<Skeleton height={40} variant='circular' width={40} />
 						<div className='flex-1 space-y-2'>
 							<Skeleton height={16} variant='text' width='60%' />
@@ -131,8 +131,8 @@ export function ListSkeleton({items = 3}: {items?: number}) {
  */
 export function WidgetSkeleton() {
 	return (
-		<div className='bg-white rounded-lg shadow-sm p-6'>
-			<div className='flex items-center justify-between mb-4'>
+		<div className='rounded-lg bg-white p-6 shadow-sm'>
+			<div className='mb-4 flex items-center justify-between'>
 				<Skeleton height={24} variant='rectangular' width='40%' />
 				<Skeleton height={32} variant='rounded' width={100} />
 			</div>

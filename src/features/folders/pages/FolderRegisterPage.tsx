@@ -2,6 +2,25 @@ import {Calendar, ChevronDown} from 'lucide-react'
 import {useState} from 'react'
 import {useNavigate} from 'react-router'
 
+// Constants
+const SELECT_PLACEHOLDER = 'Selecione...'
+const TEXTAREA_PLACEHOLDER = 'Digite aqui...'
+const SECTION_TITLES = {
+	BASIC_INFO: 'Informações Básicas',
+	COURT_INFO: 'Informações do Tribunal',
+	LOCATION_RESPONSIBLE: 'Localização e Responsáveis',
+	PROCESS_PARTIES: 'Partes do Processo',
+	ACTIVE_PARTY: 'Polo Ativo',
+	PASSIVE_PARTY: 'Polo Passivo',
+	VALUES: 'Valores',
+	DETAILED_INFO: 'Informações Detalhadas'
+} as const
+
+const BUTTON_LABELS = {
+	CANCEL: 'Cancelar',
+	SAVE: 'Salvar Pasta'
+} as const
+
 interface FormData {
 	// Basic information
 	processNumber: string
@@ -72,24 +91,24 @@ const SelectInput = (props: {
 	const id = toKebabCase(props.label)
 	return (
 		<div className='flex flex-col gap-2'>
-			<label className='text-sm font-medium text-[#161C24]' htmlFor={id}>
+			<label className='font-medium text-[#161C24] text-sm' htmlFor={id}>
 				{props.label}
 			</label>
 			<div className='relative'>
 				<select
-					className='w-full appearance-none bg-white border border-gray-300 rounded-lg px-4 py-3 text-gray-900 text-sm focus:outline-none focus:ring-2 focus:ring-[#00B8D9] focus:border-[#00B8D9] transition-colors'
+					className='w-full appearance-none rounded-lg border border-gray-300 bg-white px-4 py-3 text-gray-900 text-sm transition-colors focus:border-[#00B8D9] focus:outline-none focus:ring-2 focus:ring-[#00B8D9]'
 					id={id}
 					onChange={e => props.onChange(e.target.value)}
 					value={props.value}
 				>
-					<option value=''>Selecione...</option>
+					<option value=''>{SELECT_PLACEHOLDER}</option>
 					{props.options.map(option => (
 						<option key={option} value={option}>
 							{option}
 						</option>
 					))}
 				</select>
-				<ChevronDown className='absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none' />
+				<ChevronDown className='-translate-y-1/2 pointer-events-none absolute top-1/2 right-4 h-4 w-4 text-gray-400' />
 			</div>
 		</div>
 	)
@@ -104,11 +123,11 @@ const TextInput = (props: {
 	const id = toKebabCase(props.label)
 	return (
 		<div className='flex flex-col gap-2'>
-			<label className='text-sm font-medium text-[#161C24]' htmlFor={id}>
+			<label className='font-medium text-[#161C24] text-sm' htmlFor={id}>
 				{props.label}
 			</label>
 			<input
-				className='w-full bg-white border border-gray-300 rounded-lg px-4 py-3 text-gray-900 text-sm focus:outline-none focus:ring-2 focus:ring-[#00B8D9] focus:border-[#00B8D9] transition-colors'
+				className='w-full rounded-lg border border-gray-300 bg-white px-4 py-3 text-gray-900 text-sm transition-colors focus:border-[#00B8D9] focus:outline-none focus:ring-2 focus:ring-[#00B8D9]'
 				id={id}
 				onChange={e => props.onChange(e.target.value)}
 				placeholder={props.placeholder}
@@ -127,18 +146,18 @@ const DateInput = (props: {
 	const id = toKebabCase(props.label)
 	return (
 		<div className='flex flex-col gap-2'>
-			<label className='text-sm font-medium text-[#161C24]' htmlFor={id}>
+			<label className='font-medium text-[#161C24] text-sm' htmlFor={id}>
 				{props.label}
 			</label>
 			<div className='relative'>
 				<input
-					className='w-full bg-white border border-gray-300 rounded-lg pl-4 pr-12 py-3 text-gray-900 text-sm focus:outline-none focus:ring-2 focus:ring-[#00B8D9] focus:border-[#00B8D9] transition-colors'
+					className='w-full rounded-lg border border-gray-300 bg-white py-3 pr-12 pl-4 text-gray-900 text-sm transition-colors focus:border-[#00B8D9] focus:outline-none focus:ring-2 focus:ring-[#00B8D9]'
 					id={id}
 					onChange={e => props.onChange(e.target.value)}
 					type='date'
 					value={props.value}
 				/>
-				<Calendar className='absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none' />
+				<Calendar className='-translate-y-1/2 pointer-events-none absolute top-1/2 right-4 h-4 w-4 text-gray-400' />
 			</div>
 		</div>
 	)
@@ -152,14 +171,14 @@ const TextareaInput = (props: {
 	const id = toKebabCase(props.label)
 	return (
 		<div className='flex flex-col gap-2'>
-			<label className='text-sm font-medium text-[#161C24]' htmlFor={id}>
+			<label className='font-medium text-[#161C24] text-sm' htmlFor={id}>
 				{props.label}
 			</label>
 			<textarea
-				className='w-full bg-white border border-gray-300 rounded-lg px-4 py-3 text-gray-900 text-sm focus:outline-none focus:ring-2 focus:ring-[#00B8D9] focus:border-[#00B8D9] transition-colors h-24 resize-none'
+				className='h-24 w-full resize-none rounded-lg border border-gray-300 bg-white px-4 py-3 text-gray-900 text-sm transition-colors focus:border-[#00B8D9] focus:outline-none focus:ring-2 focus:ring-[#00B8D9]'
 				id={id}
 				onChange={e => props.onChange(e.target.value)}
-				placeholder='Digite aqui...'
+				placeholder={TEXTAREA_PLACEHOLDER}
 				value={props.value}
 			/>
 		</div>
@@ -187,7 +206,7 @@ const ToggleSwitch = (props: {
 				}`}
 			/>
 		</button>
-		<span className='text-sm font-medium text-[#161C24]'>{props.label}</span>
+		<span className='font-medium text-[#161C24] text-sm'>{props.label}</span>
 	</div>
 )
 
@@ -271,14 +290,14 @@ export function FolderRegisterPage() {
 	}
 
 	return (
-		<div className='p-8 bg-[#F1F1F2] min-h-full'>
+		<div className='min-h-full bg-[#F1F1F2] p-8'>
 			<form onSubmit={handleSubmit}>
 				{/* Informações Básicas */}
-				<div className='bg-white rounded-2xl p-8 shadow-sm border border-gray-100 mb-8'>
-					<h2 className='text-lg font-semibold text-[#161C24] mb-6'>
-						Informações Básicas
+				<div className='mb-8 rounded-2xl border border-gray-100 bg-white p-8 shadow-sm'>
+					<h2 className='mb-6 font-semibold text-[#161C24] text-lg'>
+						{SECTION_TITLES.BASIC_INFO}
 					</h2>
-					<div className='grid grid-cols-1 md:grid-cols-4 gap-6'>
+					<div className='grid grid-cols-1 gap-6 md:grid-cols-4'>
 						<TextInput
 							label='Nº Processo'
 							onChange={value => updateField('processNumber', value)}
@@ -367,11 +386,11 @@ export function FolderRegisterPage() {
 				</div>
 
 				{/* Informações do Tribunal */}
-				<div className='bg-white rounded-2xl p-8 shadow-sm border border-gray-100 mb-8'>
-					<h2 className='text-lg font-semibold text-[#161C24] mb-6'>
-						Informações do Tribunal
+				<div className='mb-8 rounded-2xl border border-gray-100 bg-white p-8 shadow-sm'>
+					<h2 className='mb-6 font-semibold text-[#161C24] text-lg'>
+						{SECTION_TITLES.COURT_INFO}
 					</h2>
-					<div className='grid grid-cols-1 md:grid-cols-4 gap-6'>
+					<div className='grid grid-cols-1 gap-6 md:grid-cols-4'>
 						<SelectInput
 							label='Órgão'
 							onChange={value => updateField('organ', value)}
@@ -430,11 +449,11 @@ export function FolderRegisterPage() {
 				</div>
 
 				{/* Localização e Responsáveis */}
-				<div className='bg-white rounded-2xl p-8 shadow-sm border border-gray-100 mb-8'>
-					<h2 className='text-lg font-semibold text-[#161C24] mb-6'>
-						Localização e Responsáveis
+				<div className='mb-8 rounded-2xl border border-gray-100 bg-white p-8 shadow-sm'>
+					<h2 className='mb-6 font-semibold text-[#161C24] text-lg'>
+						{SECTION_TITLES.LOCATION_RESPONSIBLE}
 					</h2>
-					<div className='grid grid-cols-1 md:grid-cols-3 gap-6'>
+					<div className='grid grid-cols-1 gap-6 md:grid-cols-3'>
 						<SelectInput
 							label='Área'
 							onChange={value => updateField('area', value)}
@@ -494,16 +513,16 @@ export function FolderRegisterPage() {
 				</div>
 
 				{/* Partes */}
-				<div className='bg-white rounded-2xl p-8 shadow-sm border border-gray-100 mb-8'>
-					<h2 className='text-lg font-semibold text-[#161C24] mb-6'>
-						Partes do Processo
+				<div className='mb-8 rounded-2xl border border-gray-100 bg-white p-8 shadow-sm'>
+					<h2 className='mb-6 font-semibold text-[#161C24] text-lg'>
+						{SECTION_TITLES.PROCESS_PARTIES}
 					</h2>
 
 					<div className='mb-8'>
-						<h3 className='text-md font-semibold text-[#161C24] mb-4'>
-							Polo Ativo
+						<h3 className='mb-4 font-semibold text-[#161C24] text-md'>
+							{SECTION_TITLES.ACTIVE_PARTY}
 						</h3>
-						<div className='grid grid-cols-1 md:grid-cols-3 gap-6'>
+						<div className='grid grid-cols-1 gap-6 md:grid-cols-3'>
 							<TextInput
 								label='Nome'
 								onChange={value =>
@@ -530,10 +549,10 @@ export function FolderRegisterPage() {
 					</div>
 
 					<div>
-						<h3 className='text-md font-semibold text-[#161C24] mb-4'>
-							Polo Passivo
+						<h3 className='mb-4 font-semibold text-[#161C24] text-md'>
+							{SECTION_TITLES.PASSIVE_PARTY}
 						</h3>
-						<div className='grid grid-cols-1 md:grid-cols-3 gap-6'>
+						<div className='grid grid-cols-1 gap-6 md:grid-cols-3'>
 							<TextInput
 								label='Nome'
 								onChange={value =>
@@ -561,9 +580,11 @@ export function FolderRegisterPage() {
 				</div>
 
 				{/* Valores */}
-				<div className='bg-white rounded-2xl p-8 shadow-sm border border-gray-100 mb-8'>
-					<h2 className='text-lg font-semibold text-[#161C24] mb-6'>Valores</h2>
-					<div className='grid grid-cols-1 md:grid-cols-3 gap-6'>
+				<div className='mb-8 rounded-2xl border border-gray-100 bg-white p-8 shadow-sm'>
+					<h2 className='mb-6 font-semibold text-[#161C24] text-lg'>
+						{SECTION_TITLES.VALUES}
+					</h2>
+					<div className='grid grid-cols-1 gap-6 md:grid-cols-3'>
 						<TextInput
 							label='Valor da Causa'
 							onChange={value => updateField('caseValue', value)}
@@ -586,11 +607,11 @@ export function FolderRegisterPage() {
 				</div>
 
 				{/* Informações Detalhadas */}
-				<div className='bg-white rounded-2xl p-8 shadow-sm border border-gray-100 mb-8'>
-					<h2 className='text-lg font-semibold text-[#161C24] mb-6'>
-						Informações Detalhadas
+				<div className='mb-8 rounded-2xl border border-gray-100 bg-white p-8 shadow-sm'>
+					<h2 className='mb-6 font-semibold text-[#161C24] text-lg'>
+						{SECTION_TITLES.DETAILED_INFO}
 					</h2>
-					<div className='grid grid-cols-1 md:grid-cols-2 gap-6'>
+					<div className='grid grid-cols-1 gap-6 md:grid-cols-2'>
 						<TextareaInput
 							label='Observação'
 							onChange={value => updateField('observation', value)}
@@ -607,17 +628,17 @@ export function FolderRegisterPage() {
 				{/* Buttons */}
 				<div className='flex justify-end gap-4'>
 					<button
-						className='px-6 py-3 text-sm font-semibold text-[#637381] bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors'
+						className='rounded-lg border border-gray-300 bg-white px-6 py-3 font-semibold text-[#637381] text-sm transition-colors hover:bg-gray-50'
 						onClick={() => navigate('/dashboard/folders/consultation')}
 						type='button'
 					>
-						Cancelar
+						{BUTTON_LABELS.CANCEL}
 					</button>
 					<button
-						className='px-6 py-3 text-sm font-semibold text-white bg-[#00B8D9] rounded-lg hover:bg-[#00B8D9]/90 transition-colors'
+						className='rounded-lg bg-[#00B8D9] px-6 py-3 font-semibold text-sm text-white transition-colors hover:bg-[#00B8D9]/90'
 						type='submit'
 					>
-						Salvar Pasta
+						{BUTTON_LABELS.SAVE}
 					</button>
 				</div>
 			</form>

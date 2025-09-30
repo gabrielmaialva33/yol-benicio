@@ -6,6 +6,9 @@ import type {AuthResponse, User} from '../types/domain'
 const ACCESS_TOKEN_KEY = 'auth_token'
 const REFRESH_TOKEN_KEY = 'auth_refresh_token'
 
+// HTTP Status Codes
+const HTTP_UNAUTHORIZED = 401
+
 function isBrowser() {
 	return (
 		typeof window !== 'undefined' && typeof window.localStorage !== 'undefined'
@@ -82,7 +85,7 @@ export async function getMe(): Promise<User> {
 	})
 
 	if (!response.ok) {
-		if (response.status === 401) {
+		if (response.status === HTTP_UNAUTHORIZED) {
 			clearStoredToken()
 			throw new Error('Token expirado ou inválido')
 		}

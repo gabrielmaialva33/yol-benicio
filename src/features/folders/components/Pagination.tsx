@@ -22,11 +22,11 @@ export function Pagination({
 	setLimit
 }: PaginationProps) {
 	return (
-		<div className='flex items-center justify-between mt-4'>
-			<div className='flex items-center space-x-2 text-sm text-gray-600'>
+		<div className='mt-4 flex items-center justify-between'>
+			<div className='flex items-center space-x-2 text-gray-600 text-sm'>
 				<span>{ROWS_PER_PAGE_LABEL}</span>
 				<select
-					className='border border-gray-300 rounded-md px-2 py-1 focus:outline-none focus:ring-1 focus:ring-cyan-500'
+					className='rounded-md border border-gray-300 px-2 py-1 focus:outline-none focus:ring-1 focus:ring-cyan-500'
 					onChange={e => {
 						setLimit(Number(e.target.value))
 						setPage(1) // Reset to first page on limit change
@@ -39,7 +39,7 @@ export function Pagination({
 				</select>
 			</div>
 			<div className='flex items-center space-x-4'>
-				<span className='text-sm text-gray-600'>
+				<span className='text-gray-600 text-sm'>
 					{String(page).padStart(2, '0')}
 					{PAGE_SEPARATOR}
 					{String(totalPages).padStart(2, '0')}
@@ -52,7 +52,7 @@ export function Pagination({
 						type='button'
 					>
 						<svg
-							className='w-5 h-5'
+							className='h-5 w-5'
 							fill='none'
 							stroke='currentColor'
 							viewBox='0 0 24 24'
@@ -73,7 +73,7 @@ export function Pagination({
 						type='button'
 					>
 						<svg
-							className='w-5 h-5'
+							className='h-5 w-5'
 							fill='none'
 							stroke='currentColor'
 							viewBox='0 0 24 24'

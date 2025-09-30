@@ -30,14 +30,14 @@ export function FolderConsultationPage() {
 
 	if (isInitialLoading) {
 		return (
-			<div className='p-4 sm:p-6 lg:p-8 bg-[#F1F1F2] min-h-full'>
-				<div className='bg-white rounded-2xl shadow-sm border border-gray-100'>
-					<div className='px-4 sm:px-6 lg:px-8 pt-6 lg:pt-8 pb-4'>
+			<div className='min-h-full bg-[#F1F1F2] p-4 sm:p-6 lg:p-8'>
+				<div className='rounded-2xl border border-gray-100 bg-white shadow-sm'>
+					<div className='px-4 pt-6 pb-4 sm:px-6 lg:px-8 lg:pt-8'>
 						<FolderTabs filters={filters} setFilters={setFilters} />
 					</div>
 					<div className='px-2 pb-6 lg:pb-8'>
-						<div className='flex flex-col lg:flex-row lg:items-center justify-between mb-6 gap-4'>
-							<div className='flex-1 min-w-0'>
+						<div className='mb-6 flex flex-col justify-between gap-4 lg:flex-row lg:items-center'>
+							<div className='min-w-0 flex-1'>
 								<FolderFilters
 									filters={filters}
 									isLoading={false}
@@ -59,30 +59,30 @@ export function FolderConsultationPage() {
 	}
 
 	return (
-		<div className='p-4 sm:p-6 lg:p-8 bg-[#F1F1F2] min-h-full'>
-			<div className='bg-white rounded-2xl shadow-sm border border-gray-100'>
-				<div className='px-4 sm:px-6 lg:px-8 pt-6 lg:pt-8 pb-4'>
+		<div className='min-h-full bg-[#F1F1F2] p-4 sm:p-6 lg:p-8'>
+			<div className='rounded-2xl border border-gray-100 bg-white shadow-sm'>
+				<div className='px-4 pt-6 pb-4 sm:px-6 lg:px-8 lg:pt-8'>
 					<FolderTabs filters={filters} setFilters={setFilters} />
 				</div>
 				<div className='px-2 pb-6 lg:pb-8'>
-					<div className='flex flex-col lg:flex-row lg:items-center justify-between mb-6 gap-4'>
-						<div className='flex-1 min-w-0'>
+					<div className='mb-6 flex flex-col justify-between gap-4 lg:flex-row lg:items-center'>
+						<div className='min-w-0 flex-1'>
 							<FolderFilters
 								filters={filters}
 								isLoading={isRefetching}
 								setFilters={setFilters}
 							/>
 						</div>
-						<div className='flex items-center space-x-3 px-4 sm:px-6 shrink-0'>
+						<div className='flex shrink-0 items-center space-x-3 px-4 sm:px-6'>
 							<button
-								className='px-3 sm:px-4 py-2 h-10 text-xs sm:text-sm font-bold text-[#00B8D9] bg-white border border-[#00B8D9]/48 rounded-[20px] hover:bg-[#00B8D9]/5 disabled:opacity-50 transition-colors whitespace-nowrap'
+								className='h-10 whitespace-nowrap rounded-[20px] border border-[#00B8D9]/48 bg-white px-3 py-2 font-bold text-[#00B8D9] text-xs transition-colors hover:bg-[#00B8D9]/5 disabled:opacity-50 sm:px-4 sm:text-sm'
 								disabled={selectedFolders.length === 0}
 								type='button'
 							>
 								{DOWNLOAD_BUTTON_LABEL}
 							</button>
 							<button
-								className='px-3 sm:px-4 py-2 h-10 text-xs sm:text-sm font-bold text-[#00B8D9] bg-white border border-[#00B8D9]/48 rounded-[20px] hover:bg-[#00B8D9]/5 transition-colors whitespace-nowrap'
+								className='h-10 whitespace-nowrap rounded-[20px] border border-[#00B8D9]/48 bg-white px-3 py-2 font-bold text-[#00B8D9] text-xs transition-colors hover:bg-[#00B8D9]/5 sm:px-4 sm:text-sm'
 								type='button'
 							>
 								{ADD_COLUMNS_BUTTON_LABEL}
@@ -96,12 +96,12 @@ export function FolderConsultationPage() {
 							setFilters={setFilters}
 						/>
 					</div>
-					<div className='mt-6 relative'>
+					<div className='relative mt-6'>
 						{isRefetching && (
-							<div className='absolute inset-0 bg-white/60 z-10 flex items-center justify-center'>
+							<div className='absolute inset-0 z-10 flex items-center justify-center bg-white/60'>
 								<div className='flex items-center space-x-2'>
-									<div className='animate-spin rounded-full h-6 w-6 border-b-2 border-[#00B8D9]' />
-									<span className='text-sm text-gray-600'>
+									<div className='h-6 w-6 animate-spin rounded-full border-[#00B8D9] border-b-2' />
+									<span className='text-gray-600 text-sm'>
 										{UPDATING_LABEL}
 									</span>
 								</div>
@@ -115,7 +115,7 @@ export function FolderConsultationPage() {
 							sort={sort}
 						/>
 					</div>
-					<div className='px-4 sm:px-6 mt-6'>
+					<div className='mt-6 px-4 sm:px-6'>
 						<Pagination {...pagination} setLimit={setLimit} setPage={setPage} />
 					</div>
 				</div>

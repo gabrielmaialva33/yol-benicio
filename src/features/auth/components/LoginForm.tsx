@@ -34,7 +34,7 @@ function InputField({
 				</label>
 				<input
 					autoComplete={autoComplete}
-					className='w-full bg-transparent text-base font-semibold text-gray-500 placeholder-gray-500 focus:outline-none'
+					className='w-full bg-transparent font-semibold text-base text-gray-500 placeholder-gray-500 focus:outline-none'
 					id={id}
 					name={name}
 					placeholder={placeholder}
@@ -94,9 +94,9 @@ export function LoginForm() {
 	const {errors, authError, loading, handleSubmit} = useLoginForm()
 
 	return (
-		<div className='flex w-full flex-col items-center justify-center gap-10 rounded-[15px] bg-white p-8 font-sans shadow-lg animate-in fade-in zoom-in-95 duration-1000 md:h-[607px] md:px-[32.5px] md:py-16'>
+		<div className='fade-in zoom-in-95 flex w-full animate-in flex-col items-center justify-center gap-10 rounded-[15px] bg-white p-8 font-sans shadow-lg duration-1000 md:h-[607px] md:px-[32.5px] md:py-16'>
 			<div className='flex flex-col items-center gap-[15px] self-stretch'>
-				<h2 className='self-stretch text-center text-[40px] font-semibold leading-[0.6em] tracking-[-0.01em] text-gray-900'>
+				<h2 className='self-stretch text-center font-semibold text-[40px] text-gray-900 leading-[0.6em] tracking-[-0.01em]'>
 					{LOGIN_TITLE}
 				</h2>
 			</div>
@@ -126,7 +126,7 @@ export function LoginForm() {
 					{errors.password && <p className='text-red-500'>{errors.password}</p>}
 					{authError && <p className='text-red-500'>{authError}</p>}
 					<a
-						className='self-stretch text-right text-base font-medium text-gray-500 underline'
+						className='self-stretch text-right font-medium text-base text-gray-500 underline'
 						href='/#'
 					>
 						{FORGOT_PASSWORD_LINK}
@@ -137,7 +137,7 @@ export function LoginForm() {
 					disabled={loading}
 					type='submit'
 				>
-					<span className='text-base font-semibold text-white'>
+					<span className='font-semibold text-base text-white'>
 						{loading ? 'Entrando...' : 'Entrar'}
 					</span>
 				</button>

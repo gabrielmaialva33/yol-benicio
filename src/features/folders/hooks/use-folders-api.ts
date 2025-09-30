@@ -75,8 +75,17 @@ export function useDeleteFolder() {
 	return folderApi.useDelete()
 }
 
+interface FolderStats {
+	active: number
+	newThisMonth: number
+	history: {
+		month: string
+		value: number
+	}[]
+}
+
 // Custom hook to toggle favorite
-export function useToggleFolderFavorite() {
+function useToggleFolderFavorite() {
 	const {token} = useAuth()
 	const queryClient = useQueryClient()
 
@@ -125,17 +134,8 @@ export function useToggleFolderFavorite() {
 	})
 }
 
-interface FolderStats {
-	active: number
-	newThisMonth: number
-	history: {
-		month: string
-		value: number
-	}[]
-}
-
 // Hook for statistics
-export function useFolderStats() {
+function useFolderStats() {
 	const {token} = useAuth()
 
 	return useQuery({
@@ -158,7 +158,7 @@ export function useFolderStats() {
 }
 
 // Consultation hook with advanced filters
-export function useFolderConsultation(filters?: QueryParams) {
+function useFolderConsultation(filters?: QueryParams) {
 	const queryParams: QueryParams = {
 		per_page: 10,
 		page: 1,
@@ -169,3 +169,5 @@ export function useFolderConsultation(filters?: QueryParams) {
 
 	return useFoldersList(queryParams)
 }
+
+export {useToggleFolderFavorite, useFolderStats, useFolderConsultation}

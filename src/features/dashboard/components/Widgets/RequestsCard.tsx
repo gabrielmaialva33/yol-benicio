@@ -101,13 +101,13 @@ export function RequestsCard() {
 
 	return (
 		<Card>
-			<CardHeader className='flex items-center justify-between mb-4'>
+			<CardHeader className='mb-4 flex items-center justify-between'>
 				<div>
 					<CardTitle>{CARD_TITLE}</CardTitle>
-					<p className='text-sm text-gray-500'>{CARD_DESCRIPTION}</p>
+					<p className='text-gray-500 text-sm'>{CARD_DESCRIPTION}</p>
 				</div>
 				<div className='flex items-center space-x-2'>
-					<div className='bg-gray-100 rounded p-1'>
+					<div className='rounded bg-gray-100 p-1'>
 						<button
 							aria-label={LABEL_PREV_MONTH}
 							className='p-1 text-gray-400 hover:text-gray-600'
@@ -115,7 +115,7 @@ export function RequestsCard() {
 							type='button'
 						>
 							<svg
-								className='w-4 h-4'
+								className='h-4 w-4'
 								fill='none'
 								stroke='currentColor'
 								viewBox='0 0 24 24'
@@ -130,7 +130,7 @@ export function RequestsCard() {
 							</svg>
 						</button>
 					</div>
-					<div className='bg-gray-100 rounded p-1'>
+					<div className='rounded bg-gray-100 p-1'>
 						<button
 							aria-label={LABEL_NEXT_MONTH}
 							className='p-1 text-gray-400 hover:text-gray-600'
@@ -138,7 +138,7 @@ export function RequestsCard() {
 							type='button'
 						>
 							<svg
-								className='w-4 h-4'
+								className='h-4 w-4'
 								fill='none'
 								stroke='currentColor'
 								viewBox='0 0 24 24'
@@ -157,22 +157,22 @@ export function RequestsCard() {
 			</CardHeader>
 			{currentRequest && (
 				<div className='mb-4'>
-					<div className='text-base font-semibold text-gray-800 mb-1'>
+					<div className='mb-1 font-semibold text-base text-gray-800'>
 						{currentMonthIndex === requests.length - 1
 							? TITLE_NEW_THIS_MONTH
 							: `${TITLE_NEW_IN} ${currentRequest.month}`}
 					</div>
 					<div className='flex items-center space-x-2'>
-						<span className='text-4xl font-bold text-gray-800'>
+						<span className='font-bold text-4xl text-gray-800'>
 							{currentRequest.new}
 						</span>
-						<div className='flex-1 bg-gray-200 rounded-full h-2'>
+						<div className='h-2 flex-1 rounded-full bg-gray-200'>
 							<div
 								className='h-2 rounded-full bg-teal-500'
 								style={{width: `${currentRequest.percentage}%`}}
 							/>
 						</div>
-						<span className='text-sm font-medium text-gray-500'>{`${Math.round(currentRequest.percentage)}%`}</span>
+						<span className='font-medium text-gray-500 text-sm'>{`${Math.round(currentRequest.percentage)}%`}</span>
 					</div>
 				</div>
 			)}

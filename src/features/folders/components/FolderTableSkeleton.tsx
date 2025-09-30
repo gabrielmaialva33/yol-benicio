@@ -32,7 +32,7 @@ export function FolderTableSkeleton() {
 						</th>
 					</tr>
 				</thead>
-				<tbody className='bg-white divide-y divide-gray-200'>
+				<tbody className='divide-y divide-gray-200 bg-white'>
 					{Array.from({length: 10}, (_, index) => index).map(index => (
 						<tr key={`skeleton-row-${index}`}>
 							<td className='px-6 py-4'>

@@ -111,7 +111,7 @@ function ChatWidget({
 
 	return (
 		<ChatWidgetProvider value={{...state, actions}}>
-			<div className='fixed bottom-4 right-4 z-50'>{children}</div>
+			<div className='fixed right-4 bottom-4 z-50'>{children}</div>
 		</ChatWidgetProvider>
 	)
 }
@@ -156,7 +156,7 @@ ChatWidget.Window = function ChatWidgetWindow({
 	return (
 		<div
 			className={cn(
-				'flex flex-col bg-white rounded-lg shadow-xl',
+				'flex flex-col rounded-lg bg-white shadow-xl',
 				'transition-all duration-300',
 				isMinimized ? 'h-14 w-80' : 'h-[600px] w-96'
 			)}
@@ -180,14 +180,14 @@ ChatWidget.Header = function ChatWidgetHeader() {
 						{activeConversation?.title || t('chat.title')}
 					</h3>
 					{!isMinimized && (
-						<p className='text-xs text-gray-500'>{t('chat.subtitle')}</p>
+						<p className='text-gray-500 text-xs'>{t('chat.subtitle')}</p>
 					)}
 				</div>
 			</div>
 			<div className='flex items-center gap-2'>
 				<button
 					aria-label='Minimize'
-					className='p-1 hover:bg-gray-100 rounded'
+					className='rounded p-1 hover:bg-gray-100'
 					onClick={actions.minimize}
 					type='button'
 				>
@@ -195,7 +195,7 @@ ChatWidget.Header = function ChatWidgetHeader() {
 				</button>
 				<button
 					aria-label='Close'
-					className='p-1 hover:bg-gray-100 rounded'
+					className='rounded p-1 hover:bg-gray-100'
 					onClick={actions.close}
 					type='button'
 				>
@@ -218,7 +218,7 @@ ChatWidget.Body = function ChatWidgetBody({
 		return null
 	}
 
-	return <div className='flex-1 flex flex-col overflow-hidden'>{children}</div>
+	return <div className='flex flex-1 flex-col overflow-hidden'>{children}</div>
 }
 
 // Sub-component: Conversation List
@@ -233,7 +233,7 @@ ChatWidget.ConversationList = function ChatWidgetConversationList() {
 	return (
 		<div className='flex-1 overflow-y-auto p-4'>
 			{conversations.length === 0 ? (
-				<div className='text-center text-sm text-gray-500'>
+				<div className='text-center text-gray-500 text-sm'>
 					<MessageSquare className='mx-auto mb-2 h-8 w-8 opacity-30' />
 					<p>{t('chat.noConversations')}</p>
 				</div>
@@ -242,8 +242,8 @@ ChatWidget.ConversationList = function ChatWidgetConversationList() {
 					{conversations.map(conversation => (
 						<button
 							className={cn(
-								'w-full text-left p-3 rounded-lg',
-								'hover:bg-gray-50 transition-colors',
+								'w-full rounded-lg p-3 text-left',
+								'transition-colors hover:bg-gray-50',
 								'border border-gray-200'
 							)}
 							key={conversation.id}
@@ -251,7 +251,7 @@ ChatWidget.ConversationList = function ChatWidgetConversationList() {
 							type='button'
 						>
 							<div className='font-medium text-sm'>{conversation.title}</div>
-							<div className='text-xs text-gray-500 mt-1'>
+							<div className='mt-1 text-gray-500 text-xs'>
 								{conversation.lastMessage}
 							</div>
 						</button>
@@ -271,7 +271,7 @@ ChatWidget.Messages = function ChatWidgetMessages() {
 	}
 
 	return (
-		<div className='flex-1 overflow-y-auto p-4 space-y-4'>
+		<div className='flex-1 space-y-4 overflow-y-auto p-4'>
 			{messages.map(message => (
 				<div
 					className={cn(
@@ -328,9 +328,9 @@ ChatWidget.Input = function ChatWidgetInput() {
 				/>
 				<button
 					className={cn(
-						'px-4 py-2 rounded-lg bg-brand-cyan text-white',
-						'hover:bg-cyan-600 transition-colors',
-						'disabled:opacity-50 disabled:cursor-not-allowed'
+						'rounded-lg bg-brand-cyan px-4 py-2 text-white',
+						'transition-colors hover:bg-cyan-600',
+						'disabled:cursor-not-allowed disabled:opacity-50'
 					)}
 					disabled={!value.trim()}
 					type='submit'

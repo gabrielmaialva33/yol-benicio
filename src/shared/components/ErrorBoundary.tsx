@@ -21,6 +21,8 @@ interface ErrorBoundaryProps {
  * Error Boundary reutilizável com diferentes níveis de granularidade
  */
 const AUTO_RESET_TIMEOUT = 10_000
+const ERROR_DETAILS_LABEL = 'Detalhes do erro'
+const RETRY_BUTTON_LABEL = 'Tentar novamente'
 
 export class ErrorBoundary extends Component<
 	ErrorBoundaryProps,
@@ -105,27 +107,27 @@ export class ErrorBoundary extends Component<
 							<h2 className={this.getTitleClasses(level)}>
 								{this.getErrorTitle(level)}
 							</h2>
-							<p className='text-gray-600 mt-2'>
+							<p className='mt-2 text-gray-600'>
 								{this.getErrorMessage(level)}
 							</p>
 							{showDetails && import.meta.env.DEV && (
 								<details className='mt-4 text-left'>
-									<summary className='cursor-pointer text-sm text-gray-500 hover:text-gray-700'>
-										Detalhes do erro
+									<summary className='cursor-pointer text-gray-500 text-sm hover:text-gray-700'>
+										{ERROR_DETAILS_LABEL}
 									</summary>
-									<pre className='mt-2 p-2 bg-gray-100 rounded text-xs overflow-auto max-w-full'>
+									<pre className='mt-2 max-w-full overflow-auto rounded bg-gray-100 p-2 text-xs'>
 										{error.stack || error.message}
 									</pre>
 								</details>
 							)}
 						</div>
 						<button
-							className='flex items-center gap-2 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors'
+							className='flex items-center gap-2 rounded-lg bg-blue-500 px-4 py-2 text-white transition-colors hover:bg-blue-600'
 							onClick={this.resetErrorBoundary}
 							type='button'
 						>
-							<RefreshCw className='w-4 h-4' />
-							Tentar novamente
+							<RefreshCw className='h-4 w-4' />
+							{RETRY_BUTTON_LABEL}
 						</button>
 					</div>
 				</div>

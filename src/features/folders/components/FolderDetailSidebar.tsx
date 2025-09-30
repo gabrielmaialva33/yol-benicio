@@ -23,11 +23,11 @@ export function FolderDetailSidebar({
 	onTabChange
 }: FolderDetailSidebarProps) {
 	return (
-		<div className='w-72 bg-white rounded-2xl p-6 shadow-sm border border-gray-100'>
+		<div className='w-72 rounded-2xl border border-gray-100 bg-white p-6 shadow-sm'>
 			<div className='relative mb-6'>
-				<Search className='absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400' />
+				<Search className='-translate-y-1/2 absolute top-1/2 left-4 h-4 w-4 text-gray-400' />
 				<input
-					className='w-full pl-12 pr-4 py-3 border border-gray-300 rounded-lg bg-white text-gray-900 text-sm focus:outline-none focus:ring-2 focus:ring-[#00B8D9] focus:border-[#00B8D9] transition-colors'
+					className='w-full rounded-lg border border-gray-300 bg-white py-3 pr-4 pl-12 text-gray-900 text-sm transition-colors focus:border-[#00B8D9] focus:outline-none focus:ring-2 focus:ring-[#00B8D9]'
 					placeholder='Buscar'
 					type='text'
 				/>
@@ -37,7 +37,7 @@ export function FolderDetailSidebar({
 					{menuItems.map(item => (
 						<li key={item.id}>
 							<button
-								className={`block w-full text-left px-4 py-3 rounded-lg text-sm font-medium transition-colors ${
+								className={`block w-full rounded-lg px-4 py-3 text-left font-medium text-sm transition-colors ${
 									activeTab === item.id
 										? 'bg-[#00B8D9] text-white shadow-sm'
 										: 'text-[#161C24] hover:bg-gray-50 hover:text-[#161C24]'

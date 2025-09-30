@@ -20,8 +20,8 @@ describe('createApiHooks', () => {
 			ok: false,
 			json: async () => ({errors: [{message: 'Falhou'}]})
 		} as unknown as Response)
-		const TEST_ID = 99
-		const {result} = renderHook(() => hooks.useGet(TEST_ID), {wrapper})
+		const TestId = 99
+		const {result} = renderHook(() => hooks.useGet(TestId), {wrapper})
 		await waitFor(() => expect(result.current.error).toBeTruthy())
 	})
 })

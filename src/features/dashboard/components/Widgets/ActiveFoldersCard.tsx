@@ -27,14 +27,14 @@ export function ActiveFoldersCard() {
 		<Card className='justify-between'>
 			<CardHeader className='mb-0'>
 				<CardTitle className='mb-2'>{ACTIVE_FOLDERS_TITLE}</CardTitle>
-				<div className='text-5xl font-bold text-[#1F2A37]'>
+				<div className='font-bold text-5xl text-[#1F2A37]'>
 					{folders?.active}
 				</div>
-				<div className='text-sm text-[var(--color-text-secondary)]'>
+				<div className='text-[var(--color-text-secondary)] text-sm'>
 					{folders?.newThisMonth} {NEW_THIS_MONTH_SUFFIX}
 				</div>
 			</CardHeader>
-			<CardContent className='h-24 -mx-6 mb-2'>
+			<CardContent className='-mx-6 mb-2 h-24'>
 				<ResponsiveContainer height='100%' width='100%'>
 					<LineChart data={folders?.history}>
 						<CartesianGrid strokeDasharray='3 3' vertical={false} />
@@ -49,7 +49,7 @@ export function ActiveFoldersCard() {
 				</ResponsiveContainer>
 			</CardContent>
 			<button
-				className='text-sm font-medium text-[#1CD6F4] underline'
+				className='font-medium text-[#1CD6F4] text-sm underline'
 				type='button'
 			>
 				{VIEW_FOLDERS_BUTTON}

@@ -10,7 +10,7 @@ interface FolderTableHeaderProps {
 }
 
 export function FolderTableHeader({
-	sort,
+	sort: _sort,
 	onSort,
 	allSelected,
 	onSelectAll
@@ -20,16 +20,16 @@ export function FolderTableHeader({
 	return (
 		<thead className='bg-[#F7F8F9]'>
 			<tr>
-				<th className='px-6 py-4 w-16' scope='col'>
+				<th className='w-16 px-6 py-4' scope='col'>
 					<input
 						checked={allSelected}
-						className='h-4 w-4 text-cyan-600 border-gray-300 rounded focus:ring-cyan-500'
+						className='h-4 w-4 rounded border-gray-300 text-cyan-600 focus:ring-cyan-500'
 						onChange={onSelectAll}
 						type='checkbox'
 					/>
 				</th>
 				<th
-					className='px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer w-32'
+					className='w-32 cursor-pointer px-6 py-4 text-left font-medium text-gray-500 text-xs uppercase tracking-wider'
 					onClick={() => onSort('code')}
 					scope='col'
 				>
@@ -37,7 +37,7 @@ export function FolderTableHeader({
 						{t('folders.fields.folderNumber')}
 						<img
 							alt='Sort'
-							className='w-4 h-4 ml-1 opacity-50'
+							className='ml-1 h-4 w-4 opacity-50'
 							height={16}
 							src={downIcon || '/placeholder.svg'}
 							width={16}
@@ -45,37 +45,37 @@ export function FolderTableHeader({
 					</div>
 				</th>
 				<th
-					className='px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-80'
+					className='w-80 px-6 py-4 text-left font-medium text-gray-500 text-xs uppercase tracking-wider'
 					scope='col'
 				>
 					{t('folders.fields.responsibleLawyer')}
 				</th>
 				<th
-					className='px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer w-40'
+					className='w-40 cursor-pointer px-6 py-4 text-left font-medium text-gray-500 text-xs uppercase tracking-wider'
 					onClick={() => onSort('created_at')}
 					scope='col'
 				>
 					{t('folders.fields.createdAt')}
 				</th>
 				<th
-					className='px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-20'
+					className='w-20 px-6 py-4 text-left font-medium text-gray-500 text-xs uppercase tracking-wider'
 					scope='col'
 				>
 					{t('folders.fields.documents')}
 				</th>
 				<th
-					className='px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-48'
+					className='w-48 px-6 py-4 text-left font-medium text-gray-500 text-xs uppercase tracking-wider'
 					scope='col'
 				>
 					{t('folders.fields.area')}
 				</th>
 				<th
-					className='px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-32'
+					className='w-32 px-6 py-4 text-left font-medium text-gray-500 text-xs uppercase tracking-wider'
 					scope='col'
 				>
 					{t('folders.fields.status')}
 				</th>
-				<th className='relative px-6 py-4 w-32' scope='col'>
+				<th className='relative w-32 px-6 py-4' scope='col'>
 					<span className='sr-only'>{t('common.actions')}</span>
 				</th>
 			</tr>

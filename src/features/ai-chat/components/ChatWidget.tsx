@@ -18,7 +18,7 @@ export function ChatWidget() {
 	}
 
 	return (
-		<div className='fixed bottom-6 right-6 flex flex-col bg-white rounded-lg shadow-2xl w-96 h-[600px] z-50 border border-gray-200'>
+		<div className='fixed right-6 bottom-6 z-50 flex h-[600px] w-96 flex-col rounded-lg border border-gray-200 bg-white shadow-2xl'>
 			<ChatWidgetHeader
 				onClose={handleClose}
 				onMinimize={() => setIsOpen(false)}
@@ -28,7 +28,7 @@ export function ChatWidget() {
 				<ChatWindow isLoading={isLoading} messages={messages} />
 			</div>
 
-			<div className='border-t border-gray-200 p-4'>
+			<div className='border-gray-200 border-t p-4'>
 				<ChatInput disabled={isLoading} onSend={handleSend} />
 			</div>
 		</div>

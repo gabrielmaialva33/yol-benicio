@@ -25,7 +25,7 @@ const StatusBadge = (props: {status: string}) => {
 	}
 	return (
 		<span
-			className={`${baseClasses} ${statusClasses[props.status as keyof typeof statusClasses] || 'bg-gray-50 text-gray-700 border-gray-200'}`}
+			className={`${baseClasses} ${statusClasses[props.status as keyof typeof statusClasses] || 'border-gray-200 bg-gray-50 text-gray-700'}`}
 		>
 			{props.status}
 		</span>
@@ -34,28 +34,28 @@ const StatusBadge = (props: {status: string}) => {
 
 export function FolderDetailHeader(props: FolderDetailHeaderProps) {
 	const navigate = useNavigate()
-	const FOLDER_ID_LENGTH = 4
+	const FolderIdLength = 4
 
 	return (
-		<div className='bg-white rounded-2xl p-8 shadow-sm border border-gray-100'>
+		<div className='rounded-2xl border border-gray-100 bg-white p-8 shadow-sm'>
 			<div className='flex items-center justify-between'>
 				<div className='flex items-center gap-6'>
 					<button
-						className='p-2 rounded-lg bg-white hover:bg-gray-100 border border-gray-300 transition-colors'
+						className='rounded-lg border border-gray-300 bg-white p-2 transition-colors hover:bg-gray-100'
 						onClick={() => navigate(-1)}
 						type='button'
 					>
-						<ChevronLeft className='w-5 h-5 text-gray-600' />
+						<ChevronLeft className='h-5 w-5 text-gray-600' />
 					</button>
 					<div>
-						<div className='flex items-center gap-3 mb-2'>
-							<h1 className='text-2xl font-semibold text-[#161C24]'>
+						<div className='mb-2 flex items-center gap-3'>
+							<h1 className='font-semibold text-2xl text-[#161C24]'>
 								{FOLDER_PREFIX}
-								{String(props.folder.id).substring(0, FOLDER_ID_LENGTH)}
+								{String(props.folder.id).substring(0, FolderIdLength)}
 							</h1>
 							<StatusBadge status={props.folder.status} />
 						</div>
-						<p className='text-sm text-[#919EAB]'>
+						<p className='text-[#919EAB] text-sm'>
 							{CREATED_AT_PREFIX} {props.folder.date} {AT_TIME_SEPARATOR}{' '}
 							{props.folder.time}
 						</p>
@@ -63,13 +63,13 @@ export function FolderDetailHeader(props: FolderDetailHeaderProps) {
 				</div>
 				<div className='flex items-center gap-3'>
 					<button
-						className='px-6 py-3 text-sm font-semibold text-[#637381] bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors'
+						className='rounded-lg border border-gray-300 bg-white px-6 py-3 font-semibold text-[#637381] text-sm transition-colors hover:bg-gray-50'
 						type='button'
 					>
 						{SAVE_BUTTON_LABEL}
 					</button>
 					<button
-						className='px-6 py-3 text-sm font-semibold text-white bg-[#00B8D9] rounded-lg hover:bg-[#00B8D9]/90 transition-colors'
+						className='rounded-lg bg-[#00B8D9] px-6 py-3 font-semibold text-sm text-white transition-colors hover:bg-[#00B8D9]/90'
 						type='button'
 					>
 						{ADD_FILES_BUTTON_LABEL}

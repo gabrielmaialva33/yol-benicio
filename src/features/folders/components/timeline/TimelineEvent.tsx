@@ -28,18 +28,18 @@ export function TimelineEvent({event}: TimelineEventProps) {
 				<div className='flex items-start justify-between'>
 					<div>
 						<div className='flex items-center gap-2'>
-							<h4 className='text-base font-medium text-gray-900'>
+							<h4 className='font-medium text-base text-gray-900'>
 								{event.title}
 							</h4>
 							{event.referenceNumber && (
-								<span className='text-sm text-cyan-600'>
+								<span className='text-cyan-600 text-sm'>
 									{event.referenceNumber}
 								</span>
 							)}
 						</div>
 
 						{/* Added by info */}
-						<div className='mt-1 flex items-center gap-2 text-sm text-gray-500'>
+						<div className='mt-1 flex items-center gap-2 text-gray-500 text-sm'>
 							<span>{eventDate.toFormat('dd/MM/yyyy')}</span>
 							<div className='flex items-center gap-1'>
 								<img

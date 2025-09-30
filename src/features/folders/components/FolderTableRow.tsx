@@ -66,72 +66,72 @@ export function FolderTableRow({
 
 	return (
 		<tr className={isSelected ? 'bg-cyan-50' : ''}>
-			<td className='px-3 sm:px-6 py-4 whitespace-nowrap'>
+			<td className='whitespace-nowrap px-3 py-4 sm:px-6'>
 				<input
 					checked={isSelected}
-					className='h-4 w-4 text-cyan-600 border-gray-300 rounded focus:ring-cyan-500'
+					className='h-4 w-4 rounded border-gray-300 text-cyan-600 focus:ring-cyan-500'
 					onChange={() => onSelect(folder.id.toString())}
 					type='checkbox'
 				/>
 			</td>
-			<td className='px-3 sm:px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900'>
+			<td className='whitespace-nowrap px-3 py-4 font-medium text-gray-900 text-sm sm:px-6'>
 				{`#${folder.code}`}
 			</td>
-			<td className='px-3 sm:px-6 py-4 whitespace-nowrap'>
+			<td className='whitespace-nowrap px-3 py-4 sm:px-6'>
 				<div className='flex items-center'>
-					<div className='flex-shrink-0 h-8 sm:h-10 w-8 sm:w-10'>
+					<div className='h-8 w-8 flex-shrink-0 sm:h-10 sm:w-10'>
 						<img
 							alt={folder.responsible_lawyer.full_name}
-							className='h-8 sm:h-10 w-8 sm:w-10 rounded-full object-cover'
+							className='h-8 w-8 rounded-full object-cover sm:h-10 sm:w-10'
 							height={40}
 							src={folder.responsible_lawyer.avatar_url || '/placeholder.svg'}
 							width={40}
 						/>
 					</div>
-					<div className='ml-3 sm:ml-4 min-w-0'>
-						<div className='text-sm font-medium text-gray-900 truncate'>
+					<div className='ml-3 min-w-0 sm:ml-4'>
+						<div className='truncate font-medium text-gray-900 text-sm'>
 							{folder.responsible_lawyer.full_name}
 						</div>
-						<div className='text-sm text-gray-500 truncate'>
+						<div className='truncate text-gray-500 text-sm'>
 							{folder.responsible_lawyer.email}
 						</div>
 					</div>
 				</div>
 			</td>
-			<td className='px-3 sm:px-6 py-4 whitespace-nowrap'>
-				<div className='text-sm font-medium text-gray-900'>{dateStr}</div>
-				<div className='text-sm text-gray-500'>{timeStr}</div>
+			<td className='whitespace-nowrap px-3 py-4 sm:px-6'>
+				<div className='font-medium text-gray-900 text-sm'>{dateStr}</div>
+				<div className='text-gray-500 text-sm'>{timeStr}</div>
 			</td>
-			<td className='px-3 sm:px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 text-center'>
+			<td className='whitespace-nowrap px-3 py-4 text-center font-medium text-gray-900 text-sm sm:px-6'>
 				{folder.documents_count}
 			</td>
-			<td className='px-3 sm:px-6 py-4 whitespace-nowrap text-sm text-gray-900'>
+			<td className='whitespace-nowrap px-3 py-4 text-gray-900 text-sm sm:px-6'>
 				<div className='truncate'>{areaNames[folder.area]}</div>
 			</td>
-			<td className='px-3 sm:px-6 py-4 whitespace-nowrap'>
+			<td className='whitespace-nowrap px-3 py-4 sm:px-6'>
 				<StatusBadge status={folder.status} />
 			</td>
-			<td className='px-3 sm:px-6 py-4 whitespace-nowrap text-right text-sm font-medium'>
+			<td className='whitespace-nowrap px-3 py-4 text-right font-medium text-sm sm:px-6'>
 				<div className='flex items-center justify-end space-x-3'>
 					<Link
-						className='p-3 bg-gray-100 hover:bg-gray-200 rounded-full text-gray-600 hover:text-gray-700 transition-colors'
+						className='rounded-full bg-gray-100 p-3 text-gray-600 transition-colors hover:bg-gray-200 hover:text-gray-700'
 						to={`/dashboard/folders/consultation/${folder.id}`}
 					>
 						<img
 							alt='Go'
-							className='w-6 h-6'
+							className='h-6 w-6'
 							height={24}
 							src={arrowRightIcon || '/placeholder.svg'}
 							width={24}
 						/>
 					</Link>
 					<button
-						className='p-3 hover:bg-gray-100 rounded-full text-gray-600 hover:text-gray-700 transition-colors'
+						className='rounded-full p-3 text-gray-600 transition-colors hover:bg-gray-100 hover:text-gray-700'
 						type='button'
 					>
 						<img
 							alt='More'
-							className='w-6 h-6 rotate-90'
+							className='h-6 w-6 rotate-90'
 							height={24}
 							src={moreIcon || '/placeholder.svg'}
 							width={24}

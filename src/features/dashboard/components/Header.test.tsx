@@ -139,9 +139,9 @@ describe('Header - Styling and Layout', () => {
 		render(<Header />)
 
 		// Should have multiple buttons (notifications, calendar, messages, logout)
-		const MINIMUM_BUTTON_COUNT = 4
+		const MinimumButtonCount = 4
 		const buttons = screen.getAllByRole('button')
-		expect(buttons.length).toBeGreaterThanOrEqual(MINIMUM_BUTTON_COUNT)
+		expect(buttons.length).toBeGreaterThanOrEqual(MinimumButtonCount)
 	})
 })
 

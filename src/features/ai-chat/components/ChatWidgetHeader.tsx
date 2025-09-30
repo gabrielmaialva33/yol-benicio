@@ -14,7 +14,7 @@ export function ChatWidgetHeader({onMinimize, onClose}: ChatWidgetHeaderProps) {
 	const {t} = useTranslation()
 
 	return (
-		<div className='flex items-center justify-between border-b border-border bg-brand-cyan p-4 rounded-t-lg'>
+		<div className='flex items-center justify-between rounded-t-lg border-border border-b bg-brand-cyan p-4'>
 			<div className='flex items-center gap-3'>
 				<div className='flex h-8 w-8 items-center justify-center rounded-lg bg-white/20'>
 					<MessageSquare className='h-4 w-4 text-white' />
@@ -23,7 +23,7 @@ export function ChatWidgetHeader({onMinimize, onClose}: ChatWidgetHeaderProps) {
 					<h3 className='font-semibold text-sm text-white'>
 						{t('chat.title')}
 					</h3>
-					<p className='text-xs text-white/80'>{t('chat.subtitle')}</p>
+					<p className='text-white/80 text-xs'>{t('chat.subtitle')}</p>
 				</div>
 			</div>
 

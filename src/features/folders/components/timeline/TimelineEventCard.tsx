@@ -76,7 +76,7 @@ export function TimelineEventCard({event}: TimelineEventCardProps) {
 						</div>
 					)}
 					<div className='flex-1'>
-						<p className={`text-sm font-medium ${statusColors.text}`}>
+						<p className={`font-medium text-sm ${statusColors.text}`}>
 							{event.actionText}
 						</p>
 						{event.actionDescription && (
@@ -87,7 +87,7 @@ export function TimelineEventCard({event}: TimelineEventCardProps) {
 					</div>
 					{event.status === 'success' && (
 						<button
-							className={`rounded-lg px-4 py-1.5 text-xs font-medium text-white transition-colors ${statusColors.button}`}
+							className={`rounded-lg px-4 py-1.5 font-medium text-white text-xs transition-colors ${statusColors.button}`}
 							type='button'
 						>
 							{/* Continuar */}
@@ -95,7 +95,7 @@ export function TimelineEventCard({event}: TimelineEventCardProps) {
 					)}
 					{event.status === 'error' && (
 						<button
-							className={`rounded-lg px-4 py-1.5 text-xs font-medium text-white transition-colors ${statusColors.button}`}
+							className={`rounded-lg px-4 py-1.5 font-medium text-white text-xs transition-colors ${statusColors.button}`}
 							type='button'
 						>
 							{/* Resolver */}
@@ -109,10 +109,10 @@ export function TimelineEventCard({event}: TimelineEventCardProps) {
 	// Categories and Action
 	if (event.category && !statusColors) {
 		return (
-			<div className='mt-3 rounded-lg border border-gray-200 p-4 hover:border-gray-300 transition-colors'>
+			<div className='mt-3 rounded-lg border border-gray-200 p-4 transition-colors hover:border-gray-300'>
 				<div className='flex items-center justify-between'>
 					<div className='flex-1'>
-						<p className='text-sm font-medium text-gray-900 mb-2'>
+						<p className='mb-2 font-medium text-gray-900 text-sm'>
 							{event.description}
 						</p>
 						<div className='flex flex-wrap gap-2'>
@@ -131,7 +131,7 @@ export function TimelineEventCard({event}: TimelineEventCardProps) {
 
 								return (
 									<span
-										className={`rounded-full px-3 py-1 text-xs font-medium ${badgeClasses}`}
+										className={`rounded-full px-3 py-1 font-medium text-xs ${badgeClasses}`}
 										key={cat}
 									>
 										{cat}
@@ -141,7 +141,7 @@ export function TimelineEventCard({event}: TimelineEventCardProps) {
 						</div>
 					</div>
 					<button
-						className='rounded-lg bg-white border border-gray-300 px-3 py-1.5 text-xs font-medium text-gray-700 hover:bg-gray-50 transition-colors'
+						className='rounded-lg border border-gray-300 bg-white px-3 py-1.5 font-medium text-gray-700 text-xs transition-colors hover:bg-gray-50'
 						type='button'
 					>
 						{/* Visualizar */}

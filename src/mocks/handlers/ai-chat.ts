@@ -6,6 +6,12 @@
 import {faker} from '@faker-js/faker'
 import {HttpResponse, http} from 'msw'
 
+// Constants
+const ONE_DAY_MS = 86_400_000
+const SLIGHTLY_LESS_THAN_ONE_DAY_MS = 86_000_000
+const TITLE_MAX_LENGTH = 50
+const WORDS_PER_CHUNK = 3
+
 interface ChatMessage {
 	id: number
 	conversation_id: number
@@ -29,7 +35,7 @@ let conversations: Conversation[] = [
 		id: 1,
 		title: 'Consulta sobre Recurso de Apelação',
 		user_id: 1,
-		created_at: new Date(Date.now() - 86_400_000).toISOString(), // 1 day ago
+		created_at: new Date(Date.now() - ONE_DAY_MS).toISOString(), // 1 day ago
 		updated_at: new Date().toISOString(),
 		messages: [
 			{
@@ -37,7 +43,7 @@ let conversations: Conversation[] = [
 				conversation_id: 1,
 				role: 'user',
 				content: 'O que é um recurso de apelação?',
-				created_at: new Date(Date.now() - 86_400_000).toISOString()
+				created_at: new Date(Date.now() - ONE_DAY_MS).toISOString()
 			},
 			{
 				id: 2,
@@ -45,7 +51,9 @@ let conversations: Conversation[] = [
 				role: 'assistant',
 				content:
 					'O **recurso de apelação** é um instrumento processual previsto no Código de Processo Civil (CPC) que permite às partes requererem ao tribunal de segundo grau a reforma ou anulação de uma sentença proferida em primeira instância.\n\n## Características principais:\n\n- **Prazo**: 15 dias úteis a partir da intimação da sentença\n- **Efeito**: Pode ser recebido com efeito suspensivo ou apenas devolutivo\n- **Competência**: Tribunal de Justiça (casos estaduais) ou Tribunal Regional Federal (casos federais)\n\nÉ importante observar que nem todas as decisões são apeláveis. Cabe apelação apenas contra sentenças que encerram o processo com ou sem resolução de mérito.',
-				created_at: new Date(Date.now() - 86_000_000).toISOString()
+				created_at: new Date(
+					Date.now() - SLIGHTLY_LESS_THAN_ONE_DAY_MS
+				).toISOString()
 			}
 		]
 	}
@@ -77,7 +85,7 @@ export const aiChatHandlers = [
 				// Create new conversation
 				conversation = {
 					id: nextConversationId++,
-					title: body.message.substring(0, 50),
+					title: body.message.substring(0, TITLE_MAX_LENGTH),
 					user_id: 1,
 					created_at: new Date().toISOString(),
 					updated_at: new Date().toISOString(),
@@ -123,7 +131,7 @@ export const aiChatHandlers = [
 						currentChunk += (i > 0 ? ' ' : '') + words[i]
 
 						// Send chunk every few words
-						if ((i + 1) % 3 === 0 || i === words.length - 1) {
+						if ((i + 1) % WORDS_PER_CHUNK === 0 || i === words.length - 1) {
 							const chunk = `data: ${JSON.stringify({content: currentChunk})}\n\n`
 							controller.enqueue(encoder.encode(chunk))
 							currentChunk = ''
@@ -175,7 +183,7 @@ export const aiChatHandlers = [
 			// Create new conversation
 			conversation = {
 				id: nextConversationId++,
-				title: body.message.substring(0, 50),
+				title: body.message.substring(0, TITLE_MAX_LENGTH),
 				user_id: 1,
 				created_at: new Date().toISOString(),
 				updated_at: new Date().toISOString(),

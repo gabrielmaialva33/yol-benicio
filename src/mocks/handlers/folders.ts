@@ -283,12 +283,12 @@ export const folderHandlers = [
 	// Create new folder
 	http.post('/api/folders', async ({request}) => {
 		const body = (await request.json()) as Partial<Folder>
-		const FOLDER_CODE_OFFSET = 1001
+		const FolderCodeOffset = 1001
 
 		const newFolder: Folder = {
 			...body,
 			id: Math.max(...allFolders.map(f => f.id)) + 1,
-			code: `${allFolders.length + FOLDER_CODE_OFFSET}/${DateTime.now().year}`,
+			code: `${allFolders.length + FolderCodeOffset}/${DateTime.now().year}`,
 			documents_count: 0,
 			tasks_count: 0,
 			hearings_count: 0,
@@ -374,8 +374,8 @@ export const folderHandlers = [
 
 	// Folder statistics
 	http.get('/api/folders/stats', () => {
-		const HUNDRED_PERCENT = 100
-		const RECENT_FOLDERS_COUNT = 5
+		const HundredPercent = 100
+		const RecentFoldersCount = 5
 		const stats = {
 			total: allFolders.length,
 			by_status: Object.values(FolderStatus).map(status => ({
@@ -384,14 +384,14 @@ export const folderHandlers = [
 				percentage:
 					(allFolders.filter(f => f.status === status).length /
 						allFolders.length) *
-					HUNDRED_PERCENT
+					HundredPercent
 			})),
 			by_area: Object.values(FolderArea).map(area => ({
 				area,
 				count: allFolders.filter(f => f.area === area).length,
 				percentage:
 					(allFolders.filter(f => f.area === area).length / allFolders.length) *
-					HUNDRED_PERCENT
+					HundredPercent
 			})),
 			favorites: allFolders.filter(f => f.is_favorite).length,
 			recent: allFolders
@@ -400,7 +400,7 @@ export const folderHandlers = [
 						DateTime.fromISO(b.created_at).toMillis() -
 						DateTime.fromISO(a.created_at).toMillis()
 				)
-				.slice(0, RECENT_FOLDERS_COUNT)
+				.slice(0, RecentFoldersCount)
 		}
 
 		const response: ApiResponse<typeof stats> = {data: stats}

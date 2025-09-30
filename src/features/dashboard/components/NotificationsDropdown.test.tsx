@@ -63,13 +63,13 @@ describe('NotificationsDropdown - Content Rendering', () => {
 })
 
 describe('NotificationsDropdown - Avatars and Time', () => {
-	const EXPECTED_NOTIFICATION_COUNT = 3
+	const ExpectedNotificationCount = 3
 
 	it('should render avatars for each notification', () => {
 		render(<NotificationsDropdown />)
 
 		const avatars = screen.getAllByAltText('Avatar')
-		expect(avatars).toHaveLength(EXPECTED_NOTIFICATION_COUNT)
+		expect(avatars).toHaveLength(ExpectedNotificationCount)
 		expect(avatars[0]).toHaveAttribute('src', 'https://example.com/avatar1.jpg')
 		expect(avatars[1]).toHaveAttribute('src', 'https://example.com/avatar2.jpg')
 		expect(avatars[2]).toHaveAttribute('src', 'https://example.com/avatar3.jpg')
@@ -79,7 +79,7 @@ describe('NotificationsDropdown - Avatars and Time', () => {
 		render(<NotificationsDropdown />)
 
 		const relativeTimes = screen.getAllByText('há 1 hora')
-		expect(relativeTimes).toHaveLength(EXPECTED_NOTIFICATION_COUNT)
+		expect(relativeTimes).toHaveLength(ExpectedNotificationCount)
 	})
 })
 

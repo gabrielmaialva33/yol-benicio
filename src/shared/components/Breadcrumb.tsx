@@ -10,6 +10,8 @@ interface BreadcrumbProps {
 	items: BreadcrumbItem[]
 }
 
+const BREADCRUMB_SEPARATOR = '•'
+
 export function Breadcrumb({items}: BreadcrumbProps) {
 	return (
 		<nav aria-label='Breadcrumb' className='flex items-center gap-4'>
@@ -17,18 +19,18 @@ export function Breadcrumb({items}: BreadcrumbProps) {
 				<div className='flex items-center gap-4' key={`${item.label}-${index}`}>
 					{item.href && !item.isActive ? (
 						<Link
-							className='text-sm font-normal text-[#212B36] hover:text-[#161C24] transition-colors'
+							className='font-normal text-[#212B36] text-sm transition-colors hover:text-[#161C24]'
 							to={item.href}
 						>
 							{item.label}
 						</Link>
 					) : (
-						<span className='text-sm font-normal text-[#919EAB]'>
+						<span className='font-normal text-[#919EAB] text-sm'>
 							{item.label}
 						</span>
 					)}
 					{index < items.length - 1 && (
-						<span className='text-[#919EAB]'>•</span>
+						<span className='text-[#919EAB]'>{BREADCRUMB_SEPARATOR}</span>
 					)}
 				</div>
 			))}

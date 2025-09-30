@@ -22,7 +22,7 @@ export function TimelineEventDocuments({
 		<div className='mt-3 space-y-2'>
 			{documents.map(doc => (
 				<div
-					className='flex items-center justify-between rounded-lg border border-gray-200 p-3 hover:border-gray-300 hover:shadow-sm transition-all'
+					className='flex items-center justify-between rounded-lg border border-gray-200 p-3 transition-all hover:border-gray-300 hover:shadow-sm'
 					key={doc.id}
 				>
 					<div className='flex items-center gap-3'>
@@ -31,7 +31,7 @@ export function TimelineEventDocuments({
 								<div className='relative h-8 w-6'>
 									<div className='absolute inset-0 rounded bg-red-500' />
 									<div className='absolute inset-x-1 bottom-1 flex items-center justify-center'>
-										<span className='text-[8px] font-bold text-white'>
+										<span className='font-bold text-[8px] text-white'>
 											{/* PDF */}
 										</span>
 									</div>
@@ -41,8 +41,8 @@ export function TimelineEventDocuments({
 							)}
 						</div>
 						<div>
-							<p className='text-sm font-medium text-gray-900'>{doc.name}</p>
-							<p className='text-xs text-gray-500'>{doc.size}</p>
+							<p className='font-medium text-gray-900 text-sm'>{doc.name}</p>
+							<p className='text-gray-500 text-xs'>{doc.size}</p>
 						</div>
 					</div>
 					<div className='flex gap-2'>

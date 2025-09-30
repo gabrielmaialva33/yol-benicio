@@ -53,7 +53,7 @@ export function FolderTable({
 	}
 
 	return (
-		<div className='bg-white rounded-lg border border-gray-200 overflow-hidden'>
+		<div className='overflow-hidden rounded-lg border border-gray-200 bg-white'>
 			<div className='overflow-x-auto'>
 				<table className='w-full min-w-[1200px] divide-y divide-gray-200'>
 					<FolderTableHeader
@@ -62,7 +62,7 @@ export function FolderTable({
 						onSort={handleSort}
 						sort={sort}
 					/>
-					<tbody className='bg-white divide-y divide-gray-200'>
+					<tbody className='divide-y divide-gray-200 bg-white'>
 						{folders.map(folder => (
 							<FolderTableRow
 								folder={folder}

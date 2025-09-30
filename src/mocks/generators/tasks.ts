@@ -24,9 +24,9 @@ const taskTemplates = [
 ]
 
 export function generateTask(overrides?: Partial<Task>): Task {
-	const MIN_HOUR_MULTIPLIER = 0.5
-	const MAX_HOUR_MULTIPLIER = 1.5
-	const MULTIPLE_OF = 0.5
+	const MinHourMultiplier = 0.5
+	const MaxHourMultiplier = 1.5
+	const MultipleOf = 0.5
 
 	const template = faker.helpers.arrayElement(taskTemplates)
 	const status = faker.helpers.arrayElement(Object.values(TaskStatus))
@@ -78,9 +78,9 @@ export function generateTask(overrides?: Partial<Task>): Task {
 			estimated_hours: template.estimatedHours,
 			...(isCompleted && {
 				actual_hours: faker.number.float({
-					min: template.estimatedHours * MIN_HOUR_MULTIPLIER,
-					max: template.estimatedHours * MAX_HOUR_MULTIPLIER,
-					multipleOf: MULTIPLE_OF
+					min: template.estimatedHours * MinHourMultiplier,
+					max: template.estimatedHours * MaxHourMultiplier,
+					multipleOf: MultipleOf
 				})
 			}),
 			tags: generateTaskTags(priority, status),

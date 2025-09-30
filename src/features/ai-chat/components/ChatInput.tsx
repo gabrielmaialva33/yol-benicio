@@ -74,7 +74,7 @@ function ChatInput({onSend, disabled = false, placeholder}: ChatInputProps) {
 
 	return (
 		<form
-			className='border-t border-border bg-surface p-4'
+			className='border-border border-t bg-surface p-4'
 			onSubmit={handleSubmit}
 		>
 			<ChatInputField
@@ -144,7 +144,7 @@ ChatInputField.displayName = 'ChatInputField'
 function ChatInputHint() {
 	const {t} = useTranslation()
 
-	return <div className='mt-2 text-xs text-gray-500'>{t('chat.sendHint')}</div>
+	return <div className='mt-2 text-gray-500 text-xs'>{t('chat.sendHint')}</div>
 }
 
 // Export component

@@ -62,7 +62,7 @@ describe('DashboardContent - Widget Rendering', () => {
 })
 
 describe('DashboardContent - Layout Structure', () => {
-	const EXPECTED_GRID_SECTIONS = 3
+	const ExpectedGridSections = 3
 
 	it('should have correct grid layout structure', () => {
 		const {container} = render(<DashboardContent />)
@@ -72,7 +72,7 @@ describe('DashboardContent - Layout Structure', () => {
 
 		// Check for three grid sections
 		const grids = container.querySelectorAll('.grid')
-		expect(grids).toHaveLength(EXPECTED_GRID_SECTIONS)
+		expect(grids).toHaveLength(ExpectedGridSections)
 
 		// First grid - 3 columns on large screens
 		expect(grids[0]).toHaveClass(

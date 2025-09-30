@@ -19,7 +19,7 @@ export function BillingCard() {
 	const percentageIcon =
 		billingData.percentage > 0 ? (
 			<svg
-				className='w-4 h-4'
+				className='h-4 w-4'
 				fill='none'
 				stroke='currentColor'
 				viewBox='0 0 24 24'
@@ -34,7 +34,7 @@ export function BillingCard() {
 			</svg>
 		) : (
 			<svg
-				className='w-4 h-4'
+				className='h-4 w-4'
 				fill='none'
 				stroke='currentColor'
 				viewBox='0 0 24 24'
@@ -51,7 +51,7 @@ export function BillingCard() {
 
 	return (
 		<Card tinted={true}>
-			<CardHeader className='flex items-start justify-between mb-4'>
+			<CardHeader className='mb-4 flex items-start justify-between'>
 				<CardTitle className='text-[var(--color-text-primary)]'>
 					{BILLING_TITLE}
 				</CardTitle>
@@ -65,10 +65,10 @@ export function BillingCard() {
 					<div className='text-sm'>{LAST_MONTH_TEXT}</div>
 				</div>
 			</CardHeader>
-			<div className='text-[40px] font-bold mb-4 leading-none'>
+			<div className='mb-4 font-bold text-[40px] leading-none'>
 				{billingData.value}
 			</div>
-			<CardContent className='h-16 -mx-6 -mb-6'>
+			<CardContent className='-mx-6 -mb-6 h-16'>
 				<ResponsiveContainer height='100%' width='100%'>
 					<LineChart data={billingData.chart}>
 						<Line

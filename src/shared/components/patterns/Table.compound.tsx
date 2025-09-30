@@ -19,8 +19,10 @@ import {PAGINATION} from '@/core/constants/ui'
 import {useTranslation} from '@/core/i18n'
 import {createCompoundComponentContext} from './CompoundComponent'
 
+const PAGINATION_RANGE_SEPARATOR = '-'
+
 // Types
-export interface TableColumn<T> {
+interface TableColumn<T> {
 	key: keyof T | string
 	header: string
 	sortable?: boolean
@@ -29,15 +31,15 @@ export interface TableColumn<T> {
 	className?: string
 }
 
-export interface TablePaginationConfig {
+interface TablePaginationConfig {
 	page: number
 	pageSize: number
 	total: number
 }
 
-export type SortDirection = 'asc' | 'desc' | null
+type SortDirection = 'asc' | 'desc' | null
 
-export interface TableSort<T> {
+interface TableSort<T> {
 	key: keyof T | string
 	direction: SortDirection
 }
@@ -191,10 +193,10 @@ Table.Search = function TableSearch({
 	return (
 		<form className='flex gap-2' onSubmit={handleSearch}>
 			<div className='relative flex-1'>
-				<Search className='absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400' />
+				<Search className='-translate-y-1/2 absolute top-1/2 left-3 h-4 w-4 text-gray-400' />
 				<input
 					className={cn(
-						'w-full rounded-lg border border-gray-200 pl-10 pr-4 py-2',
+						'w-full rounded-lg border border-gray-200 py-2 pr-4 pl-10',
 						'focus:outline-none focus:ring-2 focus:ring-brand-cyan'
 					)}
 					onChange={e => setValue(e.target.value)}
@@ -204,8 +206,8 @@ Table.Search = function TableSearch({
 			</div>
 			<button
 				className={cn(
-					'px-4 py-2 rounded-lg bg-brand-cyan text-white',
-					'hover:bg-cyan-600 transition-colors'
+					'rounded-lg bg-brand-cyan px-4 py-2 text-white',
+					'transition-colors hover:bg-cyan-600'
 				)}
 				type='submit'
 			>
@@ -223,7 +225,7 @@ Table.Filters = function TableFilters({children}: {children: React.ReactNode}) {
 	return (
 		<div className='space-y-2'>
 			<button
-				className='flex items-center gap-2 text-sm text-gray-600 hover:text-gray-900'
+				className='flex items-center gap-2 text-gray-600 text-sm hover:text-gray-900'
 				onClick={() => setIsOpen(!isOpen)}
 			>
 				<Filter className='h-4 w-4' />
@@ -288,9 +290,10 @@ Table.Pagination = function TablePagination() {
 
 	return (
 		<div className='flex items-center justify-between'>
-			<div className='text-sm text-gray-600'>
-				{t('pagination.showing')} {start}-{end} {t('pagination.of')} {total}{' '}
-				{t('pagination.results')}
+			<div className='text-gray-600 text-sm'>
+				{t('pagination.showing')} {start}
+				{PAGINATION_RANGE_SEPARATOR}
+				{end} {t('pagination.of')} {total} {t('pagination.results')}
 			</div>
 
 			<div className='flex items-center gap-4'>
@@ -309,8 +312,8 @@ Table.Pagination = function TablePagination() {
 				<div className='flex items-center gap-2'>
 					<button
 						className={cn(
-							'p-1 rounded hover:bg-gray-100',
-							'disabled:opacity-50 disabled:cursor-not-allowed'
+							'rounded p-1 hover:bg-gray-100',
+							'disabled:cursor-not-allowed disabled:opacity-50'
 						)}
 						disabled={page <= 1}
 						onClick={() => actions.setPage(page - 1)}
@@ -324,8 +327,8 @@ Table.Pagination = function TablePagination() {
 
 					<button
 						className={cn(
-							'p-1 rounded hover:bg-gray-100',
-							'disabled:opacity-50 disabled:cursor-not-allowed'
+							'rounded p-1 hover:bg-gray-100',
+							'disabled:cursor-not-allowed disabled:opacity-50'
 						)}
 						disabled={page >= totalPages}
 						onClick={() => actions.setPage(page + 1)}
@@ -355,10 +358,10 @@ function TableHeader<T>({
 	onSelectAll: () => void
 }) {
 	return (
-		<thead className='bg-gray-50 border-b border-gray-200'>
+		<thead className='border-gray-200 border-b bg-gray-50'>
 			<tr>
 				{selectable && (
-					<th className='px-4 py-3 w-10'>
+					<th className='w-10 px-4 py-3'>
 						<input
 							checked={allSelected}
 							onChange={onSelectAll}
@@ -369,7 +372,7 @@ function TableHeader<T>({
 				{columns.map(column => (
 					<th
 						className={cn(
-							'px-4 py-3 text-left text-sm font-semibold text-gray-900',
+							'px-4 py-3 text-left font-semibold text-gray-900 text-sm',
 							column.className,
 							column.sortable && 'cursor-pointer hover:bg-gray-100'
 						)}
@@ -425,7 +428,7 @@ function TableBody<T extends Record<string, any>>({
 		<tbody className='divide-y divide-gray-200'>
 			{data.map((item, index) => (
 				<tr
-					className='hover:bg-gray-50 transition-colors'
+					className='transition-colors hover:bg-gray-50'
 					key={item.id || index}
 				>
 					{selectedRows.size > 0 && (
@@ -475,11 +478,11 @@ function TableSkeleton({columns}: {columns: number}) {
 	return (
 		<div className='overflow-x-auto rounded-lg border border-gray-200'>
 			<table className='w-full'>
-				<thead className='bg-gray-50 border-b border-gray-200'>
+				<thead className='border-gray-200 border-b bg-gray-50'>
 					<tr>
 						{Array.from({length: columns}).map((_, i) => (
 							<th className='px-4 py-3' key={i}>
-								<div className='h-4 w-24 bg-gray-200 rounded animate-pulse' />
+								<div className='h-4 w-24 animate-pulse rounded bg-gray-200' />
 							</th>
 						))}
 					</tr>
@@ -489,7 +492,7 @@ function TableSkeleton({columns}: {columns: number}) {
 						<tr key={i}>
 							{Array.from({length: columns}).map((_, j) => (
 								<td className='px-4 py-3' key={j}>
-									<div className='h-4 w-32 bg-gray-200 rounded animate-pulse' />
+									<div className='h-4 w-32 animate-pulse rounded bg-gray-200' />
 								</td>
 							))}
 						</tr>
@@ -518,3 +521,6 @@ function TableSkeleton({columns}: {columns: number}) {
   <Table.Pagination />
 </Table>
 */
+
+// Export types
+export type {TableColumn, TablePaginationConfig, SortDirection, TableSort}

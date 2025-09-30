@@ -129,7 +129,7 @@ function _SelectField({
 					</option>
 				))}
 			</select>
-			<ChevronDown className='absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400 pointer-events-none' />
+			<ChevronDown className='-translate-y-1/2 pointer-events-none absolute top-1/2 right-3 h-4 w-4 text-gray-400' />
 		</>
 	)
 }
@@ -244,7 +244,7 @@ export function FormField({
 		<div className={`${spanClass} ${className}`}>
 			{/* biome-ignore lint/a11y/noLabelWithoutControl: Label wraps input via sub-components */}
 			<label className='block'>
-				<span className='block text-xs font-medium text-gray-600 mb-1'>
+				<span className='mb-1 block font-medium text-gray-600 text-xs'>
 					{label}
 				</span>
 				<div className='relative'>

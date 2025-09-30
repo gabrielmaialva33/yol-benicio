@@ -65,7 +65,7 @@ const SidebarHeader = (props: {isCollapsed: boolean; toggle: () => void}) => (
 	>
 		<img
 			alt='Logo'
-			className={`cursor-pointer duration-500 ${props.isCollapsed ? 'w-[42px] h-[35px]' : 'w-[159px]'}`}
+			className={`cursor-pointer duration-500 ${props.isCollapsed ? 'h-[35px] w-[42px]' : 'w-[159px]'}`}
 			height={props.isCollapsed ? LOGO_COLLAPSED_HEIGHT : LOGO_EXPANDED_HEIGHT}
 			src={props.isCollapsed ? logoCollapsed : logoExpanded}
 			width={props.isCollapsed ? LOGO_COLLAPSED_WIDTH : LOGO_EXPANDED_WIDTH}
@@ -86,16 +86,16 @@ const SidebarHeader = (props: {isCollapsed: boolean; toggle: () => void}) => (
 
 const SearchInput = (props: {isCollapsed: boolean}) =>
 	props.isCollapsed ? null : (
-		<div className='flex items-center rounded-md bg-[#86878B] px-3 py-[13px] gap-2'>
+		<div className='flex items-center gap-2 rounded-md bg-[#86878B] px-3 py-[13px]'>
 			<img
 				alt='Pesquisar'
-				className='w-4 h-4 text-white'
+				className='h-4 w-4 text-white'
 				height={16}
 				src={magnifierIcon || '/placeholder.svg'}
 				width={16}
 			/>
 			<input
-				className='text-sm bg-transparent w-full text-white focus:outline-none ml-2 placeholder:text-white'
+				className='ml-2 w-full bg-transparent text-sm text-white placeholder:text-white focus:outline-none'
 				placeholder='Pesquisar'
 				type='search'
 			/>
@@ -144,20 +144,20 @@ const MenuItemComponent = (props: {
 				<Link to={props.item.path || '#'}>{content}</Link>
 			)}
 			{props.item.subItems && isDropdownOpen && !props.isCollapsed && (
-				<ul className='pl-8 mt-2 space-y-2'>
+				<ul className='mt-2 space-y-2 pl-8'>
 					{props.item.subItems.map(subItem => {
 						const isSubItemActive = props.location.pathname === subItem.path
 						return (
 							<li key={subItem.text}>
 								<Link
-									className={`flex items-center p-2 rounded-md text-sm font-medium transition-colors ${
+									className={`flex items-center rounded-md p-2 font-medium text-sm transition-colors ${
 										isSubItemActive
 											? 'bg-orange-500 text-white'
-											: 'text-gray-400 hover:text-white hover:bg-gray-700'
+											: 'text-gray-400 hover:bg-gray-700 hover:text-white'
 									}`}
 									to={subItem.path}
 								>
-									<span className='w-1.5 h-1.5 bg-white rounded-full mr-3' />
+									<span className='mr-3 h-1.5 w-1.5 rounded-full bg-white' />
 									{subItem.text}
 								</Link>
 							</li>
@@ -194,7 +194,7 @@ const MenuList = (props: {
 	return (
 		<ul className={`pt-2 ${props.isCollapsed ? 'space-y-1' : ''}`}>
 			<p
-				className={`text-sm font-semibold text-[#A1A5B7] mt-4 mb-2 ${props.isCollapsed ? 'hidden' : 'block'}`}
+				className={`mt-4 mb-2 font-semibold text-[#A1A5B7] text-sm ${props.isCollapsed ? 'hidden' : 'block'}`}
 			>
 				{props.title}
 			</p>
@@ -212,18 +212,18 @@ const MenuList = (props: {
 				!props.isCollapsed &&
 				props.items.length > DROPDOWN_VISIBLE_ITEMS_LIMIT && (
 					<button
-						className='flex items-center pl-3 mt-2 cursor-pointer'
+						className='mt-2 flex cursor-pointer items-center pl-3'
 						onClick={() => setShowAll(!showAll)}
 						type='button'
 					>
 						<img
 							alt='Mostrar mais'
-							className={`w-4 h-4 transition-transform ${showAll ? 'rotate-180' : ''}`}
+							className={`h-4 w-4 transition-transform ${showAll ? 'rotate-180' : ''}`}
 							height={16}
 							src={downIcon || '/placeholder.svg'}
 							width={16}
 						/>
-						<span className='ml-2 text-sm text-[#A1A5B7] font-semibold'>
+						<span className='ml-2 font-semibold text-[#A1A5B7] text-sm'>
 							{showAll ? 'Mostrar menos' : 'Mostrar mais'}
 						</span>
 					</button>
@@ -255,19 +255,19 @@ const Sidebar = () => {
 		<aside
 			className={`bg-[#373737] text-white ${
 				isCollapsed ? 'w-16 md:w-24' : 'w-[280px] md:w-[340px]'
-			} h-screen py-10 transition-all duration-300 ease-in-out flex flex-col overflow-hidden`}
+			} flex h-screen flex-col overflow-hidden py-10 transition-all duration-300 ease-in-out`}
 		>
-			<div className='flex flex-col gap-[25px] items-center'>
+			<div className='flex flex-col items-center gap-[25px]'>
 				<SidebarHeader isCollapsed={isCollapsed} toggle={toggleSidebar} />
 				{isCollapsed && (
 					<button
-						className='bg-[#373737] text-white rounded-full p-1'
+						className='rounded-full bg-[#373737] p-1 text-white'
 						onClick={toggleSidebar}
 						type='button'
 					>
 						<img
 							alt='Alternar Sidebar'
-							className='transition-transform duration-300 rotate-180'
+							className='rotate-180 transition-transform duration-300'
 							height={24}
 							src={leftSquareIcon || '/placeholder.svg'}
 							width={24}
@@ -276,7 +276,7 @@ const Sidebar = () => {
 				)}
 			</div>
 			<nav
-				className={`flex-1 flex flex-col overflow-y-auto overflow-x-hidden ${isCollapsed ? 'items-center mt-[40px]' : 'gap-[25px] mt-[25px]'}`}
+				className={`flex flex-1 flex-col overflow-y-auto overflow-x-hidden ${isCollapsed ? 'mt-[40px] items-center' : 'mt-[25px] gap-[25px]'}`}
 			>
 				{!isCollapsed && (
 					<div className='px-10 pr-[60px]'>
@@ -284,7 +284,7 @@ const Sidebar = () => {
 					</div>
 				)}
 				<div
-					className={`${isCollapsed ? 'flex flex-col items-center' : 'px-10 pr-[60px] border-b border-[#BABBC1] pb-[25px]'}`}
+					className={`${isCollapsed ? 'flex flex-col items-center' : 'border-[#BABBC1] border-b px-10 pr-[60px] pb-[25px]'}`}
 				>
 					<MenuList isCollapsed={isCollapsed} items={pages} title='PÁGINAS' />
 				</div>

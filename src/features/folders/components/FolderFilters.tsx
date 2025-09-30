@@ -60,7 +60,7 @@ function _ClientNumberInput({
 }) {
 	return (
 		<input
-			className='px-4 py-3 border border-gray-300 rounded-lg bg-white text-gray-900 placeholder-gray-500 text-sm focus:outline-none focus:ring-2 focus:ring-[#00B8D9] focus:border-[#00B8D9] transition-colors'
+			className='rounded-lg border border-gray-300 bg-white px-4 py-3 text-gray-900 text-sm placeholder-gray-500 transition-colors focus:border-[#00B8D9] focus:outline-none focus:ring-2 focus:ring-[#00B8D9]'
 			name='clientNumber'
 			onChange={onChange}
 			placeholder={CLIENT_NUMBER_PLACEHOLDER}
@@ -80,7 +80,7 @@ function _DateRangeInput({
 	return (
 		<div className='relative'>
 			<input
-				className='px-4 py-3 pr-12 border border-gray-300 rounded-lg bg-white text-gray-900 placeholder-gray-500 w-full text-sm focus:outline-none focus:ring-2 focus:ring-[#00B8D9] focus:border-[#00B8D9] transition-colors'
+				className='w-full rounded-lg border border-gray-300 bg-white px-4 py-3 pr-12 text-gray-900 text-sm placeholder-gray-500 transition-colors focus:border-[#00B8D9] focus:outline-none focus:ring-2 focus:ring-[#00B8D9]'
 				maxLength={10}
 				name='dateRange'
 				onChange={onChange}
@@ -88,7 +88,7 @@ function _DateRangeInput({
 				type='text'
 				value={value}
 			/>
-			<Calendar className='absolute right-4 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400' />
+			<Calendar className='-translate-y-1/2 absolute top-1/2 right-4 h-4 w-4 transform text-gray-400' />
 		</div>
 	)
 }
@@ -103,7 +103,7 @@ function _AreaSelect({
 	return (
 		<div className='relative'>
 			<select
-				className='px-4 py-3 pr-12 border border-gray-300 rounded-lg bg-white text-gray-900 appearance-none w-full text-sm focus:outline-none focus:ring-2 focus:ring-[#00B8D9] focus:border-[#00B8D9] transition-colors'
+				className='w-full appearance-none rounded-lg border border-gray-300 bg-white px-4 py-3 pr-12 text-gray-900 text-sm transition-colors focus:border-[#00B8D9] focus:outline-none focus:ring-2 focus:ring-[#00B8D9]'
 				name='area'
 				onChange={onChange}
 				value={value}
@@ -120,7 +120,7 @@ function _AreaSelect({
 					{AREA_OPTIONS.ENVIRONMENTAL}
 				</option>
 			</select>
-			<ChevronDown className='absolute right-4 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400 pointer-events-none' />
+			<ChevronDown className='-translate-y-1/2 pointer-events-none absolute top-1/2 right-4 h-4 w-4 transform text-gray-400' />
 		</div>
 	)
 }
@@ -137,14 +137,14 @@ function _SearchInput({
 	return (
 		<div className='relative sm:col-span-2 lg:col-span-1'>
 			{isLoading ? (
-				<div className='absolute left-4 top-1/2 transform -translate-y-1/2 h-4 w-4'>
-					<div className='animate-spin rounded-full h-4 w-4 border-b-2 border-[#00B8D9]' />
+				<div className='-translate-y-1/2 absolute top-1/2 left-4 h-4 w-4 transform'>
+					<div className='h-4 w-4 animate-spin rounded-full border-[#00B8D9] border-b-2' />
 				</div>
 			) : (
-				<Search className='absolute left-4 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400' />
+				<Search className='-translate-y-1/2 absolute top-1/2 left-4 h-4 w-4 transform text-gray-400' />
 			)}
 			<input
-				className='px-4 py-3 pl-12 border border-gray-300 rounded-lg bg-white text-gray-900 placeholder-gray-500 w-full text-sm focus:outline-none focus:ring-2 focus:ring-[#00B8D9] focus:border-[#00B8D9] transition-colors'
+				className='w-full rounded-lg border border-gray-300 bg-white px-4 py-3 pl-12 text-gray-900 text-sm placeholder-gray-500 transition-colors focus:border-[#00B8D9] focus:outline-none focus:ring-2 focus:ring-[#00B8D9]'
 				name='search'
 				onChange={onChange}
 				placeholder={SEARCH_PLACEHOLDER}
@@ -171,18 +171,18 @@ export function FolderFilters({
 	}
 
 	const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		const DAY_LENGTH = 2
-		const MONTH_POSITION = 5
-		const START_YEAR_POSITION = 5
-		const END_YEAR_POSITION = 9
+		const DayLength = 2
+		const MonthPosition = 5
+		const StartYearPosition = 5
+		const EndYearPosition = 9
 
 		let value = e.target.value.replace(/\D/g, '')
 
-		if (value.length >= DAY_LENGTH) {
-			value = `${value.slice(0, DAY_LENGTH)}/${value.slice(DAY_LENGTH)}`
+		if (value.length >= DayLength) {
+			value = `${value.slice(0, DayLength)}/${value.slice(DayLength)}`
 		}
-		if (value.length >= MONTH_POSITION) {
-			value = `${value.slice(0, MONTH_POSITION)}/${value.slice(START_YEAR_POSITION, END_YEAR_POSITION)}`
+		if (value.length >= MonthPosition) {
+			value = `${value.slice(0, MonthPosition)}/${value.slice(StartYearPosition, EndYearPosition)}`
 		}
 
 		setFilters({
@@ -192,8 +192,8 @@ export function FolderFilters({
 	}
 
 	return (
-		<div className='px-4 sm:px-6 py-6'>
-			<div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6'>
+		<div className='px-4 py-6 sm:px-6'>
+			<div className='grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4 lg:gap-6'>
 				<_ClientNumberInput
 					onChange={handleInputChange}
 					value={filters.clientNumber}

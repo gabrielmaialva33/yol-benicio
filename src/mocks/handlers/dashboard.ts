@@ -93,7 +93,7 @@ export const dashboardHandlers = [
 
 	// Favorite folders widget
 	http.get('/api/dashboard/favorite-folders', () => {
-		const FAVORITE_FOLDERS_COUNT = 6
+		const FavoriteFoldersCount = 6
 		const colors = [
 			'#008980',
 			'#2FAC68',
@@ -104,7 +104,7 @@ export const dashboardHandlers = [
 		]
 		const favoriteFolders = folders
 			.filter(f => f.is_favorite)
-			.slice(0, FAVORITE_FOLDERS_COUNT)
+			.slice(0, FavoriteFoldersCount)
 			.map((f, index) => ({
 				id: f.id,
 				code: f.code,
@@ -120,7 +120,7 @@ export const dashboardHandlers = [
 
 	// Urgent tasks widget
 	http.get('/api/dashboard/urgent-tasks', () => {
-		const URGENT_TASKS_COUNT = 10
+		const UrgentTasksCount = 10
 		const urgentTasks = tasks
 			.filter(
 				t =>
@@ -133,7 +133,7 @@ export const dashboardHandlers = [
 					DateTime.fromISO(a.due_date).toMillis() -
 					DateTime.fromISO(b.due_date).toMillis()
 			)
-			.slice(0, URGENT_TASKS_COUNT)
+			.slice(0, UrgentTasksCount)
 			.map(t => ({
 				id: t.id,
 				title: t.title,
@@ -157,7 +157,7 @@ export const dashboardHandlers = [
 	// Birthdays widget
 	http.get('/api/dashboard/birthdays', () => {
 		const today = DateTime.now()
-		const BIRTHDAYS_COUNT = 5
+		const BirthdaysCount = 5
 		const birthdays = clients
 			.filter(c => {
 				if (!c.metadata.birthday || c.metadata.type !== 'individual') {
@@ -172,7 +172,7 @@ export const dashboardHandlers = [
 				birthday: c.metadata.birthday ?? '',
 				age: calculateAge(c.metadata.birthday ?? '')
 			}))
-			.slice(0, BIRTHDAYS_COUNT)
+			.slice(0, BirthdaysCount)
 
 		const response: ApiResponse<typeof birthdays> = {data: birthdays}
 		return HttpResponse.json(response)
@@ -180,13 +180,11 @@ export const dashboardHandlers = [
 
 	// Area division - for pie chart
 	http.get('/api/area-division', () => {
-		const HUNDRED_PERCENT = 100
+		const HundredPercent = 100
 		const areaDivision = Object.values(FolderArea)
 			.map(area => {
 				const count = folders.filter(f => f.area === area).length
-				const percentage = Math.round(
-					(count / folders.length) * HUNDRED_PERCENT
-				)
+				const percentage = Math.round((count / folders.length) * HundredPercent)
 
 				const colors: Record<string, string> = {
 					[FolderArea.CIVIL_LITIGATION]: '#14B8A6',
@@ -233,28 +231,26 @@ export const dashboardHandlers = [
 				DateTime.fromISO(f.updated_at) >= oneMonthAgo
 		).length
 
-		const HUNDRED_PERCENT = 100
+		const HundredPercent = 100
 		const activities = [
 			{
 				label: 'Novas esta semana',
 				value: newThisWeek,
 				color: 'bg-cyan-500',
-				percentage: Math.round((newThisWeek / folders.length) * HUNDRED_PERCENT)
+				percentage: Math.round((newThisWeek / folders.length) * HundredPercent)
 			},
 			{
 				label: 'Novas este mês',
 				value: newThisMonth,
 				color: 'bg-purple-500',
-				percentage: Math.round(
-					(newThisMonth / folders.length) * HUNDRED_PERCENT
-				)
+				percentage: Math.round((newThisMonth / folders.length) * HundredPercent)
 			},
 			{
 				label: 'Concluídas este mês',
 				value: completedThisMonth,
 				color: 'bg-emerald-500',
 				percentage: Math.round(
-					(completedThisMonth / folders.length) * HUNDRED_PERCENT
+					(completedThisMonth / folders.length) * HundredPercent
 				)
 			},
 			{
@@ -264,7 +260,7 @@ export const dashboardHandlers = [
 				percentage: Math.round(
 					(folders.filter(f => f.status === FolderStatus.ACTIVE).length /
 						folders.length) *
-						HUNDRED_PERCENT
+						HundredPercent
 				)
 			}
 		]
@@ -294,26 +290,26 @@ export const dashboardHandlers = [
 			.slice(0, currentMonth + 1)
 			.map((month, index) => {
 				// Simulate growing data with some variation
-				const BASE_VALUE_START = 10
-				const BASE_VALUE_MULTIPLIER = 1.5
-				const BASE_VALUE_RANDOM = 4
-				const NEW_REQUESTS_RANDOM = 5
-				const NEW_REQUESTS_OFFSET = 3
-				const PERCENTAGE_DIVISOR = 20
-				const HUNDRED_PERCENT = 100
+				const BaseValueStart = 10
+				const BaseValueMultiplier = 1.5
+				const BaseValueRandom = 4
+				const NewRequestsRandom = 5
+				const NewRequestsOffset = 3
+				const PercentageDivisor = 20
+				const HundredPercent = 100
 				const baseValue =
-					BASE_VALUE_START +
-					index * BASE_VALUE_MULTIPLIER +
-					Math.random() * BASE_VALUE_RANDOM
+					BaseValueStart +
+					index * BaseValueMultiplier +
+					Math.random() * BaseValueRandom
 				const newRequests =
-					Math.floor(Math.random() * NEW_REQUESTS_RANDOM) + NEW_REQUESTS_OFFSET
+					Math.floor(Math.random() * NewRequestsRandom) + NewRequestsOffset
 
 				return {
 					month,
 					value: Math.round(baseValue),
 					new: newRequests,
 					percentage: Math.round(
-						(newRequests / PERCENTAGE_DIVISOR) * HUNDRED_PERCENT
+						(newRequests / PercentageDivisor) * HundredPercent
 					)
 				}
 			})
@@ -326,42 +322,42 @@ export const dashboardHandlers = [
 		const now = DateTime.now()
 
 		// Simulate hearings and deadlines data
-		const HEARINGS_PERCENTAGE = 75
-		const HEARINGS_TOTAL = 12
-		const HEARINGS_COMPLETED = 9
-		const HEARINGS_DAYS = 5
-		const PROCEDURAL_DEADLINES_PERCENTAGE = 60
-		const PROCEDURAL_DEADLINES_TOTAL = 20
-		const PROCEDURAL_DEADLINES_COMPLETED = 12
-		const PROCEDURAL_DEADLINES_DAYS = 10
-		const ADMINISTRATIVE_DEADLINES_PERCENTAGE = 90
-		const ADMINISTRATIVE_DEADLINES_TOTAL = 10
-		const ADMINISTRATIVE_DEADLINES_COMPLETED = 9
-		const ADMINISTRATIVE_DEADLINES_DAYS = 15
+		const HearingsPercentage = 75
+		const HearingsTotal = 12
+		const HearingsCompleted = 9
+		const HearingsDays = 5
+		const ProceduralDeadlinesPercentage = 60
+		const ProceduralDeadlinesTotal = 20
+		const ProceduralDeadlinesCompleted = 12
+		const ProceduralDeadlinesDays = 10
+		const AdministrativeDeadlinesPercentage = 90
+		const AdministrativeDeadlinesTotal = 10
+		const AdministrativeDeadlinesCompleted = 9
+		const AdministrativeDeadlinesDays = 15
 		const hearingsData = [
 			{
 				label: 'Audiências',
-				percentage: HEARINGS_PERCENTAGE,
-				total: HEARINGS_TOTAL,
-				completed: HEARINGS_COMPLETED,
+				percentage: HearingsPercentage,
+				total: HearingsTotal,
+				completed: HearingsCompleted,
 				color: '#14B8A6',
-				date: now.plus({days: HEARINGS_DAYS}).toISO()
+				date: now.plus({days: HearingsDays}).toISO()
 			},
 			{
 				label: 'Prazos processuais',
-				percentage: PROCEDURAL_DEADLINES_PERCENTAGE,
-				total: PROCEDURAL_DEADLINES_TOTAL,
-				completed: PROCEDURAL_DEADLINES_COMPLETED,
+				percentage: ProceduralDeadlinesPercentage,
+				total: ProceduralDeadlinesTotal,
+				completed: ProceduralDeadlinesCompleted,
 				color: '#F43F5E',
-				date: now.plus({days: PROCEDURAL_DEADLINES_DAYS}).toISO()
+				date: now.plus({days: ProceduralDeadlinesDays}).toISO()
 			},
 			{
 				label: 'Prazos administrativos',
-				percentage: ADMINISTRATIVE_DEADLINES_PERCENTAGE,
-				total: ADMINISTRATIVE_DEADLINES_TOTAL,
-				completed: ADMINISTRATIVE_DEADLINES_COMPLETED,
+				percentage: AdministrativeDeadlinesPercentage,
+				total: AdministrativeDeadlinesTotal,
+				completed: AdministrativeDeadlinesCompleted,
 				color: '#8B5CF6',
-				date: now.plus({days: ADMINISTRATIVE_DEADLINES_DAYS}).toISO()
+				date: now.plus({days: AdministrativeDeadlinesDays}).toISO()
 			}
 		]
 
@@ -539,10 +535,10 @@ export const dashboardHandlers = [
 			'#FF5A5D',
 			'#FF8A00'
 		]
-		const FAVORITE_CLIENTS_COUNT = 6
+		const FavoriteClientsCount = 6
 		const favoriteClients = Array.from(clientsMap.values())
 			.sort((a, b) => b.folderCount - a.folderCount)
-			.slice(0, FAVORITE_CLIENTS_COUNT)
+			.slice(0, FavoriteClientsCount)
 			.map((client, index) => ({
 				...client,
 				color: colors[index]
@@ -567,9 +563,9 @@ export const dashboardHandlers = [
 		).length
 
 		// Generate history for the last 6 months
-		const HISTORY_MONTHS = 6
+		const HistoryMonths = 6
 		const history: Array<{month: string; value: number}> = []
-		for (let i = HISTORY_MONTHS - 1; i >= 0; i--) {
+		for (let i = HistoryMonths - 1; i >= 0; i--) {
 			const monthDate = now.minus({months: i})
 			const monthStart = monthDate.startOf('month')
 			const monthEnd = monthDate.endOf('month')
@@ -609,16 +605,16 @@ function generateMonthlyEvolution() {
 		'Dez'
 	]
 	const currentMonth = DateTime.now().month - 1 // 0-indexed
-	const RANDOM_MULTIPLIER = 20
-	const BASE_COUNT = 10
-	const INDEX_MULTIPLIER = 2
+	const RandomMultiplier = 20
+	const BaseCount = 10
+	const IndexMultiplier = 2
 
 	return months.slice(0, currentMonth + 1).map((month, index) => ({
 		month,
 		count:
-			Math.floor(Math.random() * RANDOM_MULTIPLIER) +
-			BASE_COUNT +
-			index * INDEX_MULTIPLIER
+			Math.floor(Math.random() * RandomMultiplier) +
+			BaseCount +
+			index * IndexMultiplier
 	}))
 }
 
@@ -630,9 +626,9 @@ function generateRecentActivities() {
 		{type: 'hearing_scheduled', message: 'Hearing scheduled'},
 		{type: 'client_added', message: 'New client added'}
 	]
-	const RECENT_ACTIVITIES_COUNT = 10
+	const RecentActivitiesCount = 10
 
-	return Array.from({length: RECENT_ACTIVITIES_COUNT}, (_, i) => {
+	return Array.from({length: RecentActivitiesCount}, (_, i) => {
 		const activityIndex = Math.floor(Math.random() * activityTypes.length)
 		const activity = activityTypes[activityIndex]
 		const folderIndex = Math.floor(Math.random() * folders.length)

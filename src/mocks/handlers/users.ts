@@ -48,12 +48,12 @@ interface AdonisUser extends User {
 
 function transformToAdonisUser(user: User): AdonisUser {
 	const now = DateTime.now()
-	const MAX_DAYS_AGO = 30
-	const MAX_DAYS_AGO_CREATED = 365
-	const MAX_DAYS_AGO_UPDATED = 7
-	const randomDaysAgo = Math.floor(Math.random() * MAX_DAYS_AGO)
-	const randomDaysAgoCreated = Math.floor(Math.random() * MAX_DAYS_AGO_CREATED)
-	const randomDaysAgoUpdated = Math.floor(Math.random() * MAX_DAYS_AGO_UPDATED)
+	const MaxDaysAgo = 30
+	const MaxDaysAgoCreated = 365
+	const MaxDaysAgoUpdated = 7
+	const randomDaysAgo = Math.floor(Math.random() * MaxDaysAgo)
+	const randomDaysAgoCreated = Math.floor(Math.random() * MaxDaysAgoCreated)
+	const randomDaysAgoUpdated = Math.floor(Math.random() * MaxDaysAgoUpdated)
 
 	const userRole = user.roles?.[0]?.slug ?? 'user'
 	const getRoleInfo = (role: string) => {

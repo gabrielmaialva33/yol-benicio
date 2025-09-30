@@ -92,7 +92,7 @@ function getNestedProperty(obj: unknown, path: string): unknown {
 		if (current && typeof current === 'object' && key in current) {
 			return (current as Record<string, unknown>)[key]
 		}
-		return
+		return current
 	}, obj)
 }
 

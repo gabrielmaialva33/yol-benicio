@@ -25,12 +25,14 @@ if (
 	})
 }
 
+const LOADING_MESSAGE = 'Loading...'
+
 const container = document.querySelector('#root')
 if (container) {
 	const root = createRoot(container)
 	root.render(
 		<StrictMode>
-			<Suspense fallback={<div>Loading...</div>}>
+			<Suspense fallback={<div>{LOADING_MESSAGE}</div>}>
 				<QueryClientProvider client={queryClient}>
 					<AuthProvider>
 						<ReactQueryDevtools initialIsOpen={false} />

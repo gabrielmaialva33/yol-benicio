@@ -39,8 +39,8 @@ export function FolderDetailPage() {
 				return <ProcessTimeline folderId={folder.id} />
 			case 'informacoes':
 				return (
-					<div className='bg-white rounded-2xl p-8 shadow-sm border border-gray-100'>
-						<h3 className='text-lg font-semibold text-[#161C24] mb-6'>
+					<div className='rounded-2xl border border-gray-100 bg-white p-8 shadow-sm'>
+						<h3 className='mb-6 font-semibold text-[#161C24] text-lg'>
 							{UI_TEXT.GENERAL_INFO_TITLE}
 						</h3>
 						<p className='text-[#919EAB]'>{UI_TEXT.GENERAL_INFO_CONTENT}</p>
@@ -48,8 +48,8 @@ export function FolderDetailPage() {
 				)
 			case 'publicacoes':
 				return (
-					<div className='bg-white rounded-2xl p-8 shadow-sm border border-gray-100'>
-						<h3 className='text-lg font-semibold text-[#161C24] mb-6'>
+					<div className='rounded-2xl border border-gray-100 bg-white p-8 shadow-sm'>
+						<h3 className='mb-6 font-semibold text-[#161C24] text-lg'>
 							{UI_TEXT.PUBLICATIONS_TITLE}
 						</h3>
 						<p className='text-[#919EAB]'>{UI_TEXT.PUBLICATIONS_CONTENT}</p>
@@ -57,8 +57,8 @@ export function FolderDetailPage() {
 				)
 			case 'agenda':
 				return (
-					<div className='bg-white rounded-2xl p-8 shadow-sm border border-gray-100'>
-						<h3 className='text-lg font-semibold text-[#161C24] mb-6'>
+					<div className='rounded-2xl border border-gray-100 bg-white p-8 shadow-sm'>
+						<h3 className='mb-6 font-semibold text-[#161C24] text-lg'>
 							{UI_TEXT.AGENDA_TITLE}
 						</h3>
 						<p className='text-[#919EAB]'>{UI_TEXT.AGENDA_CONTENT}</p>
@@ -70,11 +70,11 @@ export function FolderDetailPage() {
 	}
 
 	return (
-		<div className='p-4 sm:p-6 lg:p-8 bg-[#F1F1F2] min-h-screen'>
+		<div className='min-h-screen bg-[#F1F1F2] p-4 sm:p-6 lg:p-8'>
 			<FolderDetailHeader folder={folder} />
-			<div className='mt-6 flex flex-col lg:flex-row gap-6'>
+			<div className='mt-6 flex flex-col gap-6 lg:flex-row'>
 				<FolderDetailSidebar activeTab={activeTab} onTabChange={setActiveTab} />
-				<div className='flex-1 min-w-0'>{renderContent()}</div>
+				<div className='min-w-0 flex-1'>{renderContent()}</div>
 			</div>
 		</div>
 	)

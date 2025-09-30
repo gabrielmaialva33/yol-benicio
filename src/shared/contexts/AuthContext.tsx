@@ -3,7 +3,7 @@ import {createContext, useContext, useEffect, useState} from 'react'
 import {logout as apiLogout, getMe, getStoredToken} from '../api/auth'
 import type {User} from '../types/domain'
 
-export interface AuthContextValue {
+interface AuthContextValue {
 	user: User | null
 	token: string | null
 	isLoading: boolean
@@ -13,7 +13,7 @@ export interface AuthContextValue {
 
 const AuthContext = createContext<AuthContextValue | undefined>(undefined)
 
-export interface AuthProviderProps {
+interface AuthProviderProps {
 	children: ReactNode
 }
 
@@ -82,7 +82,7 @@ export function AuthProvider({children}: AuthProviderProps) {
 	return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
 }
 
-export function useAuth(): AuthContextValue {
+function useAuth(): AuthContextValue {
 	const context = useContext(AuthContext)
 
 	if (context === undefined) {
@@ -91,3 +91,6 @@ export function useAuth(): AuthContextValue {
 
 	return context
 }
+
+export {AuthProvider, useAuth}
+export type {AuthContextValue, AuthProviderProps}

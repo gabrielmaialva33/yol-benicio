@@ -98,16 +98,16 @@ export function AppliedFilters({
 	}
 
 	return (
-		<div className='px-6 py-3 bg-white border-b'>
+		<div className='border-b bg-white px-6 py-3'>
 			<div className='flex items-center justify-between'>
 				<div className='flex items-center space-x-4'>
-					<span className='text-sm text-gray-600'>
+					<span className='text-gray-600 text-sm'>
 						{resultCount} {RESULTS_FOUND_TEXT}
 					</span>
 					<div className='flex items-center space-x-2'>
 						{appliedFilters.map(filter => (
 							<div
-								className='inline-flex items-center px-3 py-1 rounded-md text-xs font-medium bg-blue-100 text-blue-700'
+								className='inline-flex items-center rounded-md bg-blue-100 px-3 py-1 font-medium text-blue-700 text-xs'
 								key={filter.key}
 							>
 								{filter.label}
@@ -116,16 +116,16 @@ export function AppliedFilters({
 									onClick={() => removeFilter(filter.key)}
 									type='button'
 								>
-									<X className='w-3 h-3' />
+									<X className='h-3 w-3' />
 								</button>
 							</div>
 						))}
 						<button
-							className='text-xs font-medium text-red-500 hover:text-red-700 flex items-center'
+							className='flex items-center font-medium text-red-500 text-xs hover:text-red-700'
 							onClick={clearAllFilters}
 							type='button'
 						>
-							<X className='w-3 h-3 mr-1' />
+							<X className='mr-1 h-3 w-3' />
 							{CLEAR_BUTTON_TEXT}
 						</button>
 					</div>

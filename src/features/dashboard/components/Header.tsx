@@ -42,13 +42,13 @@ function NotificationButton() {
 		<div className='relative' ref={notificationsRef}>
 			<button
 				aria-label='Notificações'
-				className='w-9 h-9 flex items-center justify-center rounded-md text-gray-500 hover:text-gray-700 hover:bg-white/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-300 transition'
+				className='flex h-9 w-9 items-center justify-center rounded-md text-gray-500 transition hover:bg-white/60 hover:text-gray-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-300'
 				ref={notificationsTriggerRef}
 				type='button'
 			>
 				<img
 					alt='Notificações'
-					className='w-5 h-5'
+					className='h-5 w-5'
 					height={20}
 					src={bellIcon || '/placeholder.svg'}
 					width={20}
@@ -73,13 +73,13 @@ function MessagesButton() {
 		<div className='relative' ref={messagesRef}>
 			<button
 				aria-label='Mensagens'
-				className='w-9 h-9 flex items-center justify-center rounded-md text-gray-500 hover:text-gray-700 hover:bg-white/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-300 transition'
+				className='flex h-9 w-9 items-center justify-center rounded-md text-gray-500 transition hover:bg-white/60 hover:text-gray-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-300'
 				ref={messagesTriggerRef}
 				type='button'
 			>
 				<img
 					alt='mensagens'
-					className='w-5 h-5'
+					className='h-5 w-5'
 					height={20}
 					src={messagesIcon || '/placeholder.svg'}
 					width={20}
@@ -99,12 +99,12 @@ function HeaderActions({onLogout}: HeaderActionsProps) {
 			<NotificationButton />
 			<button
 				aria-label='Calendário'
-				className='w-9 h-9 flex items-center justify-center rounded-md text-gray-500 hover:text-gray-700 hover:bg-white/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-300 transition'
+				className='flex h-9 w-9 items-center justify-center rounded-md text-gray-500 transition hover:bg-white/60 hover:text-gray-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-300'
 				type='button'
 			>
 				<img
 					alt='Calendário'
-					className='w-5 h-5'
+					className='h-5 w-5'
 					height={20}
 					src={calendarIcon || '/placeholder.svg'}
 					width={20}
@@ -113,20 +113,20 @@ function HeaderActions({onLogout}: HeaderActionsProps) {
 			<MessagesButton />
 			<img
 				alt='Avatar do usuário'
-				className='w-9 h-9 rounded-lg object-cover'
+				className='h-9 w-9 rounded-lg object-cover'
 				height={36}
 				src='https://avataaars.io/?avatarStyle=Circle&topType=ShortHairShortCurly&accessoriesType=Prescription01&hairColor=Blonde&facialHairType=MoustacheMagnum&facialHairColor=Blonde&clotheType=GraphicShirt&clotheColor=Red&graphicType=Skull&eyeType=EyeRoll&eyebrowType=FlatNatural&mouthType=Sad&skinColor=Pale'
 				width={36}
 			/>
 			<button
 				aria-label='Sair'
-				className='w-9 h-9 flex items-center justify-center rounded-md text-gray-500 hover:text-gray-700 hover:bg-white/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-300 transition'
+				className='flex h-9 w-9 items-center justify-center rounded-md text-gray-500 transition hover:bg-white/60 hover:text-gray-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-300'
 				onClick={onLogout}
 				type='button'
 			>
 				<img
 					alt='sair'
-					className='w-5 h-5'
+					className='h-5 w-5'
 					height={20}
 					src={exitIcon || '/placeholder.svg'}
 					width={20}
@@ -167,11 +167,11 @@ export function Header() {
 	const breadcrumbs = getBreadcrumbsForPath(location.pathname)
 
 	return (
-		<header className='bg-[#F1F1F2] border-b border-gray-200 px-[30px] py-4'>
+		<header className='border-gray-200 border-b bg-[#F1F1F2] px-[30px] py-4'>
 			<div className='flex items-center justify-between'>
 				<div>
-					<h1 className='text-2xl font-semibold text-[#161C24]'>{title}</h1>
-					{description && <p className='text-gray-500 mt-1'>{description}</p>}
+					<h1 className='font-semibold text-2xl text-[#161C24]'>{title}</h1>
+					{description && <p className='mt-1 text-gray-500'>{description}</p>}
 					{breadcrumbs.length > 0 && (
 						<div className='mt-2'>
 							<Breadcrumb items={breadcrumbs} />

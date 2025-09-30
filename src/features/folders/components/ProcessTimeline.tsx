@@ -9,16 +9,16 @@ export function ProcessTimeline({folderId: _folderId}: ProcessTimelineProps) {
 	const events = mockTimelineEvents // In real app, fetch based on folderId
 
 	return (
-		<div className='bg-white rounded-2xl shadow-sm border border-gray-100'>
+		<div className='rounded-2xl border border-gray-100 bg-white shadow-sm'>
 			{/* Header with Search */}
-			<div className='px-6 py-4 border-b border-gray-100'>
+			<div className='border-gray-100 border-b px-6 py-4'>
 				<div className='flex items-center justify-between'>
-					<h2 className='text-lg font-semibold text-gray-900'>
+					<h2 className='font-semibold text-gray-900 text-lg'>
 						{/* Histórico */}
 					</h2>
 					<div className='relative w-64'>
 						<input
-							className='w-full pl-4 pr-4 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#00B8D9] focus:border-[#00B8D9]'
+							className='w-full rounded-lg border border-gray-300 py-2 pr-4 pl-4 text-sm focus:border-[#00B8D9] focus:outline-none focus:ring-2 focus:ring-[#00B8D9]'
 							placeholder=''
 							type='text'
 						/>
@@ -30,7 +30,7 @@ export function ProcessTimeline({folderId: _folderId}: ProcessTimelineProps) {
 			<div className='p-6'>
 				<div className='relative'>
 					{/* Vertical line */}
-					<div className='absolute left-8 top-0 bottom-0 w-px border-l-2 border-dashed border-gray-300' />
+					<div className='absolute top-0 bottom-0 left-8 w-px border-gray-300 border-l-2 border-dashed' />
 
 					{/* Events */}
 					<div className='space-y-6'>

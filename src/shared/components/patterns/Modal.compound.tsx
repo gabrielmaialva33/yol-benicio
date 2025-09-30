@@ -13,8 +13,8 @@ import {useTranslation} from '@/core/i18n'
 import {createCompoundComponentContext} from './CompoundComponent'
 
 // Types
-export type ModalSize = 'sm' | 'md' | 'lg' | 'xl' | 'full'
-export type ModalVariant = 'default' | 'danger' | 'success' | 'warning'
+type ModalSize = 'sm' | 'md' | 'lg' | 'xl' | 'full'
+type ModalVariant = 'default' | 'danger' | 'success' | 'warning'
 
 // Context
 interface ModalContextType {
@@ -130,9 +130,9 @@ export function Modal({
 				{/* Modal */}
 				<div
 					className={cn(
-						'relative z-10 w-full bg-white rounded-lg shadow-xl',
+						'relative z-10 w-full rounded-lg bg-white shadow-xl',
 						'transition-all duration-300',
-						isAnimating ? 'opacity-100 scale-100' : 'opacity-0 scale-95',
+						isAnimating ? 'scale-100 opacity-100' : 'scale-95 opacity-0',
 						getModalSizeClasses(size)
 					)}
 					onClick={e => e.stopPropagation()}
@@ -162,13 +162,13 @@ Modal.Header = function ModalHeader({
 	return (
 		<div
 			className={cn(
-				'flex items-start justify-between p-6 border-b',
+				'flex items-start justify-between border-b p-6',
 				getVariantHeaderClasses(variant),
 				className
 			)}
 		>
 			<div className='flex-1'>
-				<h2 className='text-xl font-semibold'>{title}</h2>
+				<h2 className='font-semibold text-xl'>{title}</h2>
 				{description && (
 					<p className='mt-1 text-sm opacity-90'>{description}</p>
 				)}
@@ -177,7 +177,7 @@ Modal.Header = function ModalHeader({
 				<button
 					aria-label='Close modal'
 					className={cn(
-						'ml-4 p-1 rounded-lg transition-colors',
+						'ml-4 rounded-lg p-1 transition-colors',
 						'hover:bg-black/10'
 					)}
 					onClick={actions.close}
@@ -234,7 +234,7 @@ Modal.Footer = function ModalFooter({
 	return (
 		<div
 			className={cn(
-				'flex items-center gap-3 p-6 border-t',
+				'flex items-center gap-3 border-t p-6',
 				alignClasses[align],
 				className
 			)}
@@ -275,9 +275,9 @@ Modal.ConfirmActions = function ModalConfirmActions({
 		<>
 			<button
 				className={cn(
-					'px-4 py-2 rounded-lg border border-gray-200',
-					'hover:bg-gray-50 transition-colors',
-					'disabled:opacity-50 disabled:cursor-not-allowed'
+					'rounded-lg border border-gray-200 px-4 py-2',
+					'transition-colors hover:bg-gray-50',
+					'disabled:cursor-not-allowed disabled:opacity-50'
 				)}
 				disabled={isLoading}
 				onClick={handleCancel}
@@ -286,8 +286,8 @@ Modal.ConfirmActions = function ModalConfirmActions({
 			</button>
 			<button
 				className={cn(
-					'px-4 py-2 rounded-lg text-white transition-colors',
-					'disabled:opacity-50 disabled:cursor-not-allowed',
+					'rounded-lg px-4 py-2 text-white transition-colors',
+					'disabled:cursor-not-allowed disabled:opacity-50',
 					getVariantButtonClasses(variant)
 				)}
 				disabled={isLoading || confirmDisabled}
@@ -322,7 +322,7 @@ Modal.Alert = function ModalAlert({
 	}
 
 	return (
-		<div className={cn('flex gap-3 p-4 rounded-lg border', classes[type])}>
+		<div className={cn('flex gap-3 rounded-lg border p-4', classes[type])}>
 			<div className='shrink-0'>{icons[type]}</div>
 			<div className='flex-1 text-sm'>{children}</div>
 		</div>
@@ -391,7 +391,7 @@ export function AlertModal({
 			<Modal.Footer>
 				<button
 					className={cn(
-						'px-4 py-2 rounded-lg text-white',
+						'rounded-lg px-4 py-2 text-white',
 						getVariantButtonClasses(variant)
 					)}
 					onClick={onClose}
@@ -477,3 +477,6 @@ export function ConfirmModal({
   confirmLabel="Delete"
 />
 */
+
+// Export types
+export type {ModalSize, ModalVariant}

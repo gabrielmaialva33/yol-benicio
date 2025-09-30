@@ -32,7 +32,7 @@ const renderIcon = (props: SidebarItemProps) => {
 	if (props.color && props.text) {
 		return (
 			<span
-				className='w-2.5 h-2.5 rounded-full'
+				className='h-2.5 w-2.5 rounded-full'
 				style={{backgroundColor: props.color}}
 			/>
 		)
@@ -101,20 +101,20 @@ const SidebarItem = (props: SidebarItemProps) => {
 			{props.hasSubItems && !props.isCollapsed && (
 				<img
 					alt='Dropdown'
-					className={`w-5 h-5 ml-auto transition-transform ${props.isOpen ? 'rotate-180' : ''}`}
+					className={`ml-auto h-5 w-5 transition-transform ${props.isOpen ? 'rotate-180' : ''}`}
 					height={20}
 					src={downIcon || '/placeholder.svg'}
 					width={20}
 				/>
 			)}
 			{!props.isCollapsed && props.badge && (
-				<div className='ml-auto text-xs bg-[#BABBC1] text-[#1E293B] font-semibold rounded-md px-2 py-1.5'>
+				<div className='ml-auto rounded-md bg-[#BABBC1] px-2 py-1.5 font-semibold text-[#1E293B] text-xs'>
 					{props.badge}
 				</div>
 			)}
 			{/* Tooltip */}
 			{showTooltip && props.isCollapsed && (
-				<div className='absolute left-full ml-2 px-2 py-1 bg-gray-800 text-white text-sm rounded whitespace-nowrap z-50'>
+				<div className='absolute left-full z-50 ml-2 whitespace-nowrap rounded bg-gray-800 px-2 py-1 text-sm text-white'>
 					{props.text}
 					{props.badge && (
 						<span className='ml-2'>

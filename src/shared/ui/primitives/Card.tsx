@@ -13,7 +13,7 @@ export function Card({
 	return (
 		<div
 			className={cn(
-				'card bg-white rounded-lg p-6 shadow-sm border border-gray-200 relative flex flex-col',
+				'card relative flex flex-col rounded-lg border border-gray-200 bg-white p-6 shadow-sm',
 				tinted && 'card-tinted',
 				className
 			)}

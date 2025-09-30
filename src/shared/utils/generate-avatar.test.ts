@@ -2,7 +2,7 @@ import {describe, expect, it} from 'vitest'
 import {generateAvatar} from './generate-avatar'
 
 describe('generateAvatar', () => {
-	const AVATAR_GENERATION_COUNT = 50
+	const AvatarGenerationCount = 50
 
 	it('should generate avatar URL with all required parameters', () => {
 		const avatarUrl = generateAvatar()
@@ -37,7 +37,7 @@ describe('generateAvatar', () => {
 		const avatars = new Set()
 
 		// Generate 50 avatars to increase chance of getting different ones
-		for (let i = 0; i < AVATAR_GENERATION_COUNT; i++) {
+		for (let i = 0; i < AvatarGenerationCount; i++) {
 			avatars.add(generateAvatar())
 		}
 

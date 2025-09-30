@@ -49,7 +49,7 @@ export function ChatPage() {
 					/>
 				</div>
 
-				<div className='border-t border-gray-200 bg-white p-4'>
+				<div className='border-gray-200 border-t bg-white p-4'>
 					<ChatInput disabled={isStreaming} onSend={handleSendMessage} />
 				</div>
 			</div>

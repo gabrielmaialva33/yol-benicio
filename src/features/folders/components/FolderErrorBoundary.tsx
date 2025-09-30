@@ -33,19 +33,19 @@ function _ErrorFallback({
 	onNavigate
 }: ErrorFallbackProps) {
 	return (
-		<div className='flex items-center justify-center min-h-[400px] bg-white rounded-lg shadow-sm'>
-			<div className='max-w-md w-full p-8 text-center'>
-				<div className='inline-flex items-center justify-center w-14 h-14 bg-red-100 rounded-full mb-4'>
-					<Folder className='w-7 h-7 text-red-600' />
+		<div className='flex min-h-[400px] items-center justify-center rounded-lg bg-white shadow-sm'>
+			<div className='w-full max-w-md p-8 text-center'>
+				<div className='mb-4 inline-flex h-14 w-14 items-center justify-center rounded-full bg-red-100'>
+					<Folder className='h-7 w-7 text-red-600' />
 				</div>
-				<h2 className='text-xl font-bold text-gray-900 mb-2'>
+				<h2 className='mb-2 font-bold text-gray-900 text-xl'>
 					{contextMessage}
 				</h2>
-				<p className='text-gray-600 mb-6'>{actionMessage}</p>
+				<p className='mb-6 text-gray-600'>{actionMessage}</p>
 
-				<div className='flex flex-col sm:flex-row gap-3 justify-center'>
+				<div className='flex flex-col justify-center gap-3 sm:flex-row'>
 					<button
-						className='px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors'
+						className='rounded-lg bg-blue-500 px-4 py-2 text-white transition-colors hover:bg-blue-600'
 						onClick={reset}
 						type='button'
 					>
@@ -53,7 +53,7 @@ function _ErrorFallback({
 					</button>
 					{context === 'detail' && (
 						<button
-							className='px-4 py-2 bg-gray-200 text-gray-800 rounded-lg hover:bg-gray-300 transition-colors'
+							className='rounded-lg bg-gray-200 px-4 py-2 text-gray-800 transition-colors hover:bg-gray-300'
 							onClick={onNavigate}
 							type='button'
 						>
@@ -72,14 +72,14 @@ function _ErrorFallback({
 
 function _NotFoundWarning() {
 	return (
-		<div className='mt-6 p-4 bg-yellow-50 border border-yellow-200 rounded-lg'>
+		<div className='mt-6 rounded-lg border border-yellow-200 bg-yellow-50 p-4'>
 			<div className='flex gap-2'>
-				<AlertCircle className='w-5 h-5 text-yellow-600 flex-shrink-0 mt-0.5' />
+				<AlertCircle className='mt-0.5 h-5 w-5 flex-shrink-0 text-yellow-600' />
 				<div className='text-left'>
-					<p className='text-sm font-medium text-yellow-800'>
+					<p className='font-medium text-sm text-yellow-800'>
 						{NOT_FOUND_TITLE}
 					</p>
-					<p className='text-sm text-yellow-700 mt-1'>
+					<p className='mt-1 text-sm text-yellow-700'>
 						{NOT_FOUND_DESCRIPTION}
 					</p>
 				</div>
@@ -91,10 +91,10 @@ function _NotFoundWarning() {
 function _ErrorDetails({error}: {error: Error}) {
 	return (
 		<details className='mt-6 text-left'>
-			<summary className='cursor-pointer text-sm text-gray-500 hover:text-gray-700'>
+			<summary className='cursor-pointer text-gray-500 text-sm hover:text-gray-700'>
 				{ERROR_DETAILS_TITLE}
 			</summary>
-			<pre className='mt-2 p-3 bg-gray-50 rounded text-xs overflow-auto'>
+			<pre className='mt-2 overflow-auto rounded bg-gray-50 p-3 text-xs'>
 				{error.stack || error.message}
 			</pre>
 		</details>

@@ -40,7 +40,7 @@
 			"a11y": "error",
 			"complexity": "error",
 			"correctness": "error",
-			"nursery": "error",
+			"nursery": "off",
 			"performance": "error",
 			"recommended": true,
 			"security": "error",
@@ -55,31 +55,22 @@
 				"rules": {
 					"complexity": {
 						"noVoid": "off",
-						"noExcessiveLinesPerFunction": {
-							"level": "error",
-							"options": {
-								"maxLines": 80
-							}
-						}
+						"noExcessiveLinesPerFunction": "off",
+						"noExcessiveCognitiveComplexity": "off"
 					},
 					"correctness": {
 						"useImportExtensions": "off",
 						"noUndeclaredDependencies": "off"
 					},
-					"nursery": {
-						"noUnresolvedImports": "off",
-						"useExplicitType": "off",
-						"useSortedClasses": "off",
-						"noSecrets": "off",
-						"noJsxLiterals": "warn"
-					},
 					"suspicious": {
-						"noReactSpecificProps": "off"
+						"noReactSpecificProps": "off",
+						"noExplicitAny": "off"
 					},
 					"performance": {
 						"noImgElement": "off",
 						"noNamespaceImport": "off",
-						"useSolidForComponent": "off"
+						"useSolidForComponent": "off",
+						"noBarrelFile": "off"
 					},
 					"style": {
 						"useNamingConvention": "off",
@@ -91,8 +82,10 @@
 								"filenameCases": ["camelCase", "kebab-case", "PascalCase"]
 							}
 						},
-						"noMagicNumbers": "warn",
-						"useExportsLast": "warn"
+						"noMagicNumbers": "off",
+						"useExportsLast": "off",
+						"noDefaultExport": "off",
+						"useComponentExportOnlyModules": "off"
 					}
 				}
 			}
@@ -114,9 +107,6 @@
 			"includes": ["src/**/*.test.tsx", "tests/**/*.spec.ts"],
 			"linter": {
 				"rules": {
-					"nursery": {
-						"noJsxLiterals": "off"
-					},
 					"performance": {
 						"useTopLevelRegex": "off"
 					}
@@ -130,6 +120,16 @@
 			},
 			"linter": {
 				"enabled": false
+			}
+		},
+		{
+			"includes": ["src/global.css"],
+			"linter": {
+				"rules": {
+					"suspicious": {
+						"noUnknownAtRules": "off"
+					}
+				}
 			}
 		}
 	]

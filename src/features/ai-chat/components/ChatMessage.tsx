@@ -51,7 +51,7 @@ export function ChatMessage({message}: ChatMessageProps) {
 						<p className='whitespace-pre-wrap'>{message.content}</p>
 					)}
 				</div>
-				<div className='text-xs text-gray-500'>
+				<div className='text-gray-500 text-xs'>
 					{new Date(message.created_at).toLocaleTimeString('pt-BR', {
 						hour: '2-digit',
 						minute: '2-digit'
