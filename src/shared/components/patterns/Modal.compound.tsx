@@ -107,7 +107,9 @@ export function Modal({
 
 	const actions = {
 		close: () => !preventClose && onClose(),
-		setPreventClose: (_prevent: boolean) => {}
+		setPreventClose: (_prevent: boolean) => {
+			// Placeholder for future implementation
+		}
 	}
 
 	if (!isVisible) {
@@ -117,12 +119,15 @@ export function Modal({
 	return createPortal(
 		<ModalProvider value={{isOpen, size, variant, preventClose, actions}}>
 			<div
+				aria-modal='true'
 				className={cn(
 					'fixed inset-0 z-50 flex items-center justify-center p-4',
 					'transition-opacity duration-300',
 					isAnimating ? 'opacity-100' : 'opacity-0'
 				)}
 				onClick={handleOverlayClick}
+				onKeyDown={() => {}}
+				role='dialog'
 			>
 				{/* Backdrop */}
 				<div className='absolute inset-0 bg-black/50' />
@@ -136,6 +141,8 @@ export function Modal({
 						getModalSizeClasses(size)
 					)}
 					onClick={e => e.stopPropagation()}
+					onKeyDown={() => {}}
+					role='document'
 				>
 					{children}
 				</div>
