@@ -1,7 +1,9 @@
 import './global.css'
+import './core/i18n'
+
 import {QueryClient, QueryClientProvider} from '@tanstack/react-query'
 import {ReactQueryDevtools} from '@tanstack/react-query-devtools'
-import {StrictMode} from 'react'
+import {StrictMode, Suspense} from 'react'
 import {createRoot} from 'react-dom/client'
 import {BrowserRouter} from 'react-router'
 import {App} from './App'
@@ -28,14 +30,16 @@ if (container) {
 	const root = createRoot(container)
 	root.render(
 		<StrictMode>
-			<QueryClientProvider client={queryClient}>
-				<AuthProvider>
-					<ReactQueryDevtools initialIsOpen={false} />
-					<BrowserRouter>
-						<App />
-					</BrowserRouter>
-				</AuthProvider>
-			</QueryClientProvider>
+			<Suspense fallback={<div>Loading...</div>}>
+				<QueryClientProvider client={queryClient}>
+					<AuthProvider>
+						<ReactQueryDevtools initialIsOpen={false} />
+						<BrowserRouter>
+							<App />
+						</BrowserRouter>
+					</AuthProvider>
+				</QueryClientProvider>
+			</Suspense>
 		</StrictMode>
 	)
 }

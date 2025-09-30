@@ -10,8 +10,8 @@ import magnifierIcon from '/icons/magnifier.svg'
 import overviewIcon from '/icons/overview.svg'
 import chatIcon from '/icons/sparkles.svg'
 import logoExpanded from '/logo-yol.svg'
-import {SidebarItem} from './SidebarItem'
 import {useFavoriteFolders} from '../../hooks/use-favorite-folders'
+import {SidebarItem} from './SidebarItem'
 
 interface SubMenuItem {
 	text: string

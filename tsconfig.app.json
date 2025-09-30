@@ -4,13 +4,15 @@
 		"allowUnreachableCode": false,
 		"baseUrl": ".",
 		"paths": {
+			"@/*": ["src/*"],
 			"@features/*": ["src/features/*"],
 			"@shared/*": ["src/shared/*"],
 			"@ui/*": ["src/shared/ui/*"],
 			"@hooks/*": ["src/shared/hooks/*"],
 			"@types/*": ["src/shared/types/*"],
 			"@mocks/*": ["src/mocks/*"],
-			"@app/*": ["src/app/*"]
+			"@app/*": ["src/app/*"],
+			"@core/*": ["src/core/*"]
 		},
 		"erasableSyntaxOnly": true,
 		"exactOptionalPropertyTypes": true,

@@ -13,7 +13,9 @@ export function useStreamingChat() {
 	const [isStreaming, setIsStreaming] = useState(false)
 	const [streamingContent, setStreamingContent] = useState('')
 	const [error, setError] = useState<Error | null>(null)
-	const [newConversationId, setNewConversationId] = useState<number | null>(null)
+	const [newConversationId, setNewConversationId] = useState<number | null>(
+		null
+	)
 
 	const sendStreamingMessage = useCallback(
 		async (request: SendMessageRequest) => {

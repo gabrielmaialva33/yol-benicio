@@ -43,12 +43,14 @@ const renderIcon = (props: SidebarItemProps) => {
 		// Check if icon is a React component (lucide-react)
 		if (typeof props.icon === 'function') {
 			const IconComponent = props.icon
-			const iconClassName =
-				props.active && !props.isCollapsed
-					? 'w-6 h-6 text-white'
-					: props.active && props.isCollapsed
-						? 'w-6 h-6 text-orange-500'
-						: 'w-6 h-6 text-gray-300 group-hover:text-white'
+			let iconClassName = 'w-6 h-6 text-gray-300 group-hover:text-white'
+
+			if (props.active && !props.isCollapsed) {
+				iconClassName = 'w-6 h-6 text-white'
+			} else if (props.active && props.isCollapsed) {
+				iconClassName = 'w-6 h-6 text-orange-500'
+			}
+
 			return <IconComponent className={iconClassName} strokeWidth={2} />
 		}
 

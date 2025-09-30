@@ -5,6 +5,7 @@
 
 import {API_BASE_URL} from '@app/../config/api'
 import {getStoredToken} from '@shared/api/auth'
+import {CHAT} from '@/core/constants/ui'
 import type {
 	Conversation,
 	ConversationsListResponse,
@@ -12,6 +13,9 @@ import type {
 	SendMessageResponse,
 	StreamChunk
 } from '../types'
+
+// Constants
+const SSE_DONE_MARKER = '[DONE]'
 
 /**
  * Get auth headers for API requests
@@ -25,40 +29,17 @@ function getAuthHeaders(): HeadersInit {
 }
 
 /**
- * Send chat message (non-streaming)
- */
-export async function sendMessage(
-	request: SendMessageRequest
-): Promise<SendMessageResponse> {
-	const response = await fetch(`${API_BASE_URL}/api/v1/ai/chat`, {
-		method: 'POST',
-		headers: getAuthHeaders(),
-		body: JSON.stringify(request)
-	})
-
-	if (!response.ok) {
-		const error = await response.json()
-		throw new Error(error.errors?.[0]?.message || 'Failed to send message')
-	}
-
-	return response.json()
-}
-
-const SSE_DATA_PREFIX_LENGTH = 6 // Length of 'data: ' prefix
-const SSE_DONE_MARKER = '[DONE]'
-
-/**
  * Process a single SSE line
  */
 function processSSELine(
 	line: string,
 	onChunk: (chunk: StreamChunk) => void
 ): boolean {
-	if (!line.startsWith('data: ')) {
+	if (!line.startsWith(CHAT.SSE_DATA_PREFIX)) {
 		return false
 	}
 
-	const data = line.slice(SSE_DATA_PREFIX_LENGTH)
+	const data = line.slice(CHAT.SSE_DATA_PREFIX_LENGTH)
 
 	if (data === SSE_DONE_MARKER) {
 		onChunk({content: '', done: true})
@@ -79,6 +60,26 @@ function processSSELine(
 	}
 
 	return false
+}
+
+/**
+ * Send chat message (non-streaming)
+ */
+export async function sendMessage(
+	request: SendMessageRequest
+): Promise<SendMessageResponse> {
+	const response = await fetch(`${API_BASE_URL}/api/v1/ai/chat`, {
+		method: 'POST',
+		headers: getAuthHeaders(),
+		body: JSON.stringify(request)
+	})
+
+	if (!response.ok) {
+		const error = await response.json()
+		throw new Error(error.errors?.[0]?.message || 'Failed to send message')
+	}
+
+	return response.json()
 }
 
 /**
@@ -110,7 +111,6 @@ export async function streamMessage(
 	let shouldStop = false
 
 	try {
-		// biome-ignore lint/correctness/noConstantCondition: Need infinite loop for streaming
 		while (!shouldStop) {
 			// biome-ignore lint/performance/noAwaitInLoops: Sequential reading required for streaming
 			const {done, value} = await reader.read()

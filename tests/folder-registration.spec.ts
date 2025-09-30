@@ -134,10 +134,11 @@ test.describe('Folder Registration', () => {
 			'Informações Detalhadas'
 		]
 
-		for (const section of sections) {
-			const sectionHeader = page.getByRole('heading', {name: section})
-			await expect(sectionHeader).toBeVisible()
-		}
+		await Promise.all(
+			sections.map(section =>
+				expect(page.getByRole('heading', {name: section})).toBeVisible()
+			)
+		)
 	})
 
 	test('should cancel form and return to dashboard', async ({page}) => {

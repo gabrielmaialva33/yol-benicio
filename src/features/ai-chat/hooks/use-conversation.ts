@@ -5,6 +5,7 @@
 
 import {useAuth} from '@shared/hooks/use-auth-hook'
 import {useQuery} from '@tanstack/react-query'
+import {CACHE_TIMES} from '@/core/constants/cache'
 import {getConversation} from '../api'
 
 export function useConversation(conversationId?: number) {
@@ -12,9 +13,14 @@ export function useConversation(conversationId?: number) {
 
 	return useQuery({
 		queryKey: ['ai-conversation', conversationId],
-		queryFn: () => getConversation(conversationId!),
+		queryFn: () => {
+			if (!conversationId) {
+				throw new Error('Conversation ID is required')
+			}
+			return getConversation(conversationId)
+		},
 		enabled: Boolean(token) && Boolean(conversationId),
-		staleTime: 1000 * 60, // 1 minute
-		gcTime: 1000 * 60 * 5 // 5 minutes
+		staleTime: CACHE_TIMES.ONE_MINUTE,
+		gcTime: CACHE_TIMES.FIVE_MINUTES
 	})
 }

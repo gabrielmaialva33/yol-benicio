@@ -6,6 +6,7 @@
 import {Bot, Loader2} from 'lucide-react'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
+import {useTranslation} from '@/core/i18n'
 
 interface StreamingMessageProps {
 	content: string
@@ -16,6 +17,8 @@ export function StreamingMessage({
 	content,
 	isStreaming
 }: StreamingMessageProps) {
+	const {t} = useTranslation()
+
 	if (!(content || isStreaming)) {
 		return null
 	}
@@ -30,7 +33,7 @@ export function StreamingMessage({
 			{/* Content */}
 			<div className='flex-1 space-y-2'>
 				<div className='flex items-center gap-2'>
-					<div className='font-semibold text-sm'>Assistente IA</div>
+					<div className='font-semibold text-sm'>{t('chat.aiAssistant')}</div>
 					{isStreaming && (
 						<Loader2 className='h-4 w-4 animate-spin text-brand-cyan' />
 					)}
@@ -39,7 +42,7 @@ export function StreamingMessage({
 					{content ? (
 						<ReactMarkdown remarkPlugins={[remarkGfm]}>{content}</ReactMarkdown>
 					) : (
-						<p className='text-gray-500'>Pensando...</p>
+						<p className='text-gray-500'>{t('chat.thinking')}</p>
 					)}
 				</div>
 			</div>

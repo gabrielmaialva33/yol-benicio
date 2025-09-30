@@ -5,6 +5,7 @@
 
 import {MessageSquare} from 'lucide-react'
 import {useEffect, useRef} from 'react'
+import {useTranslation} from '@/core/i18n'
 import type {ChatMessage as ChatMessageType} from '../types'
 import {ChatMessage} from './ChatMessage'
 import {StreamingMessage} from './StreamingMessage'
@@ -22,6 +23,7 @@ export function ChatWindow({
 	isStreaming = false,
 	isLoading = false
 }: ChatWindowProps) {
+	const {t} = useTranslation()
 	const messagesEndRef = useRef<HTMLDivElement>(null)
 
 	// Auto-scroll to bottom when new messages arrive
@@ -34,7 +36,7 @@ export function ChatWindow({
 			<div className='flex h-full items-center justify-center'>
 				<div className='text-center text-gray-500'>
 					<MessageSquare className='mx-auto mb-2 h-12 w-12 opacity-30' />
-					<p>Carregando conversa...</p>
+					<p>{t('chat.loadingConversation')}</p>
 				</div>
 			</div>
 		)
@@ -45,10 +47,10 @@ export function ChatWindow({
 			<div className='flex h-full items-center justify-center'>
 				<div className='text-center text-gray-500'>
 					<MessageSquare className='mx-auto mb-4 h-16 w-16 opacity-30' />
-					<h3 className='mb-2 font-semibold text-lg'>Comece uma conversa</h3>
-					<p className='text-sm'>
-						Faça uma pergunta ou inicie um chat com o assistente IA
-					</p>
+					<h3 className='mb-2 font-semibold text-lg'>
+						{t('chat.startConversation')}
+					</h3>
+					<p className='text-sm'>{t('chat.startConversationHint')}</p>
 				</div>
 			</div>
 		)

@@ -1,0 +1,168 @@
+{
+	"common": {
+		"loading": "Loading...",
+		"error": "Error",
+		"success": "Success",
+		"cancel": "Cancel",
+		"save": "Save",
+		"delete": "Delete",
+		"edit": "Edit",
+		"add": "Add",
+		"search": "Search",
+		"filter": "Filter",
+		"clear": "Clear",
+		"back": "Back",
+		"next": "Next",
+		"previous": "Previous",
+		"confirm": "Confirm",
+		"yes": "Yes",
+		"no": "No",
+		"noData": "No data found",
+		"actions": "Actions"
+	},
+	"auth": {
+		"login": "Login",
+		"logout": "Logout",
+		"email": "Email",
+		"password": "Password",
+		"forgotPassword": "Forgot password",
+		"register": "Register"
+	},
+	"chat": {
+		"title": "AI Chat",
+		"subtitle": "Legal Assistant",
+		"placeholder": "Type your message...",
+		"send": "Send",
+		"deleteChat": "Delete",
+		"deleteConfirm": "Are you sure you want to delete this conversation?",
+		"newChat": "New conversation",
+		"noConversations": "No conversations yet",
+		"thinking": "Thinking...",
+		"aiAssistant": "AI Assistant",
+		"sendHint": "Press Enter to send, Shift+Enter for line break",
+		"errorMessage": "Sorry, an error occurred while processing your message. Please try again.",
+		"openChat": "Open AI chat",
+		"minimize": "Minimize chat",
+		"close": "Close chat",
+		"loadingConversation": "Loading conversation...",
+		"startConversation": "Start a conversation",
+		"startConversationHint": "Ask a question or start a chat with the AI assistant",
+		"error": {
+			"sendMessage": "Error sending message",
+			"loadConversations": "Error loading conversations"
+		}
+	},
+	"dashboard": {
+		"title": "Dashboard",
+		"welcome": "Welcome",
+		"stats": {
+			"activeFolders": "Active Folders",
+			"pendingTasks": "Pending Tasks",
+			"upcomingHearings": "Upcoming Hearings",
+			"billsToReceive": "Accounts Receivable"
+		},
+		"widgets": {
+			"tasks": "Tasks",
+			"folders": "Folders",
+			"hearings": "Hearings",
+			"billing": "Billing",
+			"birthdays": "Birthdays",
+			"requests": "Requests",
+			"activity": "Recent Activity",
+			"areaDivision": "Area Division"
+		}
+	},
+	"folders": {
+		"title": "Folders",
+		"consultation": "Folder Consultation",
+		"register": "Register Folder",
+		"details": "Folder Details",
+		"process": {
+			"title": "Process",
+			"systems": {
+				"totus": "TOTUS",
+				"migrated": "Migrated"
+			}
+		},
+		"fields": {
+			"folderNumber": "Code",
+			"client": "Client",
+			"responsibleLawyer": "Responsible",
+			"area": "Area",
+			"status": "Status",
+			"value": "Value",
+			"createdAt": "Created at",
+			"updatedAt": "Updated at",
+			"documents": "Docs"
+		},
+		"status": {
+			"active": "Active",
+			"archived": "Archived",
+			"pending": "Pending",
+			"closed": "Closed"
+		},
+		"actions": {
+			"toggleFavorite": "Toggle Favorite",
+			"viewDetails": "View Details",
+			"edit": "Edit Folder",
+			"archive": "Archive"
+		}
+	},
+	"tasks": {
+		"title": "Tasks",
+		"pending": "Pending",
+		"inProgress": "In Progress",
+		"completed": "Completed",
+		"priority": {
+			"low": "Low",
+			"medium": "Medium",
+			"high": "High",
+			"urgent": "Urgent"
+		}
+	},
+	"notifications": {
+		"title": "Notifications",
+		"markAsRead": "Mark as read",
+		"markAllAsRead": "Mark all as read",
+		"noNotifications": "No notifications"
+	},
+	"messages": {
+		"title": "Messages",
+		"noMessages": "No messages",
+		"reply": "Reply",
+		"newMessage": "New message"
+	},
+	"sidebar": {
+		"dashboard": "Dashboard",
+		"folders": "Folders",
+		"clients": "Clients",
+		"calendar": "Calendar",
+		"finance": "Finance",
+		"tasks": "Tasks",
+		"reports": "Reports",
+		"settings": "Settings"
+	},
+	"pagination": {
+		"showing": "Showing",
+		"of": "of",
+		"results": "results",
+		"perPage": "Per page",
+		"page": "Page"
+	},
+	"filters": {
+		"title": "Filters",
+		"apply": "Apply",
+		"clear": "Clear",
+		"dateRange": "Date Range",
+		"from": "From",
+		"to": "To"
+	},
+	"errors": {
+		"generic": "An error occurred. Please try again.",
+		"network": "Connection error. Check your internet.",
+		"notFound": "Not found",
+		"unauthorized": "Unauthorized",
+		"forbidden": "Access denied",
+		"validation": "Please check the provided information"
+	}
+}

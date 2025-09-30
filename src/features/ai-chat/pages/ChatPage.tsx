@@ -3,115 +3,29 @@
  * Main chat interface page
  */
 
-import {useCallback, useEffect} from 'react'
-import {useNavigate, useParams} from 'react-router'
 import {ChatHeader} from '../components/ChatHeader'
 import {ChatInput} from '../components/ChatInput'
 import {ChatWindow} from '../components/ChatWindow'
 import {ConversationList} from '../components/ConversationList'
-import {useConversation} from '../hooks/use-conversation'
-import {useConversations} from '../hooks/use-conversations'
-import {useDeleteConversation} from '../hooks/use-delete-conversation'
-import {useStreamingChat} from '../hooks/use-streaming-chat'
+import {useChatPage} from '../hooks/use-chat-page'
 
 export function ChatPage() {
-	const {conversationId} = useParams<{conversationId?: string}>()
-	const navigate = useNavigate()
-
-	// Fetch conversations list
-	const {data: conversations = []} = useConversations()
-
-	// Fetch current conversation
-	const currentConversationId = conversationId
-		? Number.parseInt(conversationId, 10)
-		: undefined
 	const {
-		data: currentConversation,
-		isLoading: isLoadingConversation,
-		refetch: refetchConversation
-	} = useConversation(currentConversationId)
-
-	// Streaming chat hook
-	const {
-		sendStreamingMessage,
+		conversations,
+		messages,
+		streamContent,
 		isStreaming,
-		streamingContent,
-		reset: resetStreaming,
-		newConversationId
-	} = useStreamingChat()
-
-	// Delete conversation hook
-	const {deleteConversation, isDeleting} = useDeleteConversation()
-
-	// Handle send message
-	const handleSendMessage = useCallback(
-		async (message: string) => {
-			resetStreaming()
-
-			const request: any = {message, mode: 'single'}
-			if (currentConversationId) {
-				request.conversation_id = currentConversationId
-			}
-
-			// Send message and handle new conversation creation
-			await sendStreamingMessage(request)
-
-			// Refetch conversation to get updated messages
-			setTimeout(() => {
-				refetchConversation()
-			}, 1000)
-		},
-		[
-			currentConversationId,
-			sendStreamingMessage,
-			resetStreaming,
-			refetchConversation
-		]
-	)
-
-	// Handle new conversation
-	const handleNewConversation = useCallback(() => {
-		navigate('/dashboard/chat')
-		resetStreaming()
-	}, [navigate, resetStreaming])
-
-	// Handle delete conversation
-	const handleDeleteConversation = useCallback(
-		(id: number) => {
-			deleteConversation(id, {
-				onSuccess: () => {
-					// Navigate to base chat if deleting current conversation
-					if (id === currentConversationId) {
-						navigate('/dashboard/chat')
-					}
-				}
-			})
-		},
-		[deleteConversation, currentConversationId, navigate]
-	)
-
-	// Handle delete current conversation
-	const handleDeleteCurrentConversation = useCallback(() => {
-		if (currentConversationId) {
-			handleDeleteConversation(currentConversationId)
-		}
-	}, [currentConversationId, handleDeleteConversation])
-
-	// Reset streaming when conversation changes
-	useEffect(() => {
-		resetStreaming()
-	}, [resetStreaming])
-
-	// Navigate to new conversation after creation
-	useEffect(() => {
-		if (newConversationId && !currentConversationId && !isStreaming) {
-			navigate(`/dashboard/chat/${newConversationId}`)
-		}
-	}, [newConversationId, currentConversationId, isStreaming, navigate])
+		isDeleting,
+		currentConversationId,
+		conversation,
+		handleSendMessage,
+		handleNewConversation,
+		handleDeleteConversation,
+		handleDeleteCurrentConversation
+	} = useChatPage()
 
 	return (
 		<div className='flex h-[calc(100vh-64px)]'>
-			{/* Sidebar with conversations */}
 			<ConversationList
 				activeConversationId={currentConversationId}
 				conversations={conversations}
@@ -120,30 +34,24 @@ export function ChatPage() {
 				onNewConversation={handleNewConversation}
 			/>
 
-			{/* Main chat area */}
 			<div className='flex flex-1 flex-col'>
 				<ChatHeader
 					conversationId={currentConversationId}
-					onDeleteConversation={
-						currentConversationId ? handleDeleteCurrentConversation : undefined
-					}
-					title={currentConversation?.title || 'Chat IA'}
+					onDeleteConversation={handleDeleteCurrentConversation}
+					title={conversation?.title}
 				/>
 
-				<ChatWindow
-					isLoading={isLoadingConversation && Boolean(currentConversationId)}
-					isStreaming={isStreaming}
-					messages={currentConversation?.messages || []}
-					streamingContent={streamingContent}
-				/>
+				<div className='flex-1 overflow-hidden bg-gray-50'>
+					<ChatWindow
+						isStreaming={isStreaming}
+						messages={messages}
+						streamingContent={streamContent}
+					/>
+				</div>
 
-				<ChatInput
-					disabled={isStreaming}
-					onSend={handleSendMessage}
-					placeholder={
-						isStreaming ? 'Aguarde a resposta...' : 'Digite sua mensagem...'
-					}
-				/>
+				<div className='border-t border-gray-200 bg-white p-4'>
+					<ChatInput disabled={isStreaming} onSend={handleSendMessage} />
+				</div>
 			</div>
 		</div>
 	)

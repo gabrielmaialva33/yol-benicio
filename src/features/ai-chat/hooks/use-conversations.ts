@@ -5,6 +5,7 @@
 
 import {useAuth} from '@shared/hooks/use-auth-hook'
 import {useQuery} from '@tanstack/react-query'
+import {CACHE_TIMES} from '@/core/constants/cache'
 import {getConversations} from '../api'
 
 export function useConversations() {
@@ -14,7 +15,7 @@ export function useConversations() {
 		queryKey: ['ai-conversations'],
 		queryFn: getConversations,
 		enabled: Boolean(token),
-		staleTime: 1000 * 60 * 5, // 5 minutes
-		gcTime: 1000 * 60 * 10 // 10 minutes
+		staleTime: CACHE_TIMES.STALE.MEDIUM, // 5 minutes
+		gcTime: CACHE_TIMES.GC.DEFAULT // 10 minutes
 	})
 }

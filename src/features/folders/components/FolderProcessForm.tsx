@@ -1,5 +1,6 @@
 import {Search} from 'lucide-react'
 import {useState} from 'react'
+import {useTranslation} from '@/core/i18n'
 import type {FolderDetail} from '../types/folder.types'
 import {FormField} from './form/FormField'
 import {FormSection} from './form/FormSection'
@@ -10,6 +11,8 @@ interface FolderProcessFormProps {
 }
 
 export function FolderProcessForm({folder}: FolderProcessFormProps) {
+	const {t} = useTranslation()
+
 	// Form state
 	const [formData, setFormData] = useState({
 		// Identification
@@ -71,7 +74,9 @@ export function FolderProcessForm({folder}: FolderProcessFormProps) {
 			{/* Header with Search */}
 			<div className='px-6 py-4 border-b border-gray-100'>
 				<div className='flex items-center justify-between'>
-					<h2 className='text-lg font-semibold text-gray-900'>Processo</h2>
+					<h2 className='text-lg font-semibold text-gray-900'>
+						{t('folders.process.title')}
+					</h2>
 					<div className='relative w-64'>
 						<Search className='absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400' />
 						<input
@@ -193,7 +198,9 @@ export function FolderProcessForm({folder}: FolderProcessFormProps) {
 								onChange={e => updateField('totus', e.target.checked)}
 								type='checkbox'
 							/>
-							<span className='text-sm text-gray-700'>TOTUS</span>
+							<span className='text-sm text-gray-700'>
+								{t('folders.process.systems.totus')}
+							</span>
 						</label>
 						<label className='flex items-center gap-2'>
 							<input
@@ -202,7 +209,9 @@ export function FolderProcessForm({folder}: FolderProcessFormProps) {
 								onChange={e => updateField('migrated', e.target.checked)}
 								type='checkbox'
 							/>
-							<span className='text-sm text-gray-700'>Migrado</span>
+							<span className='text-sm text-gray-700'>
+								{t('folders.process.systems.migrated')}
+							</span>
 						</label>
 					</div>
 				</FormSection>

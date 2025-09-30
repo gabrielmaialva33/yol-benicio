@@ -6,6 +6,7 @@
 import {cn} from '@ui/utils/cn'
 import {MessageSquare, Plus, Trash2} from 'lucide-react'
 import {Link} from 'react-router'
+import {useTranslation} from '@/core/i18n'
 import type {Conversation} from '../types'
 
 interface ConversationListProps {
@@ -23,6 +24,8 @@ export function ConversationList({
 	onDeleteConversation,
 	isDeleting = false
 }: ConversationListProps) {
+	const {t} = useTranslation()
+
 	return (
 		<div className='flex h-full w-64 flex-col border-r border-border bg-surface'>
 			{/* Header */}
@@ -33,7 +36,7 @@ export function ConversationList({
 					type='button'
 				>
 					<Plus className='h-4 w-4' />
-					Nova Conversa
+					{t('chat.newChat')}
 				</button>
 			</div>
 
@@ -42,7 +45,7 @@ export function ConversationList({
 				{conversations.length === 0 ? (
 					<div className='p-4 text-center text-sm text-gray-500'>
 						<MessageSquare className='mx-auto mb-2 h-8 w-8 opacity-30' />
-						<p>Nenhuma conversa ainda</p>
+						<p>{t('chat.noConversations')}</p>
 					</div>
 				) : (
 					conversations.map(conversation => (

@@ -1,0 +1,168 @@
+{
+	"common": {
+		"loading": "Carregando...",
+		"error": "Erro",
+		"success": "Sucesso",
+		"cancel": "Cancelar",
+		"save": "Salvar",
+		"delete": "Deletar",
+		"edit": "Editar",
+		"add": "Adicionar",
+		"search": "Buscar",
+		"filter": "Filtrar",
+		"clear": "Limpar",
+		"back": "Voltar",
+		"next": "Próximo",
+		"previous": "Anterior",
+		"confirm": "Confirmar",
+		"yes": "Sim",
+		"no": "Não",
+		"noData": "Nenhum dado encontrado",
+		"actions": "Ações"
+	},
+	"auth": {
+		"login": "Entrar",
+		"logout": "Sair",
+		"email": "E-mail",
+		"password": "Senha",
+		"forgotPassword": "Esqueci minha senha",
+		"register": "Cadastrar"
+	},
+	"chat": {
+		"title": "Chat IA",
+		"subtitle": "Assistente Jurídico",
+		"placeholder": "Digite sua mensagem...",
+		"send": "Enviar",
+		"deleteChat": "Deletar",
+		"deleteConfirm": "Tem certeza que deseja deletar esta conversa?",
+		"newChat": "Nova conversa",
+		"noConversations": "Nenhuma conversa ainda",
+		"thinking": "Pensando...",
+		"aiAssistant": "Assistente IA",
+		"sendHint": "Pressione Enter para enviar, Shift+Enter para quebrar linha",
+		"errorMessage": "Desculpe, ocorreu um erro ao processar sua mensagem. Por favor, tente novamente.",
+		"openChat": "Abrir chat com IA",
+		"minimize": "Minimizar chat",
+		"close": "Fechar chat",
+		"loadingConversation": "Carregando conversa...",
+		"startConversation": "Comece uma conversa",
+		"startConversationHint": "Faça uma pergunta ou inicie um chat com o assistente IA",
+		"error": {
+			"sendMessage": "Erro ao enviar mensagem",
+			"loadConversations": "Erro ao carregar conversas"
+		}
+	},
+	"dashboard": {
+		"title": "Dashboard",
+		"welcome": "Bem-vindo",
+		"stats": {
+			"activeFolders": "Pastas Ativas",
+			"pendingTasks": "Tarefas Pendentes",
+			"upcomingHearings": "Audiências Próximas",
+			"billsToReceive": "Contas a Receber"
+		},
+		"widgets": {
+			"tasks": "Tarefas",
+			"folders": "Pastas",
+			"hearings": "Audiências",
+			"billing": "Faturamento",
+			"birthdays": "Aniversariantes",
+			"requests": "Solicitações",
+			"activity": "Atividade Recente",
+			"areaDivision": "Divisão por Área"
+		}
+	},
+	"folders": {
+		"title": "Pastas",
+		"consultation": "Consulta de Pastas",
+		"register": "Cadastro de Pasta",
+		"details": "Detalhes da Pasta",
+		"process": {
+			"title": "Processo",
+			"systems": {
+				"totus": "TOTUS",
+				"migrated": "Migrado"
+			}
+		},
+		"fields": {
+			"folderNumber": "Código",
+			"client": "Cliente",
+			"responsibleLawyer": "Responsável",
+			"area": "Área",
+			"status": "Status",
+			"value": "Valor",
+			"createdAt": "Data de inclusão",
+			"updatedAt": "Atualizado em",
+			"documents": "Docs"
+		},
+		"status": {
+			"active": "Ativa",
+			"archived": "Arquivada",
+			"pending": "Pendente",
+			"closed": "Fechada"
+		},
+		"actions": {
+			"toggleFavorite": "Favoritar/Desfavoritar",
+			"viewDetails": "Ver Detalhes",
+			"edit": "Editar Pasta",
+			"archive": "Arquivar"
+		}
+	},
+	"tasks": {
+		"title": "Tarefas",
+		"pending": "Pendentes",
+		"inProgress": "Em Andamento",
+		"completed": "Concluídas",
+		"priority": {
+			"low": "Baixa",
+			"medium": "Média",
+			"high": "Alta",
+			"urgent": "Urgente"
+		}
+	},
+	"notifications": {
+		"title": "Notificações",
+		"markAsRead": "Marcar como lida",
+		"markAllAsRead": "Marcar todas como lidas",
+		"noNotifications": "Nenhuma notificação"
+	},
+	"messages": {
+		"title": "Mensagens",
+		"noMessages": "Nenhuma mensagem",
+		"reply": "Responder",
+		"newMessage": "Nova mensagem"
+	},
+	"sidebar": {
+		"dashboard": "Dashboard",
+		"folders": "Pastas",
+		"clients": "Clientes",
+		"calendar": "Calendário",
+		"finance": "Financeiro",
+		"tasks": "Tarefas",
+		"reports": "Relatórios",
+		"settings": "Configurações"
+	},
+	"pagination": {
+		"showing": "Mostrando",
+		"of": "de",
+		"results": "resultados",
+		"perPage": "Por página",
+		"page": "Página"
+	},
+	"filters": {
+		"title": "Filtros",
+		"apply": "Aplicar",
+		"clear": "Limpar",
+		"dateRange": "Período",
+		"from": "De",
+		"to": "Até"
+	},
+	"errors": {
+		"generic": "Ocorreu um erro. Por favor, tente novamente.",
+		"network": "Erro de conexão. Verifique sua internet.",
+		"notFound": "Não encontrado",
+		"unauthorized": "Não autorizado",
+		"forbidden": "Acesso negado",
+		"validation": "Por favor, verifique os dados informados"
+	}
+}

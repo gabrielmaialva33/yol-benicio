@@ -1,3 +1,4 @@
+import type {Page} from '@playwright/test'
 import {expect, test} from '@playwright/test'
 
 // Constants for timeouts
@@ -7,7 +8,7 @@ const XSS_CHECK_TIMEOUT = 1000 // 1 second to wait for XSS check
 type StorageData = Record<string, string | null>
 
 // Helper function for testing invalid emails
-const testInvalidEmail = async (page: any, email: string) => {
+const testInvalidEmail = async (page: Page, email: string) => {
 	await page.getByPlaceholder('E-mail').fill(email)
 	await page.getByPlaceholder('Senha').fill('password123')
 	await page.getByRole('button', {name: 'Entrar'}).click()
@@ -220,7 +221,7 @@ test.describe('Security - Session Management', () => {
 })
 
 // Helper function for testing weak passwords
-const testWeakPassword = async (page: any, password: string) => {
+const testWeakPassword = async (page: Page, password: string) => {
 	await page.getByPlaceholder('E-mail').fill('test@example.com')
 	await page.getByPlaceholder('Senha').fill(password)
 	await page.getByRole('button', {name: 'Entrar'}).click()

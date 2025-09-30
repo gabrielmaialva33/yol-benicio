@@ -4,7 +4,15 @@ import {useFolderConsultation as useFolderConsultationApi} from './use-folders-a
 
 const DEBOUNCE_DELAY = 300
 
-export function useFolderConsultation() {
+function parseDateRange(dateRange: string) {
+	const [startDate, endDate] = dateRange.split(' to ')
+	return {
+		...(startDate && {date_from: startDate.trim()}),
+		...(endDate && {date_to: endDate.trim()})
+	}
+}
+
+function useFolderConsultation() {
 	const [page, setPage] = useState(1)
 	const [limit, setLimit] = useState(10)
 	const [filters, setFilters] = useState({
@@ -78,10 +86,4 @@ export function useFolderConsultation() {
 	}
 }
 
-function parseDateRange(dateRange: string) {
-	const [startDate, endDate] = dateRange.split(' to ')
-	return {
-		...(startDate && {date_from: startDate.trim()}),
-		...(endDate && {date_to: endDate.trim()})
-	}
-}
+export {useFolderConsultation}

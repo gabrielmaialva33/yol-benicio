@@ -4,6 +4,7 @@
  */
 
 import {MessageSquare, Trash2} from 'lucide-react'
+import {useTranslation} from '@/core/i18n'
 
 interface ChatHeaderProps {
 	title?: string | undefined
@@ -12,10 +13,15 @@ interface ChatHeaderProps {
 }
 
 export function ChatHeader({
-	title = 'Chat IA',
+	title,
 	conversationId,
 	onDeleteConversation
 }: ChatHeaderProps) {
+	const {t} = useTranslation()
+
+	// Use translated title if not provided
+	const displayTitle = title || t('chat.title')
+
 	return (
 		<div className='flex items-center justify-between border-b border-border bg-surface p-4'>
 			<div className='flex items-center gap-3'>
@@ -23,10 +29,8 @@ export function ChatHeader({
 					<MessageSquare className='h-5 w-5 text-brand-cyan' />
 				</div>
 				<div>
-					<h1 className='font-semibold text-lg'>{title}</h1>
-					<p className='text-sm text-gray-500'>
-						Assistente IA para consultas jurídicas
-					</p>
+					<h1 className='font-semibold text-lg'>{displayTitle}</h1>
+					<p className='text-sm text-gray-500'>{t('chat.subtitle')}</p>
 				</div>
 			</div>
 
@@ -34,11 +38,11 @@ export function ChatHeader({
 				<button
 					className='flex items-center gap-2 rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-600 transition-colors hover:bg-red-100'
 					onClick={onDeleteConversation}
-					title='Deletar conversa'
+					title={t('chat.deleteChat')}
 					type='button'
 				>
 					<Trash2 className='h-4 w-4' />
-					Deletar
+					{t('chat.deleteChat')}
 				</button>
 			)}
 		</div>

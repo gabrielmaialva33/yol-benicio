@@ -88,7 +88,9 @@ export function AuthProvider({children}: {children: React.ReactNode}) {
 	}, [])
 
 	const refresh = useCallback(async () => {
-		if (!token) return
+		if (!token) {
+			return
+		}
 		try {
 			const me = await getMe()
 			setUser(me)

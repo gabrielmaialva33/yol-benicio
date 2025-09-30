@@ -81,7 +81,7 @@ export function createApiHooks<T>({baseUrl, token}: UseApiOptions) {
 				const result = await fetcher(buildUrl('', params))
 				// Backend wraps paginated response in { message, data: {...} }
 				// Unwrap if needed
-				if (result.data && result.data.data && result.data.meta) {
+				if (result.data?.data && result.data.meta) {
 					return result.data
 				}
 				return result
