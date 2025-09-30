@@ -7,6 +7,12 @@ import {
 } from '../../../../shared/ui/primitives/Card'
 import {type BirthdayData, getBirthdays} from '../../api'
 
+const CARD_TITLE = 'Aniversariantes'
+const VIEW_ALL_TEXT = 'Ver todos'
+const DESCRIPTION_TEXT = 'Colegas que fazem aniversário este mês'
+const GO_ICON_TITLE = 'Go'
+const PLACEHOLDER_IMAGE = '/placeholder.svg'
+
 export function BirthdaysCard() {
 	const {data: birthdays = []} = useQuery<BirthdayData[]>({
 		queryKey: ['birthdays'],
@@ -16,17 +22,15 @@ export function BirthdaysCard() {
 	return (
 		<Card>
 			<CardHeader className='flex items-center justify-between mb-4'>
-				<CardTitle>Aniversariantes</CardTitle>
+				<CardTitle>{CARD_TITLE}</CardTitle>
 				<button
 					className='text-sm font-medium text-cyan-500 hover:text-cyan-600 cursor-pointer'
 					type='button'
 				>
-					Ver todos
+					{VIEW_ALL_TEXT}
 				</button>
 			</CardHeader>
-			<p className='text-sm text-gray-500 mb-4'>
-				Colegas que fazem aniversário este mês
-			</p>
+			<p className='text-sm text-gray-500 mb-4'>{DESCRIPTION_TEXT}</p>
 			<CardContent className='space-y-4'>
 				{birthdays.slice(0, 2).map(user => (
 					<div className='flex items-center space-x-3' key={user.email}>
@@ -34,7 +38,7 @@ export function BirthdaysCard() {
 							alt={user.name}
 							className='w-10 h-10 rounded-full'
 							height={40}
-							src={user.avatar || '/placeholder.svg'}
+							src={user.avatar || PLACEHOLDER_IMAGE}
 							width={40}
 						/>
 						<div className='flex-1'>
@@ -51,7 +55,7 @@ export function BirthdaysCard() {
 								stroke='currentColor'
 								viewBox='0 0 24 24'
 							>
-								<title>Go</title>
+								<title>{GO_ICON_TITLE}</title>
 								<path
 									d='M9 5l7 7-7 7'
 									strokeLinecap='round'

@@ -7,6 +7,8 @@ import {
 } from '../../../../shared/ui/primitives/Card'
 import {type FolderActivityData, getFolderActivity} from '../../api'
 
+const CARD_TITLE = 'Atividade de Pastas'
+
 export function FolderActivityCard() {
 	const {data: activities = []} = useQuery<FolderActivityData[]>({
 		queryKey: ['folderActivity'],
@@ -16,7 +18,7 @@ export function FolderActivityCard() {
 	return (
 		<Card>
 			<CardHeader className='mb-4'>
-				<CardTitle>Atividade de Pastas</CardTitle>
+				<CardTitle>{CARD_TITLE}</CardTitle>
 			</CardHeader>
 			<CardContent className='space-y-4'>
 				{activities.map(activity => (

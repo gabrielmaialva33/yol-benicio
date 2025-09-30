@@ -1,3 +1,11 @@
+const ROWS_PER_PAGE_LABEL = 'Linhas por página'
+const OPTION_10 = '10'
+const OPTION_20 = '20'
+const OPTION_50 = '50'
+const _PAGE_SEPARATOR = ' de '
+const PREVIOUS_TITLE = 'Previous'
+const NEXT_TITLE = 'Next'
+
 interface PaginationProps {
 	page: number
 	limit: number
@@ -16,7 +24,7 @@ export function Pagination({
 	return (
 		<div className='flex items-center justify-between mt-4'>
 			<div className='flex items-center space-x-2 text-sm text-gray-600'>
-				<span>Linhas por página</span>
+				<span>{ROWS_PER_PAGE_LABEL}</span>
 				<select
 					className='border border-gray-300 rounded-md px-2 py-1 focus:outline-none focus:ring-1 focus:ring-cyan-500'
 					onChange={e => {
@@ -25,9 +33,9 @@ export function Pagination({
 					}}
 					value={limit}
 				>
-					<option>10</option>
-					<option>20</option>
-					<option>50</option>
+					<option>{OPTION_10}</option>
+					<option>{OPTION_20}</option>
+					<option>{OPTION_50}</option>
 				</select>
 			</div>
 			<div className='flex items-center space-x-4'>
@@ -48,7 +56,7 @@ export function Pagination({
 							stroke='currentColor'
 							viewBox='0 0 24 24'
 						>
-							<title>Previous</title>
+							<title>{PREVIOUS_TITLE}</title>
 							<path
 								d='M15 19l-7-7 7-7'
 								strokeLinecap='round'
@@ -69,7 +77,7 @@ export function Pagination({
 							stroke='currentColor'
 							viewBox='0 0 24 24'
 						>
-							<title>Next</title>
+							<title>{NEXT_TITLE}</title>
 							<path
 								d='M9 5l7 7-7 7'
 								strokeLinecap='round'

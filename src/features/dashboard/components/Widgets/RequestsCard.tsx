@@ -17,13 +17,21 @@ import {
 } from '../../../../shared/ui/primitives/Card'
 import {getRequests, type RequestData} from '../../api'
 
-export function RequestsCard() {
+const CARD_TITLE = 'Requisições'
+const CARD_DESCRIPTION = 'Requisições por período'
+const TITLE_NEW_THIS_MONTH = 'Novas neste mês'
+const TITLE_NEW_IN = 'Novas em'
+const LABEL_PREV_MONTH = 'Mês anterior'
+const LABEL_NEXT_MONTH = 'Próximo mês'
+const SVG_TITLE_PREV = 'Anterior'
+const SVG_TITLE_NEXT = 'Próximo'
+
+function useRequestsData() {
 	const {data: requests = []} = useQuery<RequestData[]>({
 		queryKey: ['requests'],
 		queryFn: getRequests
 	})
 	const [currentMonthIndex, setCurrentMonthIndex] = useState(0)
-	const id = useId()
 
 	useEffect(() => {
 		if (requests.length > 0) {
@@ -39,19 +47,69 @@ export function RequestsCard() {
 		setCurrentMonthIndex(prev => (prev < requests.length - 1 ? prev + 1 : prev))
 	}
 
+	return {requests, currentMonthIndex, handlePrevMonth, handleNextMonth}
+}
+
+function RequestsChart({
+	requests,
+	gradientId
+}: {
+	requests: RequestData[]
+	gradientId: string
+}) {
+	return (
+		<ResponsiveContainer height='100%' width='100%'>
+			<AreaChart data={requests}>
+				<defs>
+					<linearGradient id={gradientId} x1='0' x2='0' y1='0' y2='1'>
+						<stop offset='5%' stopColor='#F43F5E' stopOpacity={0.8} />
+						<stop offset='95%' stopColor='#F43F5E' stopOpacity={0} />
+					</linearGradient>
+				</defs>
+				<XAxis
+					axisLine={false}
+					dataKey='month'
+					tick={{fontSize: 12, fill: '#6B7280'}}
+					tickLine={false}
+				/>
+				<CartesianGrid strokeDasharray='3 3' vertical={false} />
+				<YAxis
+					axisLine={false}
+					domain={[10, 24]}
+					tick={{fontSize: 12, fill: '#6B7280'}}
+					tickLine={false}
+				/>
+				<Tooltip />
+				<Area
+					dataKey='value'
+					dot={{fill: '#F43F5E', strokeWidth: 2, r: 4}}
+					fill={`url(#${gradientId})`}
+					stroke='#F43F5E'
+					strokeWidth={2}
+					type='monotone'
+				/>
+			</AreaChart>
+		</ResponsiveContainer>
+	)
+}
+
+export function RequestsCard() {
+	const {requests, currentMonthIndex, handlePrevMonth, handleNextMonth} =
+		useRequestsData()
+	const id = useId()
 	const currentRequest = requests[currentMonthIndex]
 
 	return (
 		<Card>
 			<CardHeader className='flex items-center justify-between mb-4'>
 				<div>
-					<CardTitle>Requisições</CardTitle>
-					<p className='text-sm text-gray-500'>Requisições por período</p>
+					<CardTitle>{CARD_TITLE}</CardTitle>
+					<p className='text-sm text-gray-500'>{CARD_DESCRIPTION}</p>
 				</div>
 				<div className='flex items-center space-x-2'>
 					<div className='bg-gray-100 rounded p-1'>
 						<button
-							aria-label='Mês anterior'
+							aria-label={LABEL_PREV_MONTH}
 							className='p-1 text-gray-400 hover:text-gray-600'
 							onClick={handlePrevMonth}
 							type='button'
@@ -62,7 +120,7 @@ export function RequestsCard() {
 								stroke='currentColor'
 								viewBox='0 0 24 24'
 							>
-								<title>Anterior</title>
+								<title>{SVG_TITLE_PREV}</title>
 								<path
 									d='M15 19l-7-7 7-7'
 									strokeLinecap='round'
@@ -74,7 +132,7 @@ export function RequestsCard() {
 					</div>
 					<div className='bg-gray-100 rounded p-1'>
 						<button
-							aria-label='Próximo mês'
+							aria-label={LABEL_NEXT_MONTH}
 							className='p-1 text-gray-400 hover:text-gray-600'
 							onClick={handleNextMonth}
 							type='button'
@@ -85,7 +143,7 @@ export function RequestsCard() {
 								stroke='currentColor'
 								viewBox='0 0 24 24'
 							>
-								<title>Próximo</title>
+								<title>{SVG_TITLE_NEXT}</title>
 								<path
 									d='M9 5l7 7-7 7'
 									strokeLinecap='round'
@@ -101,8 +159,8 @@ export function RequestsCard() {
 				<div className='mb-4'>
 					<div className='text-base font-semibold text-gray-800 mb-1'>
 						{currentMonthIndex === requests.length - 1
-							? 'Novas neste mês'
-							: `Novas em ${currentRequest.month}`}
+							? TITLE_NEW_THIS_MONTH
+							: `${TITLE_NEW_IN} ${currentRequest.month}`}
 					</div>
 					<div className='flex items-center space-x-2'>
 						<span className='text-4xl font-bold text-gray-800'>
@@ -119,38 +177,7 @@ export function RequestsCard() {
 				</div>
 			)}
 			<CardContent className='h-64'>
-				<ResponsiveContainer height='100%' width='100%'>
-					<AreaChart data={requests}>
-						<defs>
-							<linearGradient id={id} x1='0' x2='0' y1='0' y2='1'>
-								<stop offset='5%' stopColor='#F43F5E' stopOpacity={0.8} />
-								<stop offset='95%' stopColor='#F43F5E' stopOpacity={0} />
-							</linearGradient>
-						</defs>
-						<XAxis
-							axisLine={false}
-							dataKey='month'
-							tick={{fontSize: 12, fill: '#6B7280'}}
-							tickLine={false}
-						/>
-						<CartesianGrid strokeDasharray='3 3' vertical={false} />
-						<YAxis
-							axisLine={false}
-							domain={[10, 24]}
-							tick={{fontSize: 12, fill: '#6B7280'}}
-							tickLine={false}
-						/>
-						<Tooltip />
-						<Area
-							dataKey='value'
-							dot={{fill: '#F43F5E', strokeWidth: 2, r: 4}}
-							fill={`url(#${id})`}
-							stroke='#F43F5E'
-							strokeWidth={2}
-							type='monotone'
-						/>
-					</AreaChart>
-				</ResponsiveContainer>
+				<RequestsChart gradientId={id} requests={requests} />
 			</CardContent>
 		</Card>
 	)

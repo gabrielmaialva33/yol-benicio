@@ -58,9 +58,7 @@ function validateFormData(email: string, password: string) {
 	return newErrors
 }
 
-export function LoginForm() {
-	const emailId = useId()
-	const passwordId = useId()
+function useLoginForm() {
 	const navigate = useNavigate()
 	const [errors, setErrors] = useState({email: '', password: ''})
 	const {login, error: authError, loading} = useAuth()
@@ -86,6 +84,14 @@ export function LoginForm() {
 			// erro já tratado via estado
 		}
 	}
+
+	return {errors, authError, loading, handleSubmit}
+}
+
+export function LoginForm() {
+	const emailId = useId()
+	const passwordId = useId()
+	const {errors, authError, loading, handleSubmit} = useLoginForm()
 
 	return (
 		<div className='flex w-full flex-col items-center justify-center gap-10 rounded-[15px] bg-white p-8 font-sans shadow-lg animate-in fade-in zoom-in-95 duration-1000 md:h-[607px] md:px-[32.5px] md:py-16'>

@@ -6,6 +6,12 @@ interface FolderDetailHeaderProps {
 	folder: FolderDetail
 }
 
+const FOLDER_PREFIX = 'Pasta #'
+const CREATED_AT_PREFIX = 'Criado em'
+const AT_TIME_SEPARATOR = 'às'
+const SAVE_BUTTON_LABEL = 'Salvar'
+const ADD_FILES_BUTTON_LABEL = 'Adicionar arquivos'
+
 const StatusBadge = (props: {status: string}) => {
 	const baseClasses =
 		'px-3 py-1.5 text-xs font-medium rounded-full inline-block border'
@@ -44,12 +50,14 @@ export function FolderDetailHeader(props: FolderDetailHeaderProps) {
 					<div>
 						<div className='flex items-center gap-3 mb-2'>
 							<h1 className='text-2xl font-semibold text-[#161C24]'>
-								Pasta #{String(props.folder.id).substring(0, FOLDER_ID_LENGTH)}
+								{FOLDER_PREFIX}
+								{String(props.folder.id).substring(0, FOLDER_ID_LENGTH)}
 							</h1>
 							<StatusBadge status={props.folder.status} />
 						</div>
 						<p className='text-sm text-[#919EAB]'>
-							Criado em {props.folder.date} às {props.folder.time}
+							{CREATED_AT_PREFIX} {props.folder.date} {AT_TIME_SEPARATOR}{' '}
+							{props.folder.time}
 						</p>
 					</div>
 				</div>
@@ -58,13 +66,13 @@ export function FolderDetailHeader(props: FolderDetailHeaderProps) {
 						className='px-6 py-3 text-sm font-semibold text-[#637381] bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors'
 						type='button'
 					>
-						Salvar
+						{SAVE_BUTTON_LABEL}
 					</button>
 					<button
 						className='px-6 py-3 text-sm font-semibold text-white bg-[#00B8D9] rounded-lg hover:bg-[#00B8D9]/90 transition-colors'
 						type='button'
 					>
-						Adicionar arquivos
+						{ADD_FILES_BUTTON_LABEL}
 					</button>
 				</div>
 			</div>

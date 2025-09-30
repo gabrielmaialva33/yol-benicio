@@ -2,6 +2,22 @@ import {useQuery} from '@tanstack/react-query'
 import {API_BASE_URL} from '../../../config/api'
 import {useAuth} from '../../../shared/hooks/auth-context'
 
+// Time unit constants
+const MILLISECONDS_PER_SECOND = 1000
+const SECONDS_PER_MINUTE = 60
+const MINUTES_TO_MS = SECONDS_PER_MINUTE * MILLISECONDS_PER_SECOND
+
+// Cache and retry configuration constants
+const STALE_TIME_MINUTES = 5
+const CACHE_TIME_MINUTES = 10
+const STALE_TIME_MS = STALE_TIME_MINUTES * MINUTES_TO_MS // 5 minutes
+const CACHE_TIME_MS = CACHE_TIME_MINUTES * MINUTES_TO_MS // 10 minutes
+const MAX_RETRY_ATTEMPTS = 2 // Retry failed requests twice
+const INITIAL_RETRY_DELAY_MS = MILLISECONDS_PER_SECOND // Initial retry delay
+const RETRY_BACKOFF_EXPONENT = 2 // Exponential backoff multiplier
+const MAX_RETRY_DELAY_SECONDS = 30
+const MAX_RETRY_DELAY_MS = MAX_RETRY_DELAY_SECONDS * MILLISECONDS_PER_SECOND // Maximum retry delay
+
 /**
  * Folder entity from the API
  */
@@ -36,7 +52,7 @@ interface AreaStats {
 /**
  * Dashboard statistics response from the API
  */
-export interface DashboardStats {
+interface DashboardStats {
 	total: number
 	by_status: StatusStats[]
 	by_area: AreaStats[]
@@ -85,7 +101,7 @@ interface ApiErrorResponse {
  * }
  * ```
  */
-export function useDashboardStats() {
+function useDashboardStats() {
 	const {token} = useAuth()
 
 	const {data, isLoading, isError, error, refetch} = useQuery<
@@ -123,15 +139,19 @@ export function useDashboardStats() {
 				throw new Error(errorMessage)
 			}
 
-			const data: DashboardStats = await response.json()
-			return data
+			const statsData: DashboardStats = await response.json()
+			return statsData
 		},
 		enabled: Boolean(token), // Only run query when token exists
-		staleTime: 5 * 60 * 1000, // 5 minutes - data is considered fresh for 5 minutes
-		gcTime: 10 * 60 * 1000, // 10 minutes - cache time (formerly cacheTime)
+		staleTime: STALE_TIME_MS, // Data is considered fresh for 5 minutes
+		gcTime: CACHE_TIME_MS, // Cache time (formerly cacheTime)
 		refetchOnWindowFocus: false, // Avoid excessive requests on window focus
-		retry: 2, // Retry failed requests twice before giving up
-		retryDelay: attemptIndex => Math.min(1000 * 2 ** attemptIndex, 30_000) // Exponential backoff
+		retry: MAX_RETRY_ATTEMPTS, // Retry failed requests before giving up
+		retryDelay: attemptIndex =>
+			Math.min(
+				INITIAL_RETRY_DELAY_MS * RETRY_BACKOFF_EXPONENT ** attemptIndex,
+				MAX_RETRY_DELAY_MS
+			) // Exponential backoff
 	})
 
 	return {
@@ -142,3 +162,7 @@ export function useDashboardStats() {
 		refetch
 	}
 }
+
+// Export types and hook at the end per style guidelines
+export type {DashboardStats}
+export {useDashboardStats}

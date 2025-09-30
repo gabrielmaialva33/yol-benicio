@@ -203,14 +203,18 @@ test.describe('Performance and Network Tests', () => {
 		})
 
 		// Navigate multiple times sequentially to avoid race conditions
-		for (let i = 0; i < NAVIGATION_ITERATIONS; i++) {
-			await page.getByTestId('sidebar-pastas').click()
-			await page.getByRole('link', {name: 'Consulta'}).click()
-			await page.waitForSelector('table')
+		await Array.from({length: NAVIGATION_ITERATIONS}).reduce(
+			async (previousPromise, _) => {
+				await previousPromise
+				await page.getByTestId('sidebar-pastas').click()
+				await page.getByRole('link', {name: 'Consulta'}).click()
+				await page.waitForSelector('table')
 
-			await page.getByRole('button', {name: 'Visão Geral'}).click()
-			await page.waitForSelector('h3:has-text("Suas tarefas")')
-		}
+				await page.getByRole('button', {name: 'Visão Geral'}).click()
+				await page.waitForSelector('h3:has-text("Suas tarefas")')
+			},
+			Promise.resolve()
+		)
 
 		// Check memory usage after navigation
 		const finalMemory = await page.evaluate(() => {

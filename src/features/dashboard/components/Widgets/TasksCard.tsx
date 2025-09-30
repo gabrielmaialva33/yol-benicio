@@ -9,6 +9,8 @@ import {
 } from '../../../../shared/ui/primitives/Card'
 import {TaskItem} from './TaskItem'
 
+const TASKS_CARD_TITLE = 'Suas tarefas'
+
 export function TasksCard() {
 	const {displayTasks, dateRange, setDateRange, toggleTask} = useTasks()
 	const [showDatePicker, setShowDatePicker] = useState(false)
@@ -20,7 +22,7 @@ export function TasksCard() {
 	return (
 		<Card>
 			<CardHeader className='flex items-center justify-between mb-4'>
-				<CardTitle>Suas tarefas</CardTitle>
+				<CardTitle>{TASKS_CARD_TITLE}</CardTitle>
 				<DateRangePicker
 					dateRange={dateRange}
 					isOpen={showDatePicker}

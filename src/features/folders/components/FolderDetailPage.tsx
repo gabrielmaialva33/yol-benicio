@@ -6,6 +6,18 @@ import {FolderDetailSidebar} from './FolderDetailSidebar'
 import {FolderProcessForm} from './FolderProcessForm'
 import {ProcessTimeline} from './ProcessTimeline'
 
+// UI text constants
+const UI_TEXT = {
+	LOADING: 'Carregando...',
+	ERROR: 'Erro ao buscar os detalhes da pasta.',
+	GENERAL_INFO_TITLE: 'Informações Gerais',
+	GENERAL_INFO_CONTENT: 'Conteúdo das informações gerais...',
+	PUBLICATIONS_TITLE: 'Publicações',
+	PUBLICATIONS_CONTENT: 'Lista de publicações...',
+	AGENDA_TITLE: 'Agenda',
+	AGENDA_CONTENT: 'Eventos agendados...'
+} as const
+
 export function FolderDetailPage() {
 	const {folderId} = useParams<{folderId: string}>()
 	const [activeTab, setActiveTab] = useState('processo')
@@ -14,11 +26,11 @@ export function FolderDetailPage() {
 	)
 
 	if (isLoading) {
-		return <div>Carregando...</div>
+		return <div>{UI_TEXT.LOADING}</div>
 	}
 
 	if (isError || !folder) {
-		return <div>Erro ao buscar os detalhes da pasta.</div>
+		return <div>{UI_TEXT.ERROR}</div>
 	}
 
 	const renderContent = () => {
@@ -29,27 +41,27 @@ export function FolderDetailPage() {
 				return (
 					<div className='bg-white rounded-2xl p-8 shadow-sm border border-gray-100'>
 						<h3 className='text-lg font-semibold text-[#161C24] mb-6'>
-							Informações Gerais
+							{UI_TEXT.GENERAL_INFO_TITLE}
 						</h3>
-						<p className='text-[#919EAB]'>Conteúdo das informações gerais...</p>
+						<p className='text-[#919EAB]'>{UI_TEXT.GENERAL_INFO_CONTENT}</p>
 					</div>
 				)
 			case 'publicacoes':
 				return (
 					<div className='bg-white rounded-2xl p-8 shadow-sm border border-gray-100'>
 						<h3 className='text-lg font-semibold text-[#161C24] mb-6'>
-							Publicações
+							{UI_TEXT.PUBLICATIONS_TITLE}
 						</h3>
-						<p className='text-[#919EAB]'>Lista de publicações...</p>
+						<p className='text-[#919EAB]'>{UI_TEXT.PUBLICATIONS_CONTENT}</p>
 					</div>
 				)
 			case 'agenda':
 				return (
 					<div className='bg-white rounded-2xl p-8 shadow-sm border border-gray-100'>
 						<h3 className='text-lg font-semibold text-[#161C24] mb-6'>
-							Agenda
+							{UI_TEXT.AGENDA_TITLE}
 						</h3>
-						<p className='text-[#919EAB]'>Eventos agendados...</p>
+						<p className='text-[#919EAB]'>{UI_TEXT.AGENDA_CONTENT}</p>
 					</div>
 				)
 			default:

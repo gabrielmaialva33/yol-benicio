@@ -102,135 +102,152 @@ const ToggleSwitch = (props: {label: string; checked?: boolean}) => (
 	</div>
 )
 
-export function FolderDetailForm({folder}: {folder: FolderDetail}) {
+const ProcessInfoSection = (props: {folder: FolderDetail}) => (
+	<div className='grid grid-cols-1 md:grid-cols-4 gap-6 border-b pb-6 mb-6'>
+		<TextInput label='Nº Processo' value={props.folder.processNumber} />
+		<TextInput label='Nº CNJ' value={props.folder.cnjNumber} />
+		<SelectInput
+			label='Instância'
+			options={['Primeira Instância', 'Segunda Instância']}
+			value={props.folder.instance}
+		/>
+		<SelectInput
+			label='Natureza'
+			options={['Cível']}
+			value={props.folder.nature}
+		/>
+		<SelectInput
+			label='Tipo de Ação'
+			options={['Ordinária']}
+			value={props.folder.actionType}
+		/>
+		<SelectInput
+			label='Fase'
+			options={['Conhecimento']}
+			value={props.folder.phase}
+		/>
+		<SelectInput
+			label='Eletrônico'
+			options={['Sim', 'Não']}
+			value={props.folder.electronic}
+		/>
+		<SelectInput
+			label='Cód. Cliente'
+			options={['001', '002']}
+			value={props.folder.clientCode}
+		/>
+		<TextInput label='Pasta' value={props.folder.folder} />
+		<SelectInput
+			label='Caso Padrão Faturamento'
+			options={['Sim', 'Não']}
+			value={props.folder.defaultBillingCase}
+		/>
+		<div className='flex items-end'>
+			<ToggleSwitch checked={props.folder.totus} label='TOTUS' />
+		</div>
+		<div className='flex items-end'>
+			<ToggleSwitch checked={props.folder.migrated} label='Migrado' />
+		</div>
+		<SelectInput label='Órgão' options={['TJSP']} value={props.folder.organ} />
+		<SelectInput
+			label='Distribuição'
+			options={['Sorteio']}
+			value={props.folder.distribution}
+		/>
+		<DateInput label='Entrada' value={props.folder.entryDate} />
+		<SelectInput
+			label='Status'
+			options={['Ativo']}
+			value={props.folder.status}
+		/>
+		<TextInput label='Código Interno' value={props.folder.internalCode} />
+		<SelectInput
+			label='Tipo de Pesquisa'
+			options={['Padrão']}
+			value={props.folder.searchType}
+		/>
+		<TextInput label='Código' value={props.folder.code} />
+		<TextInput label='Juiz' value={props.folder.judge} />
+	</div>
+)
+
+const OrganizationSection = (props: {folder: FolderDetail}) => (
+	<div className='grid grid-cols-1 md:grid-cols-3 gap-6 border-b pb-6 mb-6'>
+		<SelectInput
+			label='Área'
+			options={['Cível Contencioso']}
+			value={props.folder.area}
+		/>
+		<SelectInput
+			label='Comarca'
+			options={['São Paulo']}
+			value={props.folder.district}
+		/>
+		<SelectInput
+			label='Sócio'
+			options={['Dr. João']}
+			value={props.folder.partner}
+		/>
+		<SelectInput
+			label='SubÁrea'
+			options={['Contratos']}
+			value={props.folder.subArea}
+		/>
+		<SelectInput
+			label='Foro'
+			options={['Foro Central Cível']}
+			value={props.folder.court}
+		/>
+		<SelectInput
+			label='Coordenador'
+			options={['Dra. Maria']}
+			value={props.folder.coordinator}
+		/>
+		<SelectInput
+			label='Núcleo'
+			options={['Equipe 1']}
+			value={props.folder.core}
+		/>
+		<SelectInput
+			label='Vara'
+			options={['1ª Vara Cível']}
+			value={props.folder.courtDivision}
+		/>
+		<SelectInput
+			label='Advogado'
+			options={['Dr. Carlos']}
+			value={props.folder.lawyer}
+		/>
+	</div>
+)
+
+const PoleSection = () => (
+	<div className='grid grid-cols-1 md:grid-cols-2 gap-6 mb-6'>
+		<div className='flex gap-4'>
+			<ToggleSwitch label='Polo Ativo' />
+			<ToggleSwitch label='Polo Passivo' />
+		</div>
+	</div>
+)
+
+const NotesSection = (props: {folder: FolderDetail}) => (
+	<div className='grid grid-cols-1 md:grid-cols-3 gap-6'>
+		<TextareaInput label='Observação' value={props.folder.observation} />
+		<TextareaInput
+			label='Detalhamento do Objeto'
+			value={props.folder.objectDetail}
+		/>
+		<TextareaInput label='Último Andamento' value={props.folder.lastMovement} />
+	</div>
+)
+
+export function FolderDetailForm(props: {folder: FolderDetail}) {
 	return (
 		<div className='bg-white rounded-lg p-6 shadow-sm'>
-			<div className='grid grid-cols-1 md:grid-cols-4 gap-6 border-b pb-6 mb-6'>
-				<TextInput label='Nº Processo' value={folder.processNumber} />
-				<TextInput label='Nº CNJ' value={folder.cnjNumber} />
-				<SelectInput
-					label='Instância'
-					options={['Primeira Instância', 'Segunda Instância']}
-					value={folder.instance}
-				/>
-				<SelectInput
-					label='Natureza'
-					options={['Cível']}
-					value={folder.nature}
-				/>
-				<SelectInput
-					label='Tipo de Ação'
-					options={['Ordinária']}
-					value={folder.actionType}
-				/>
-				<SelectInput
-					label='Fase'
-					options={['Conhecimento']}
-					value={folder.phase}
-				/>
-				<SelectInput
-					label='Eletrônico'
-					options={['Sim', 'Não']}
-					value={folder.electronic}
-				/>
-				<SelectInput
-					label='Cód. Cliente'
-					options={['001', '002']}
-					value={folder.clientCode}
-				/>
-				<TextInput label='Pasta' value={folder.folder} />
-				<SelectInput
-					label='Caso Padrão Faturamento'
-					options={['Sim', 'Não']}
-					value={folder.defaultBillingCase}
-				/>
-				<div className='flex items-end'>
-					<ToggleSwitch checked={folder.totus} label='TOTUS' />
-				</div>
-				<div className='flex items-end'>
-					<ToggleSwitch checked={folder.migrated} label='Migrado' />
-				</div>
-				<SelectInput label='Órgão' options={['TJSP']} value={folder.organ} />
-				<SelectInput
-					label='Distribuição'
-					options={['Sorteio']}
-					value={folder.distribution}
-				/>
-				<DateInput label='Entrada' value={folder.entryDate} />
-				<SelectInput label='Status' options={['Ativo']} value={folder.status} />
-				<TextInput label='Código Interno' value={folder.internalCode} />
-				<SelectInput
-					label='Tipo de Pesquisa'
-					options={['Padrão']}
-					value={folder.searchType}
-				/>
-				<TextInput label='Código' value={folder.code} />
-				<TextInput label='Juiz' value={folder.judge} />
-			</div>
-
-			<div className='grid grid-cols-1 md:grid-cols-3 gap-6 border-b pb-6 mb-6'>
-				<SelectInput
-					label='Área'
-					options={['Cível Contencioso']}
-					value={folder.area}
-				/>
-				<SelectInput
-					label='Comarca'
-					options={['São Paulo']}
-					value={folder.district}
-				/>
-				<SelectInput
-					label='Sócio'
-					options={['Dr. João']}
-					value={folder.partner}
-				/>
-				<SelectInput
-					label='SubÁrea'
-					options={['Contratos']}
-					value={folder.subArea}
-				/>
-				<SelectInput
-					label='Foro'
-					options={['Foro Central Cível']}
-					value={folder.court}
-				/>
-				<SelectInput
-					label='Coordenador'
-					options={['Dra. Maria']}
-					value={folder.coordinator}
-				/>
-				<SelectInput
-					label='Núcleo'
-					options={['Equipe 1']}
-					value={folder.core}
-				/>
-				<SelectInput
-					label='Vara'
-					options={['1ª Vara Cível']}
-					value={folder.courtDivision}
-				/>
-				<SelectInput
-					label='Advogado'
-					options={['Dr. Carlos']}
-					value={folder.lawyer}
-				/>
-			</div>
-
-			<div className='grid grid-cols-1 md:grid-cols-2 gap-6 mb-6'>
-				<div className='flex gap-4'>
-					<ToggleSwitch label='Polo Ativo' />
-					<ToggleSwitch label='Polo Passivo' />
-				</div>
-			</div>
-
-			<div className='grid grid-cols-1 md:grid-cols-3 gap-6'>
-				<TextareaInput label='Observação' value={folder.observation} />
-				<TextareaInput
-					label='Detalhamento do Objeto'
-					value={folder.objectDetail}
-				/>
-				<TextareaInput label='Último Andamento' value={folder.lastMovement} />
-			</div>
+			<ProcessInfoSection folder={props.folder} />
+			<OrganizationSection folder={props.folder} />
+			<PoleSection />
+			<NotesSection folder={props.folder} />
 		</div>
 	)
 }

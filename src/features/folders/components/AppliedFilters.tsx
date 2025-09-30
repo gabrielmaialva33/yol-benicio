@@ -1,5 +1,8 @@
 import {X} from 'lucide-react'
 
+const RESULTS_FOUND_TEXT = 'resultados encontrados'
+const CLEAR_BUTTON_TEXT = 'Limpar'
+
 interface AppliedFiltersProps {
 	filters: {
 		clientNumber: string
@@ -34,11 +37,7 @@ interface AppliedFiltersProps {
 	resultCount: number
 }
 
-export function AppliedFilters({
-	filters,
-	setFilters,
-	resultCount
-}: AppliedFiltersProps) {
+function buildAppliedFilters(filters: AppliedFiltersProps['filters']) {
 	const appliedFilters: Array<{key: string; label: string; value: string}> = []
 
 	if (filters.area && filters.area !== '') {
@@ -65,11 +64,31 @@ export function AppliedFilters({
 		})
 	}
 
+	return appliedFilters
+}
+
+export function AppliedFilters({
+	filters,
+	setFilters,
+	resultCount
+}: AppliedFiltersProps) {
+	const appliedFilters = buildAppliedFilters(filters)
+
 	const removeFilter = (key: string) => {
 		setFilters(prevFilters => ({
 			...prevFilters,
 			[key]: ''
 		}))
+	}
+
+	const clearAllFilters = () => {
+		setFilters({
+			clientNumber: '',
+			dateRange: '',
+			area: '',
+			status: 'Total',
+			search: ''
+		})
 	}
 
 	const hasAppliedFilters = appliedFilters.length > 0
@@ -83,7 +102,7 @@ export function AppliedFilters({
 			<div className='flex items-center justify-between'>
 				<div className='flex items-center space-x-4'>
 					<span className='text-sm text-gray-600'>
-						{resultCount} resultados encontrados
+						{resultCount} {RESULTS_FOUND_TEXT}
 					</span>
 					<div className='flex items-center space-x-2'>
 						{appliedFilters.map(filter => (
@@ -103,19 +122,11 @@ export function AppliedFilters({
 						))}
 						<button
 							className='text-xs font-medium text-red-500 hover:text-red-700 flex items-center'
-							onClick={() =>
-								setFilters({
-									clientNumber: '',
-									dateRange: '',
-									area: '',
-									status: 'Total',
-									search: ''
-								})
-							}
+							onClick={clearAllFilters}
 							type='button'
 						>
 							<X className='w-3 h-3 mr-1' />
-							Limpar
+							{CLEAR_BUTTON_TEXT}
 						</button>
 					</div>
 				</div>

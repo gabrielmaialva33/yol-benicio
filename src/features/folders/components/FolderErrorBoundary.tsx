@@ -3,10 +3,47 @@ import {AlertCircle, Folder} from 'lucide-react'
 import type {ReactNode} from 'react'
 import {useNavigate} from 'react-router'
 
+const RETRY_BUTTON_LABEL = 'Tentar novamente'
+const BACK_TO_LIST_BUTTON_LABEL = 'Voltar para lista'
+const NOT_FOUND_TITLE = 'Pasta não encontrada'
+const NOT_FOUND_DESCRIPTION = 'Esta pasta pode ter sido arquivada ou excluída.'
+const ERROR_DETAILS_TITLE = 'Detalhes do erro'
+
 interface FolderErrorBoundaryProps {
 	children: ReactNode
 	folderId?: string
 	context?: 'list' | 'detail' | 'form'
+}
+
+function _NotFoundWarning() {
+	return (
+		<div className='mt-6 p-4 bg-yellow-50 border border-yellow-200 rounded-lg'>
+			<div className='flex gap-2'>
+				<AlertCircle className='w-5 h-5 text-yellow-600 flex-shrink-0 mt-0.5' />
+				<div className='text-left'>
+					<p className='text-sm font-medium text-yellow-800'>
+						{NOT_FOUND_TITLE}
+					</p>
+					<p className='text-sm text-yellow-700 mt-1'>
+						{NOT_FOUND_DESCRIPTION}
+					</p>
+				</div>
+			</div>
+		</div>
+	)
+}
+
+function _ErrorDetails({error}: {error: Error}) {
+	return (
+		<details className='mt-6 text-left'>
+			<summary className='cursor-pointer text-sm text-gray-500 hover:text-gray-700'>
+				{ERROR_DETAILS_TITLE}
+			</summary>
+			<pre className='mt-2 p-3 bg-gray-50 rounded text-xs overflow-auto'>
+				{error.stack || error.message}
+			</pre>
+		</details>
+	)
 }
 
 /**
@@ -73,7 +110,7 @@ export function FolderErrorBoundary({
 								onClick={reset}
 								type='button'
 							>
-								Tentar novamente
+								{RETRY_BUTTON_LABEL}
 							</button>
 							{context === 'detail' && (
 								<button
@@ -81,7 +118,7 @@ export function FolderErrorBoundary({
 									onClick={() => navigate('/dashboard/folders/consultation')}
 									type='button'
 								>
-									Voltar para lista
+									{BACK_TO_LIST_BUTTON_LABEL}
 								</button>
 							)}
 						</div>

@@ -34,7 +34,7 @@ test.describe('Security and Validation Tests', () => {
 		]
 
 		// Test each invalid email sequentially to avoid race conditions
-		for (const email of invalidEmails) {
+		const testInvalidEmail = async (email: string) => {
 			await page.getByPlaceholder('E-mail').fill(email)
 			await page.getByPlaceholder('Senha').fill('password123')
 			await page.getByRole('button', {name: 'Entrar'}).click()
@@ -46,6 +46,12 @@ test.describe('Security and Validation Tests', () => {
 			await page.getByPlaceholder('E-mail').clear()
 			await page.getByPlaceholder('Senha').clear()
 		}
+
+		// Run sequentially using reduce to avoid await in loop
+		await invalidEmails.reduce(async (previousPromise, email) => {
+			await previousPromise
+			return testInvalidEmail(email)
+		}, Promise.resolve())
 	})
 
 	test('should not expose sensitive data in browser storage', async ({
@@ -185,7 +191,7 @@ test.describe('Security and Validation Tests', () => {
 		const weakPasswords = ['123', 'abc', '    ', '']
 
 		// Test each weak password sequentially to avoid race conditions
-		for (const password of weakPasswords) {
+		const testWeakPassword = async (password: string) => {
 			await page.getByPlaceholder('E-mail').fill('test@example.com')
 			await page.getByPlaceholder('Senha').fill(password)
 			await page.getByRole('button', {name: 'Entrar'}).click()
@@ -197,6 +203,12 @@ test.describe('Security and Validation Tests', () => {
 			await page.getByPlaceholder('E-mail').clear()
 			await page.getByPlaceholder('Senha').clear()
 		}
+
+		// Run sequentially using reduce to avoid await in loop
+		await weakPasswords.reduce(async (previousPromise, password) => {
+			await previousPromise
+			return testWeakPassword(password)
+		}, Promise.resolve())
 	})
 
 	test('should prevent concurrent sessions', async ({page, context}) => {

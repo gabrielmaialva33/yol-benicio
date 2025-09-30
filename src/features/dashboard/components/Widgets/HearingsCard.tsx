@@ -11,6 +11,12 @@ import {
 } from '../../../../shared/ui/primitives/Card'
 import {getHearings, type HearingData} from '../../api'
 
+const CARD_TITLE = 'Audiências e Prazos'
+const PERCENT_SYMBOL = '%'
+const TOTAL_LABEL = 'Total'
+const COMPLETED_LABEL = 'Cumpridos'
+const COLON = ':'
+
 export function HearingsCard() {
 	const {data: hearings = []} = useQuery<HearingData[]>({
 		queryKey: ['hearings'],
@@ -40,7 +46,7 @@ export function HearingsCard() {
 	return (
 		<Card>
 			<CardHeader className='flex items-center justify-between mb-4'>
-				<CardTitle>Audiências e Prazos</CardTitle>
+				<CardTitle>{CARD_TITLE}</CardTitle>
 				<div className='cursor-pointer'>
 					<DateRangePicker
 						dateRange={dateRange}
@@ -55,14 +61,21 @@ export function HearingsCard() {
 					<div className='flex items-center' key={item.label}>
 						<div className='w-1/4 pr-4'>
 							<div className='text-3xl font-bold text-gray-900'>
-								{item.percentage}%
+								{item.percentage}
+								{PERCENT_SYMBOL}
 							</div>
 							<div className='text-sm text-gray-500 mt-1'>{item.label}</div>
 						</div>
 						<div className='w-3/4'>
 							<div className='flex justify-between text-sm text-gray-500 mb-1'>
-								<span>Total: {item.total}</span>
-								<span>Cumpridos: {item.completed}</span>
+								<span>
+									{TOTAL_LABEL}
+									{COLON} {item.total}
+								</span>
+								<span>
+									{COMPLETED_LABEL}
+									{COLON} {item.completed}
+								</span>
 							</div>
 							<div className='w-full bg-gray-200 rounded-full h-2.5'>
 								<div

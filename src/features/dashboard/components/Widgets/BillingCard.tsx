@@ -10,6 +10,8 @@ import {
 const UP_ICON_TITLE = 'Up'
 const DOWN_ICON_TITLE = 'Down'
 const BILLING_TITLE = 'Faturamento'
+const LAST_MONTH_TEXT = 'Último mês'
+const PERCENT_SYMBOL = '%'
 
 export function BillingCard() {
 	const percentageColor =
@@ -58,9 +60,9 @@ export function BillingCard() {
 						className={`flex items-center space-x-1 font-semibold ${percentageColor}`}
 					>
 						{percentageIcon}
-						<span>{`${billingData.percentage.toFixed(2)}%`}</span>
+						<span>{`${billingData.percentage.toFixed(2)}${PERCENT_SYMBOL}`}</span>
 					</div>
-					<div className='text-sm'>Último mês</div>
+					<div className='text-sm'>{LAST_MONTH_TEXT}</div>
 				</div>
 			</CardHeader>
 			<div className='text-[40px] font-bold mb-4 leading-none'>

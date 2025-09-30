@@ -1,6 +1,18 @@
 import {Calendar, ChevronDown, Search} from 'lucide-react'
 import type React from 'react'
 
+const _AREA_OPTIONS = {
+	DEFAULT: 'Área',
+	CIVIL: 'Cível contencioso',
+	LABOR: 'Trabalhista',
+	CRIMINAL: 'Penal',
+	BUSINESS: 'Empresarial',
+	TAX: 'Tributário',
+	FAMILY: 'Família',
+	CONSUMER: 'Consumidor',
+	ENVIRONMENTAL: 'Ambiental'
+} as const
+
 interface FolderFiltersProps {
 	filters: {
 		clientNumber: string
@@ -101,15 +113,23 @@ export function FolderFilters({
 						onChange={handleInputChange}
 						value={filters.area}
 					>
-						<option value=''>Área</option>
-						<option value='Cível contencioso'>Cível contencioso</option>
-						<option value='Trabalhista'>Trabalhista</option>
-						<option value='Penal'>Penal</option>
-						<option value='Empresarial'>Empresarial</option>
-						<option value='Tributário'>Tributário</option>
-						<option value='Família'>Família</option>
-						<option value='Consumidor'>Consumidor</option>
-						<option value='Ambiental'>Ambiental</option>
+						<option value=''>{_AREA_OPTIONS.DEFAULT}</option>
+						<option value={_AREA_OPTIONS.CIVIL}>{_AREA_OPTIONS.CIVIL}</option>
+						<option value={_AREA_OPTIONS.LABOR}>{_AREA_OPTIONS.LABOR}</option>
+						<option value={_AREA_OPTIONS.CRIMINAL}>
+							{_AREA_OPTIONS.CRIMINAL}
+						</option>
+						<option value={_AREA_OPTIONS.BUSINESS}>
+							{_AREA_OPTIONS.BUSINESS}
+						</option>
+						<option value={_AREA_OPTIONS.TAX}>{_AREA_OPTIONS.TAX}</option>
+						<option value={_AREA_OPTIONS.FAMILY}>{_AREA_OPTIONS.FAMILY}</option>
+						<option value={_AREA_OPTIONS.CONSUMER}>
+							{_AREA_OPTIONS.CONSUMER}
+						</option>
+						<option value={_AREA_OPTIONS.ENVIRONMENTAL}>
+							{_AREA_OPTIONS.ENVIRONMENTAL}
+						</option>
 					</select>
 					<ChevronDown className='absolute right-4 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400 pointer-events-none' />
 				</div>
