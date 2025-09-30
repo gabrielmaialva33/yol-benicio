@@ -12,10 +12,7 @@ vi.mock('lucide-react', () => ({
 	Eye: () => <div data-testid='eye-icon' />
 }))
 
-describe('ProcessTimeline', () => {
-	const EXPECTED_ADDED_BY_COUNT = 4
-	const EXPECTED_AVATAR_COUNT = 4
-
+describe('ProcessTimeline - Event Rendering', () => {
 	it('should render timeline header', () => {
 		render(<ProcessTimeline folderId='123' />)
 
@@ -59,6 +56,11 @@ describe('ProcessTimeline', () => {
 		).toBeInTheDocument()
 		expect(screen.getByText('Proceed')).toBeInTheDocument()
 	})
+})
+
+describe('ProcessTimeline - Documents and Metadata', () => {
+	const EXPECTED_ADDED_BY_COUNT = 4
+	const EXPECTED_AVATAR_COUNT = 4
 
 	it('should render document attachments', () => {
 		render(<ProcessTimeline folderId='123' />)

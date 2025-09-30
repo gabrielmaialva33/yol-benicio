@@ -1,8 +1,9 @@
 import {expect, test} from '@playwright/test'
 
 const _DROPDOWN_WAIT_TIME = 500
+const ANIMATION_DURATION = 300
 
-test.describe('Mobile Responsiveness', () => {
+test.describe('Mobile Responsiveness - Dashboard Display', () => {
 	test.use({
 		viewport: {width: 375, height: 667} // iPhone SE size
 	})
@@ -23,7 +24,6 @@ test.describe('Mobile Responsiveness', () => {
 		// On mobile, sidebar is collapsed by default, so search input is hidden
 		// Expand sidebar first to see search input
 		const expandButton = page.locator('button img[alt="Alternar Sidebar"]')
-		const ANIMATION_DURATION = 300
 		if (await expandButton.isVisible()) {
 			await expandButton.click()
 			await page.waitForTimeout(ANIMATION_DURATION) // Wait for animation
@@ -34,6 +34,21 @@ test.describe('Mobile Responsiveness', () => {
 		const widgets = page.locator('[class*="rounded-lg"][class*="shadow"]')
 		const widgetCount = await widgets.count()
 		expect(widgetCount).toBeGreaterThan(0)
+	})
+})
+
+test.describe('Mobile Responsiveness - Navigation', () => {
+	test.use({
+		viewport: {width: 375, height: 667} // iPhone SE size
+	})
+
+	test.beforeEach(async ({page}) => {
+		// Login first
+		await page.goto('/yol-benicio/')
+		await page.getByPlaceholder('E-mail').fill('test@benicio.com.br')
+		await page.getByPlaceholder('Senha').fill('benicio123')
+		await page.getByRole('button', {name: 'Entrar'}).click()
+		await expect(page).toHaveURL('/yol-benicio/dashboard')
 	})
 
 	test('should have mobile-friendly navigation', async ({page}) => {
@@ -70,6 +85,21 @@ test.describe('Mobile Responsiveness', () => {
 		// Should show notification items
 		await expect(page.getByText('Ver todas as notificações')).toBeVisible()
 	})
+})
+
+test.describe('Mobile Responsiveness - Tables', () => {
+	test.use({
+		viewport: {width: 375, height: 667} // iPhone SE size
+	})
+
+	test.beforeEach(async ({page}) => {
+		// Login first
+		await page.goto('/yol-benicio/')
+		await page.getByPlaceholder('E-mail').fill('test@benicio.com.br')
+		await page.getByPlaceholder('Senha').fill('benicio123')
+		await page.getByRole('button', {name: 'Entrar'}).click()
+		await expect(page).toHaveURL('/yol-benicio/dashboard')
+	})
 
 	test('should display folder table in mobile view', async ({page}) => {
 		// Navigate directly to consultation page (sidebar dropdown doesn't work when collapsed on mobile)
@@ -83,6 +113,21 @@ test.describe('Mobile Responsiveness', () => {
 		const tableContainer = table.locator('..')
 		const containerClasses = await tableContainer.getAttribute('class')
 		expect(containerClasses).toContain('overflow')
+	})
+})
+
+test.describe('Mobile Responsiveness - Forms', () => {
+	test.use({
+		viewport: {width: 375, height: 667} // iPhone SE size
+	})
+
+	test.beforeEach(async ({page}) => {
+		// Login first
+		await page.goto('/yol-benicio/')
+		await page.getByPlaceholder('E-mail').fill('test@benicio.com.br')
+		await page.getByPlaceholder('Senha').fill('benicio123')
+		await page.getByRole('button', {name: 'Entrar'}).click()
+		await expect(page).toHaveURL('/yol-benicio/dashboard')
 	})
 
 	test('should handle form inputs on mobile', async ({page}) => {
@@ -109,6 +154,21 @@ test.describe('Mobile Responsiveness', () => {
 
 		// Date picker should be visible (native date input on mobile)
 		await expect(dateField).toBeFocused()
+	})
+})
+
+test.describe('Mobile Responsiveness - Auth', () => {
+	test.use({
+		viewport: {width: 375, height: 667} // iPhone SE size
+	})
+
+	test.beforeEach(async ({page}) => {
+		// Login first
+		await page.goto('/yol-benicio/')
+		await page.getByPlaceholder('E-mail').fill('test@benicio.com.br')
+		await page.getByPlaceholder('Senha').fill('benicio123')
+		await page.getByRole('button', {name: 'Entrar'}).click()
+		await expect(page).toHaveURL('/yol-benicio/dashboard')
 	})
 
 	test('should handle mobile logout', async ({page}) => {

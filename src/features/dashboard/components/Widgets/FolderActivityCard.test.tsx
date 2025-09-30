@@ -54,13 +54,22 @@ afterEach(() => {
 	vi.restoreAllMocks()
 })
 
-describe('FolderActivityCard', () => {
+describe('FolderActivityCard - Rendering', () => {
 	it('should render folder activity card with title', () => {
 		renderWithClient(<FolderActivityCard />)
 
 		expect(screen.getByText('Atividade de Pastas')).toBeInTheDocument()
 	})
 
+	it('should have correct card styling', () => {
+		const {container} = renderWithClient(<FolderActivityCard />)
+
+		const card = container.firstChild
+		expect(card).toHaveClass('bg-white', 'rounded-lg', 'p-6', 'shadow-sm')
+	})
+})
+
+describe('FolderActivityCard - Data Fetching', () => {
 	it('should fetch and display folder activities', async () => {
 		renderWithClient(<FolderActivityCard />)
 
@@ -96,13 +105,6 @@ describe('FolderActivityCard', () => {
 		await waitFor(() => {
 			expect(global.fetch).toHaveBeenCalledWith('/api/folder-activity')
 		})
-	})
-
-	it('should have correct card styling', () => {
-		const {container} = renderWithClient(<FolderActivityCard />)
-
-		const card = container.firstChild
-		expect(card).toHaveClass('bg-white', 'rounded-lg', 'p-6', 'shadow-sm')
 	})
 
 	it('should render empty state when no activities', async () => {

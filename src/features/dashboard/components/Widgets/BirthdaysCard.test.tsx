@@ -51,7 +51,7 @@ afterEach(() => {
 	vi.restoreAllMocks()
 })
 
-describe('BirthdaysCard', () => {
+describe('BirthdaysCard - Rendering', () => {
 	it('should render birthdays card with title', () => {
 		renderWithClient(<BirthdaysCard />)
 
@@ -75,6 +75,21 @@ describe('BirthdaysCard', () => {
 		expect(button).toHaveClass('text-cyan-500')
 	})
 
+	it('should have correct card styling', () => {
+		const {container} = renderWithClient(<BirthdaysCard />)
+
+		const card = container.firstChild
+		expect(card).toHaveClass(
+			'bg-white',
+			'rounded-lg',
+			'p-6',
+			'shadow-sm',
+			'border-gray-200'
+		)
+	})
+})
+
+describe('BirthdaysCard - Data Fetching', () => {
 	it('should fetch and display only first 2 birthdays', async () => {
 		renderWithClient(<BirthdaysCard />)
 
@@ -132,18 +147,5 @@ describe('BirthdaysCard', () => {
 			expect(screen.getByText('Aniversariantes')).toBeInTheDocument()
 			expect(screen.queryByText('João Silva')).not.toBeInTheDocument()
 		})
-	})
-
-	it('should have correct card styling', () => {
-		const {container} = renderWithClient(<BirthdaysCard />)
-
-		const card = container.firstChild
-		expect(card).toHaveClass(
-			'bg-white',
-			'rounded-lg',
-			'p-6',
-			'shadow-sm',
-			'border-gray-200'
-		)
 	})
 })

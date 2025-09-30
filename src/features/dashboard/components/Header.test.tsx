@@ -120,6 +120,13 @@ describe('Header - UI Components', () => {
 			expect.stringContaining('avataaars.io')
 		)
 	})
+})
+
+describe('Header - Styling and Layout', () => {
+	beforeEach(() => {
+		mockNavigate.mockClear()
+		mockPathname = '/dashboard'
+	})
 
 	it('should have correct header styling', () => {
 		const {container} = render(<Header />)

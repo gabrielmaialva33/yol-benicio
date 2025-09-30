@@ -6,7 +6,31 @@ const XSS_CHECK_TIMEOUT = 1000 // 1 second to wait for XSS check
 // Type definitions for storage data
 type StorageData = Record<string, string | null>
 
-test.describe('Security and Validation Tests', () => {
+// Helper function for testing invalid emails
+const testInvalidEmail = async (page: any, email: string) => {
+	await page.getByPlaceholder('E-mail').fill(email)
+	await page.getByPlaceholder('Senha').fill('password123')
+	await page.getByRole('button', {name: 'Entrar'}).click()
+
+	// Should show validation error
+	await expect(page.getByText('E-mail inválido')).toBeVisible()
+
+	// Clear for next test
+	await page.getByPlaceholder('E-mail').clear()
+	await page.getByPlaceholder('Senha').clear()
+}
+
+// Invalid email formats for testing
+const INVALID_EMAILS = [
+	'notanemail',
+	'@example.com',
+	'user@',
+	'user@@example.com',
+	'user@example',
+	'user space@example.com'
+]
+
+test.describe('Security - SQL Injection', () => {
 	test('should not allow SQL injection in login form', async ({page}) => {
 		await page.goto('/yol-benicio/')
 
@@ -19,41 +43,21 @@ test.describe('Security and Validation Tests', () => {
 		await expect(page.getByText('E-mail inválido')).toBeVisible()
 		await expect(page).toHaveURL('/yol-benicio/') // Still on login page
 	})
+})
 
+test.describe('Security - Email Validation', () => {
 	test('should validate email format', async ({page}) => {
 		await page.goto('/yol-benicio/')
 
-		// Invalid email formats
-		const invalidEmails = [
-			'notanemail',
-			'@example.com',
-			'user@',
-			'user@@example.com',
-			'user@example',
-			'user space@example.com'
-		]
-
-		// Test each invalid email sequentially to avoid race conditions
-		const testInvalidEmail = async (email: string) => {
-			await page.getByPlaceholder('E-mail').fill(email)
-			await page.getByPlaceholder('Senha').fill('password123')
-			await page.getByRole('button', {name: 'Entrar'}).click()
-
-			// Should show validation error
-			await expect(page.getByText('E-mail inválido')).toBeVisible()
-
-			// Clear for next test
-			await page.getByPlaceholder('E-mail').clear()
-			await page.getByPlaceholder('Senha').clear()
-		}
-
 		// Run sequentially using reduce to avoid await in loop
-		await invalidEmails.reduce(async (previousPromise, email) => {
+		await INVALID_EMAILS.reduce(async (previousPromise, email) => {
 			await previousPromise
-			return testInvalidEmail(email)
+			return testInvalidEmail(page, email)
 		}, Promise.resolve())
 	})
+})
 
+test.describe('Security - Storage Protection', () => {
 	test('should not expose sensitive data in browser storage', async ({
 		page
 	}) => {
@@ -98,7 +102,9 @@ test.describe('Security and Validation Tests', () => {
 		expect(sessionStorageString).not.toContain('benicio123')
 		expect(sessionStorageString).not.toContain('password')
 	})
+})
 
+test.describe('Security - XSS Protection', () => {
 	test('should handle XSS attempts in forms', async ({page}) => {
 		// Login first
 		await page.goto('/yol-benicio/')
@@ -124,7 +130,31 @@ test.describe('Security and Validation Tests', () => {
 		// Page should still be functional
 		await expect(page.getByRole('heading')).toBeVisible()
 	})
+})
 
+test.describe('Security - Data Masking', () => {
+	test('should mask sensitive information in UI', async ({page}) => {
+		// Login
+		await page.goto('/yol-benicio/')
+
+		// Password should be masked
+		const passwordField = page.getByPlaceholder('Senha')
+		await passwordField.fill('benicio123')
+
+		// Check input type
+		const inputType = await passwordField.getAttribute('type')
+		expect(inputType).toBe('password')
+
+		// Login to check other sensitive data
+		await page.getByPlaceholder('E-mail').fill('test@benicio.com.br')
+		await page.getByRole('button', {name: 'Entrar'}).click()
+
+		// Check if any sensitive data like CPF is properly masked
+		// This depends on the application's data display
+	})
+})
+
+test.describe('Security - Authentication', () => {
 	test('should require authentication for protected routes', async ({page}) => {
 		// Try to access dashboard directly without login
 		await page.goto('/yol-benicio/dashboard')
@@ -133,7 +163,9 @@ test.describe('Security and Validation Tests', () => {
 		await expect(page).toHaveURL('/yol-benicio/')
 		await expect(page.getByPlaceholder('E-mail')).toBeVisible()
 	})
+})
 
+test.describe('Security - Session Management', () => {
 	test('should clear session on logout', async ({page}) => {
 		// Login
 		await page.goto('/yol-benicio/')
@@ -164,53 +196,6 @@ test.describe('Security and Validation Tests', () => {
 		)
 	})
 
-	test('should sanitize file uploads', async ({page}) => {
-		// Login
-		await page.goto('/yol-benicio/')
-		await page.getByPlaceholder('E-mail').fill('test@benicio.com.br')
-		await page.getByPlaceholder('Senha').fill('benicio123')
-		await page.getByRole('button', {name: 'Entrar'}).click()
-
-		// Navigate to a page with file upload (if exists)
-		// This is a placeholder - adjust based on actual file upload functionality
-		// Example:
-		// await page.getByText('Upload').click()
-		// const fileInput = page.locator('input[type="file"]')
-		// await fileInput.setInputFiles({
-		//   name: 'test.exe',
-		//   mimeType: 'application/x-msdownload',
-		//   buffer: Buffer.from('fake executable content')
-		// })
-		// Should reject dangerous file types
-	})
-
-	test('should enforce password requirements', async ({page}) => {
-		await page.goto('/yol-benicio/')
-
-		// Try weak passwords
-		const weakPasswords = ['123', 'abc', '    ', '']
-
-		// Test each weak password sequentially to avoid race conditions
-		const testWeakPassword = async (password: string) => {
-			await page.getByPlaceholder('E-mail').fill('test@example.com')
-			await page.getByPlaceholder('Senha').fill(password)
-			await page.getByRole('button', {name: 'Entrar'}).click()
-
-			// Should show error
-			await expect(page.getByText('Senha é obrigatória')).toBeVisible()
-
-			// Clear for next test
-			await page.getByPlaceholder('E-mail').clear()
-			await page.getByPlaceholder('Senha').clear()
-		}
-
-		// Run sequentially using reduce to avoid await in loop
-		await weakPasswords.reduce(async (previousPromise, password) => {
-			await previousPromise
-			return testWeakPassword(password)
-		}, Promise.resolve())
-	})
-
 	test('should prevent concurrent sessions', async ({page, context}) => {
 		// Login in first tab
 		await page.goto('/yol-benicio/')
@@ -232,24 +217,54 @@ test.describe('Security and Validation Tests', () => {
 
 		await page2.close()
 	})
+})
 
-	test('should mask sensitive information in UI', async ({page}) => {
-		// Login
+// Helper function for testing weak passwords
+const testWeakPassword = async (page: any, password: string) => {
+	await page.getByPlaceholder('E-mail').fill('test@example.com')
+	await page.getByPlaceholder('Senha').fill(password)
+	await page.getByRole('button', {name: 'Entrar'}).click()
+
+	// Should show error
+	await expect(page.getByText('Senha é obrigatória')).toBeVisible()
+
+	// Clear for next test
+	await page.getByPlaceholder('E-mail').clear()
+	await page.getByPlaceholder('Senha').clear()
+}
+
+const WEAK_PASSWORDS = ['123', 'abc', '    ', '']
+
+test.describe('Security - Password Requirements', () => {
+	test('should enforce password requirements', async ({page}) => {
 		await page.goto('/yol-benicio/')
 
-		// Password should be masked
-		const passwordField = page.getByPlaceholder('Senha')
-		await passwordField.fill('benicio123')
+		// Run sequentially using reduce to avoid await in loop
+		await WEAK_PASSWORDS.reduce(async (previousPromise, password) => {
+			await previousPromise
+			return testWeakPassword(page, password)
+		}, Promise.resolve())
+	})
+})
 
-		// Check input type
-		const inputType = await passwordField.getAttribute('type')
-		expect(inputType).toBe('password')
-
-		// Login to check other sensitive data
+test.describe('Security - File Upload', () => {
+	test('should sanitize file uploads', async ({page}) => {
+		// Login
+		await page.goto('/yol-benicio/')
 		await page.getByPlaceholder('E-mail').fill('test@benicio.com.br')
+		await page.getByPlaceholder('Senha').fill('benicio123')
 		await page.getByRole('button', {name: 'Entrar'}).click()
 
-		// Check if any sensitive data like CPF is properly masked
-		// This depends on the application's data display
+		// Navigate to a page with file upload (if exists)
+		// This is a placeholder - adjust based on actual file upload functionality
+		// Example:
+		// await page.getByText('Upload').click()
+		// const fileInput = page.locator('input[type="file"]')
+		// await fileInput.setInputFiles({
+		//   name: 'test.exe',
+		//   mimeType: 'application/x-msdownload',
+		//   buffer: Buffer.from('fake executable content')
+		// })
+		// Should reject dangerous file types
 	})
 })

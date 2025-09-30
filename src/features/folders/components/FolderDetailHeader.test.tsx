@@ -73,7 +73,7 @@ const mockFolder: FolderDetail = {
 	movements: []
 }
 
-describe('FolderDetailHeader', () => {
+describe('FolderDetailHeader - Rendering', () => {
 	beforeEach(() => {
 		mockNavigate.mockClear()
 	})
@@ -106,15 +106,6 @@ describe('FolderDetailHeader', () => {
 		expect(screen.getByTestId('chevron-left-icon')).toBeInTheDocument()
 	})
 
-	it('should navigate back when back button is clicked', () => {
-		render(<FolderDetailHeader folder={mockFolder} />)
-
-		const backButton = screen.getByRole('button', {name: 'ChevronLeft'})
-		fireEvent.click(backButton)
-
-		expect(mockNavigate).toHaveBeenCalledWith(-1)
-	})
-
 	it('should render save button', () => {
 		render(<FolderDetailHeader folder={mockFolder} />)
 
@@ -130,6 +121,21 @@ describe('FolderDetailHeader', () => {
 		expect(addFilesButton).toBeInTheDocument()
 		expect(addFilesButton.tagName).toBe('BUTTON')
 		expect(addFilesButton).toHaveClass('bg-cyan-500')
+	})
+})
+
+describe('FolderDetailHeader - Status and Interactions', () => {
+	beforeEach(() => {
+		mockNavigate.mockClear()
+	})
+
+	it('should navigate back when back button is clicked', () => {
+		render(<FolderDetailHeader folder={mockFolder} />)
+
+		const backButton = screen.getByRole('button', {name: 'ChevronLeft'})
+		fireEvent.click(backButton)
+
+		expect(mockNavigate).toHaveBeenCalledWith(-1)
 	})
 
 	it('should render unknown status with default styling', () => {

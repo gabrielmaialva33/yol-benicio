@@ -15,6 +15,61 @@ interface FolderErrorBoundaryProps {
 	context?: 'list' | 'detail' | 'form'
 }
 
+interface ErrorFallbackProps {
+	error: Error
+	reset: () => void
+	contextMessage: string
+	actionMessage: string
+	context: 'list' | 'detail' | 'form'
+	onNavigate: () => void
+}
+
+function _ErrorFallback({
+	error,
+	reset,
+	contextMessage,
+	actionMessage,
+	context,
+	onNavigate
+}: ErrorFallbackProps) {
+	return (
+		<div className='flex items-center justify-center min-h-[400px] bg-white rounded-lg shadow-sm'>
+			<div className='max-w-md w-full p-8 text-center'>
+				<div className='inline-flex items-center justify-center w-14 h-14 bg-red-100 rounded-full mb-4'>
+					<Folder className='w-7 h-7 text-red-600' />
+				</div>
+				<h2 className='text-xl font-bold text-gray-900 mb-2'>
+					{contextMessage}
+				</h2>
+				<p className='text-gray-600 mb-6'>{actionMessage}</p>
+
+				<div className='flex flex-col sm:flex-row gap-3 justify-center'>
+					<button
+						className='px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors'
+						onClick={reset}
+						type='button'
+					>
+						{RETRY_BUTTON_LABEL}
+					</button>
+					{context === 'detail' && (
+						<button
+							className='px-4 py-2 bg-gray-200 text-gray-800 rounded-lg hover:bg-gray-300 transition-colors'
+							onClick={onNavigate}
+							type='button'
+						>
+							{BACK_TO_LIST_BUTTON_LABEL}
+						</button>
+					)}
+				</div>
+
+				{error.message.includes('404') && <_NotFoundWarning />}
+
+				{import.meta.env.DEV && <_ErrorDetails error={error} />}
+			</div>
+		</div>
+	)
+}
+
 function _NotFoundWarning() {
 	return (
 		<div className='mt-6 p-4 bg-yellow-50 border border-yellow-200 rounded-lg'>
@@ -94,63 +149,14 @@ export function FolderErrorBoundary({
 	return (
 		<ErrorBoundary
 			fallback={(error, reset) => (
-				<div className='flex items-center justify-center min-h-[400px] bg-white rounded-lg shadow-sm'>
-					<div className='max-w-md w-full p-8 text-center'>
-						<div className='inline-flex items-center justify-center w-14 h-14 bg-red-100 rounded-full mb-4'>
-							<Folder className='w-7 h-7 text-red-600' />
-						</div>
-						<h2 className='text-xl font-bold text-gray-900 mb-2'>
-							{getContextMessage()}
-						</h2>
-						<p className='text-gray-600 mb-6'>{getActionMessage()}</p>
-
-						<div className='flex flex-col sm:flex-row gap-3 justify-center'>
-							<button
-								className='px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors'
-								onClick={reset}
-								type='button'
-							>
-								{RETRY_BUTTON_LABEL}
-							</button>
-							{context === 'detail' && (
-								<button
-									className='px-4 py-2 bg-gray-200 text-gray-800 rounded-lg hover:bg-gray-300 transition-colors'
-									onClick={() => navigate('/dashboard/folders/consultation')}
-									type='button'
-								>
-									{BACK_TO_LIST_BUTTON_LABEL}
-								</button>
-							)}
-						</div>
-
-						{error.message.includes('404') && (
-							<div className='mt-6 p-4 bg-yellow-50 border border-yellow-200 rounded-lg'>
-								<div className='flex gap-2'>
-									<AlertCircle className='w-5 h-5 text-yellow-600 flex-shrink-0 mt-0.5' />
-									<div className='text-left'>
-										<p className='text-sm font-medium text-yellow-800'>
-											Pasta não encontrada
-										</p>
-										<p className='text-sm text-yellow-700 mt-1'>
-											Esta pasta pode ter sido arquivada ou excluída.
-										</p>
-									</div>
-								</div>
-							</div>
-						)}
-
-						{import.meta.env.DEV && (
-							<details className='mt-6 text-left'>
-								<summary className='cursor-pointer text-sm text-gray-500 hover:text-gray-700'>
-									Detalhes do erro
-								</summary>
-								<pre className='mt-2 p-3 bg-gray-50 rounded text-xs overflow-auto'>
-									{error.stack || error.message}
-								</pre>
-							</details>
-						)}
-					</div>
-				</div>
+				<_ErrorFallback
+					actionMessage={getActionMessage()}
+					context={context}
+					contextMessage={getContextMessage()}
+					error={error}
+					onNavigate={() => navigate('/dashboard/folders/consultation')}
+					reset={reset}
+				/>
 			)}
 			level={getContextLevel()}
 			onError={(_error, _errorInfo) => {

@@ -26,7 +26,7 @@ interface PerformanceWithMemory extends Performance {
 	memory?: PerformanceMemory
 }
 
-test.describe('Performance and Network Tests', () => {
+test.describe('Performance - Slow Network', () => {
 	test('should handle slow network gracefully', async ({page}) => {
 		// Simulate slow 3G network
 		await page.route('**/*', route => {
@@ -69,7 +69,9 @@ test.describe('Performance and Network Tests', () => {
 		// Eventually should navigate
 		await expect(page).toHaveURL('/yol-benicio/dashboard', {timeout: 10_000})
 	})
+})
 
+test.describe('Performance - Error Handling', () => {
 	test('should handle API errors gracefully', async ({page}) => {
 		// Mock API error for login
 		let errorCount = 0
@@ -125,7 +127,9 @@ test.describe('Performance and Network Tests', () => {
 		await page.reload()
 		await expect(page.getByRole('heading', {name: 'Visão Geral'})).toBeVisible()
 	})
+})
 
+test.describe('Performance - Page Load', () => {
 	test('should measure page load performance', async ({page}) => {
 		// Start measuring
 		const startTime = Date.now()
@@ -161,7 +165,9 @@ test.describe('Performance and Network Tests', () => {
 			expect(metrics.fcp).toBeLessThan(FCP_TIMEOUT) // 2 seconds
 		}
 	})
+})
 
+test.describe('Performance - Large Data Sets', () => {
 	test('should handle large data sets', async ({page}) => {
 		// Login
 		await page.goto('/yol-benicio/')
@@ -185,7 +191,9 @@ test.describe('Performance and Network Tests', () => {
 		const rows = await page.locator('tbody tr').count()
 		expect(rows).toBeLessThanOrEqual(MAX_PAGINATION_ROWS) // Should paginate large datasets
 	})
+})
 
+test.describe('Performance - Memory Leaks', () => {
 	test('should not have memory leaks on navigation', async ({page}) => {
 		// Login
 		await page.goto('/yol-benicio/')
@@ -230,7 +238,9 @@ test.describe('Performance and Network Tests', () => {
 			expect(finalMemory).toBeLessThan(initialMemory * MEMORY_GROWTH_MULTIPLIER)
 		}
 	})
+})
 
+test.describe('Performance - Concurrency', () => {
 	test('should handle concurrent operations', async ({page}) => {
 		// Login
 		await page.goto('/yol-benicio/')

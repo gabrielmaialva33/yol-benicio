@@ -52,64 +52,65 @@ vi.mock('./TaskItem', () => ({
 	)
 }))
 
-describe('TasksCard', () => {
-	const TASK_IDS = {
-		FIRST: 1,
-		SECOND: 2,
-		THIRD: 3
-	}
+// Mock data factory
+const TASK_IDS = {
+	FIRST: 1,
+	SECOND: 2,
+	THIRD: 3
+}
 
-	const createMockTask = (id: number, title: string): Task => ({
-		id,
-		title,
-		description: 'Test description',
-		due_date: '2024-12-31',
-		status: 'pending',
-		priority: 'medium',
-		assigned_to: {
-			id: 1,
-			full_name: 'Test User',
-			email: 'test@example.com',
-			username: 'testuser',
-			metadata: {
-				email_verified: true,
-				email_verified_at: '2024-01-01'
-			},
-			roles: [],
-			created_at: '2024-01-01',
-			updated_at: '2024-01-01'
+const createMockTask = (id: number, title: string): Task => ({
+	id,
+	title,
+	description: 'Test description',
+	due_date: '2024-12-31',
+	status: 'pending',
+	priority: 'medium',
+	assigned_to: {
+		id: 1,
+		full_name: 'Test User',
+		email: 'test@example.com',
+		username: 'testuser',
+		metadata: {
+			email_verified: true,
+			email_verified_at: '2024-01-01'
 		},
-		created_by: {
-			id: 1,
-			full_name: 'Test User',
-			email: 'test@example.com',
-			username: 'testuser',
-			metadata: {
-				email_verified: true,
-				email_verified_at: '2024-01-01'
-			},
-			roles: [],
-			created_at: '2024-01-01',
-			updated_at: '2024-01-01'
-		},
-		metadata: {},
+		roles: [],
 		created_at: '2024-01-01',
 		updated_at: '2024-01-01'
-	})
+	},
+	created_by: {
+		id: 1,
+		full_name: 'Test User',
+		email: 'test@example.com',
+		username: 'testuser',
+		metadata: {
+			email_verified: true,
+			email_verified_at: '2024-01-01'
+		},
+		roles: [],
+		created_at: '2024-01-01',
+		updated_at: '2024-01-01'
+	},
+	metadata: {},
+	created_at: '2024-01-01',
+	updated_at: '2024-01-01'
+})
 
-	const mockTasks = [
-		createMockTask(TASK_IDS.FIRST, 'Task 1'),
-		createMockTask(TASK_IDS.SECOND, 'Task 2'),
-		createMockTask(TASK_IDS.THIRD, 'Task 3')
-	]
+const mockTasks = [
+	createMockTask(TASK_IDS.FIRST, 'Task 1'),
+	createMockTask(TASK_IDS.SECOND, 'Task 2'),
+	createMockTask(TASK_IDS.THIRD, 'Task 3')
+]
 
-	const mockUseTasks = {
-		displayTasks: mockTasks,
-		dateRange: undefined,
-		setDateRange: vi.fn(),
-		toggleTask: vi.fn()
-	}
+const mockUseTasks = {
+	displayTasks: mockTasks,
+	dateRange: undefined,
+	setDateRange: vi.fn(),
+	toggleTask: vi.fn()
+}
 
+describe('TasksCard - Setup and Rendering', () => {
 	beforeEach(() => {
 		vi.clearAllMocks()
 		vi.mocked(useTasks).mockReturnValue(mockUseTasks)
@@ -128,6 +129,13 @@ describe('TasksCard', () => {
 			expect(screen.getByTestId(`task-${task.id}`)).toBeInTheDocument()
 			expect(screen.getByText(task.title)).toBeInTheDocument()
 		}
+	})
+})
+
+describe('TasksCard - Date Range Picker', () => {
+	beforeEach(() => {
+		vi.clearAllMocks()
+		vi.mocked(useTasks).mockReturnValue(mockUseTasks)
 	})
 
 	it('should render date range picker', () => {
@@ -153,6 +161,25 @@ describe('TasksCard', () => {
 		expect(screen.queryByText('Date Picker Open')).not.toBeInTheDocument()
 	})
 
+	it('should pass dateRange to DateRangePicker', () => {
+		const dateRange = {from: new Date(), to: new Date()}
+		vi.mocked(useTasks).mockReturnValue({
+			...mockUseTasks,
+			dateRange
+		})
+
+		render(<TasksCard />)
+
+		expect(screen.getByText('Date Range Selected')).toBeInTheDocument()
+	})
+})
+
+describe('TasksCard - Interactions', () => {
+	beforeEach(() => {
+		vi.clearAllMocks()
+		vi.mocked(useTasks).mockReturnValue(mockUseTasks)
+	})
+
 	it('should call toggleTask when clicking task toggle button', () => {
 		render(<TasksCard />)
 
@@ -169,17 +196,12 @@ describe('TasksCard', () => {
 		}
 		expect(mockUseTasks.toggleTask).toHaveBeenCalledWith(TASK_IDS.SECOND)
 	})
+})
 
-	it('should pass dateRange to DateRangePicker', () => {
-		const dateRange = {from: new Date(), to: new Date()}
-		vi.mocked(useTasks).mockReturnValue({
-			...mockUseTasks,
-			dateRange
-		})
-
-		render(<TasksCard />)
-
-		expect(screen.getByText('Date Range Selected')).toBeInTheDocument()
+describe('TasksCard - Styling', () => {
+	beforeEach(() => {
+		vi.clearAllMocks()
+		vi.mocked(useTasks).mockReturnValue(mockUseTasks)
 	})
 
 	it('should have correct card styling', () => {

@@ -17,7 +17,7 @@ vi.mock('./components/Header', () => ({
 	Header: () => <div data-testid='header'>Header</div>
 }))
 
-describe('Dashboard', () => {
+describe('Dashboard - Component Rendering', () => {
 	it('should render dashboard layout with all components', () => {
 		vi.mocked(Outlet).mockReturnValue(
 			<div data-testid='outlet'>Outlet Content</div>
@@ -30,6 +30,17 @@ describe('Dashboard', () => {
 		expect(screen.getByTestId('outlet')).toBeInTheDocument()
 	})
 
+	it('should render Outlet component for nested routes', () => {
+		const mockOutletContent = <div>Dashboard Content</div>
+		vi.mocked(Outlet).mockReturnValue(mockOutletContent)
+
+		render(<Dashboard />)
+
+		expect(Outlet).toHaveBeenCalled()
+	})
+})
+
+describe('Dashboard - Layout Structure', () => {
 	it('should have correct layout structure', () => {
 		vi.mocked(Outlet).mockReturnValue(
 			<div data-testid='outlet'>Outlet Content</div>
@@ -51,16 +62,9 @@ describe('Dashboard', () => {
 		const mainContent = container.querySelector('main')
 		expect(mainContent).toHaveClass('flex-1', 'overflow-y-auto')
 	})
+})
 
-	it('should render Outlet component for nested routes', () => {
-		const mockOutletContent = <div>Dashboard Content</div>
-		vi.mocked(Outlet).mockReturnValue(mockOutletContent)
-
-		render(<Dashboard />)
-
-		expect(Outlet).toHaveBeenCalled()
-	})
-
+describe('Dashboard - Sidebar Layout', () => {
 	it('should have sidebar on the left side', () => {
 		vi.mocked(Outlet).mockReturnValue(
 			<div data-testid='outlet'>Outlet Content</div>
@@ -74,7 +78,9 @@ describe('Dashboard', () => {
 		// Sidebar should be the first child of the main flex container
 		expect(sidebarParent).toBe(container.firstChild)
 	})
+})
 
+describe('Dashboard - Content Area', () => {
 	it('should have header and outlet in content area', () => {
 		vi.mocked(Outlet).mockReturnValue(
 			<div data-testid='outlet'>Outlet Content</div>

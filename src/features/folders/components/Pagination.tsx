@@ -2,7 +2,7 @@ const ROWS_PER_PAGE_LABEL = 'Linhas por página'
 const OPTION_10 = '10'
 const OPTION_20 = '20'
 const OPTION_50 = '50'
-const _PAGE_SEPARATOR = ' de '
+const PAGE_SEPARATOR = ' de '
 const PREVIOUS_TITLE = 'Previous'
 const NEXT_TITLE = 'Next'
 
@@ -40,7 +40,8 @@ export function Pagination({
 			</div>
 			<div className='flex items-center space-x-4'>
 				<span className='text-sm text-gray-600'>
-					{String(page).padStart(2, '0')} de{' '}
+					{String(page).padStart(2, '0')}
+					{PAGE_SEPARATOR}
 					{String(totalPages).padStart(2, '0')}
 				</span>
 				<div className='flex items-center space-x-1'>

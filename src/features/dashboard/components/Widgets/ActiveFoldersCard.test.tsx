@@ -22,17 +22,18 @@ vi.mock('recharts', () => ({
 	)
 }))
 
-describe('ActiveFoldersCard', () => {
-	const mockData = {
-		active: 42,
-		newThisMonth: 5,
-		history: [
-			{month: 'Jan', value: 30},
-			{month: 'Feb', value: 35},
-			{month: 'Mar', value: 42}
-		]
-	}
+// Module-level mock data
+const MOCK_ACTIVE_FOLDERS_DATA = {
+	active: 42,
+	newThisMonth: 5,
+	history: [
+		{month: 'Jan', value: 30},
+		{month: 'Feb', value: 35},
+		{month: 'Mar', value: 42}
+	]
+}
 
+describe('ActiveFoldersCard - Data Rendering', () => {
 	it('should render with initial data when no data is provided', () => {
 		vi.mocked(useQuery).mockReturnValue({
 			data: undefined,
@@ -72,7 +73,7 @@ describe('ActiveFoldersCard', () => {
 
 	it('should render with fetched data', () => {
 		vi.mocked(useQuery).mockReturnValue({
-			data: mockData,
+			data: MOCK_ACTIVE_FOLDERS_DATA,
 			isLoading: false,
 			isError: false
 		} as ReturnType<typeof useQuery>)
@@ -83,10 +84,12 @@ describe('ActiveFoldersCard', () => {
 		expect(screen.getByText('42')).toBeInTheDocument()
 		expect(screen.getByText('5 novos neste mês')).toBeInTheDocument()
 	})
+})
 
+describe('ActiveFoldersCard - UI Components', () => {
 	it('should render visualizar pastas button', () => {
 		vi.mocked(useQuery).mockReturnValue({
-			data: mockData,
+			data: MOCK_ACTIVE_FOLDERS_DATA,
 			isLoading: false,
 			isError: false
 		} as ReturnType<typeof useQuery>)
@@ -105,7 +108,7 @@ describe('ActiveFoldersCard', () => {
 
 	it('should render chart components', () => {
 		vi.mocked(useQuery).mockReturnValue({
-			data: mockData,
+			data: MOCK_ACTIVE_FOLDERS_DATA,
 			isLoading: false,
 			isError: false
 		} as ReturnType<typeof useQuery>)
@@ -120,7 +123,7 @@ describe('ActiveFoldersCard', () => {
 
 	it('should pass correct data to chart', () => {
 		vi.mocked(useQuery).mockReturnValue({
-			data: mockData,
+			data: MOCK_ACTIVE_FOLDERS_DATA,
 			isLoading: false,
 			isError: false
 		} as ReturnType<typeof useQuery>)
@@ -130,12 +133,14 @@ describe('ActiveFoldersCard', () => {
 		const lineChart = screen.getByTestId('line-chart')
 		const chartData = JSON.parse(lineChart.getAttribute('data-history') || '[]')
 
-		expect(chartData).toEqual(mockData.history)
+		expect(chartData).toEqual(MOCK_ACTIVE_FOLDERS_DATA.history)
 	})
+})
 
+describe('ActiveFoldersCard - Configuration and Styling', () => {
 	it('should use correct query key and function', () => {
 		vi.mocked(useQuery).mockReturnValue({
-			data: mockData,
+			data: MOCK_ACTIVE_FOLDERS_DATA,
 			isLoading: false,
 			isError: false
 		} as ReturnType<typeof useQuery>)
@@ -155,7 +160,7 @@ describe('ActiveFoldersCard', () => {
 
 	it('should have correct card styling', () => {
 		vi.mocked(useQuery).mockReturnValue({
-			data: mockData,
+			data: MOCK_ACTIVE_FOLDERS_DATA,
 			isLoading: false,
 			isError: false
 		} as ReturnType<typeof useQuery>)
@@ -178,7 +183,7 @@ describe('ActiveFoldersCard', () => {
 
 	it('should display large number with correct styling', () => {
 		vi.mocked(useQuery).mockReturnValue({
-			data: mockData,
+			data: MOCK_ACTIVE_FOLDERS_DATA,
 			isLoading: false,
 			isError: false
 		} as ReturnType<typeof useQuery>)

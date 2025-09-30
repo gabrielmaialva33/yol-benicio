@@ -17,6 +17,19 @@ import {
 import {DateTime} from 'luxon'
 import type {FolderMovement} from '../types/folder.types'
 
+// String constants
+const LABEL_HISTORY = 'Histórico'
+const LABEL_SEARCH = 'Buscar'
+const LABEL_ADDED_BY = 'Adicionado'
+const LABEL_BY = 'por'
+const LABEL_CONTINUE = 'Continuar'
+const LABEL_RESOLVE = 'Resolver'
+const LABEL_VIEW = 'Visualizar'
+const LABEL_PDF = 'PDF'
+const CATEGORY_FAVORABLE = 'favorável'
+const CATEGORY_HEARING = 'audiência'
+const CATEGORY_SCHEDULED = 'agendada'
+
 interface TimelineEvent extends FolderMovement {
 	id: string
 	title: string
@@ -278,11 +291,13 @@ export function ProcessTimeline({folderId: _folderId}: ProcessTimelineProps) {
 			{/* Header with Search */}
 			<div className='px-6 py-4 border-b border-gray-100'>
 				<div className='flex items-center justify-between'>
-					<h2 className='text-lg font-semibold text-gray-900'>Histórico</h2>
+					<h2 className='text-lg font-semibold text-gray-900'>
+						{LABEL_HISTORY}
+					</h2>
 					<div className='relative w-64'>
 						<input
 							className='w-full pl-4 pr-4 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#00B8D9] focus:border-[#00B8D9]'
-							placeholder='Buscar'
+							placeholder={LABEL_SEARCH}
 							type='text'
 						/>
 					</div>
@@ -332,7 +347,8 @@ export function ProcessTimeline({folderId: _folderId}: ProcessTimelineProps) {
 												{/* Added by info */}
 												<div className='mt-1 flex items-center gap-2 text-sm text-gray-500'>
 													<span>
-														Adicionado {eventDate.toFormat('dd/MM/yyyy')} por
+														{LABEL_ADDED_BY} {eventDate.toFormat('dd/MM/yyyy')}{' '}
+														{LABEL_BY}
 													</span>
 													<div className='flex items-center gap-1'>
 														<img
@@ -384,7 +400,7 @@ export function ProcessTimeline({folderId: _folderId}: ProcessTimelineProps) {
 															className={`rounded-lg px-4 py-1.5 text-xs font-medium text-white transition-colors ${statusColors.button}`}
 															type='button'
 														>
-															Continuar
+															{LABEL_CONTINUE}
 														</button>
 													)}
 													{event.status === 'error' && (
@@ -392,7 +408,7 @@ export function ProcessTimeline({folderId: _folderId}: ProcessTimelineProps) {
 															className={`rounded-lg px-4 py-1.5 text-xs font-medium text-white transition-colors ${statusColors.button}`}
 															type='button'
 														>
-															Resolver
+															{LABEL_RESOLVE}
 														</button>
 													)}
 												</div>
@@ -411,19 +427,23 @@ export function ProcessTimeline({folderId: _folderId}: ProcessTimelineProps) {
 															{event.category.map(cat => {
 																const isPositive = cat
 																	.toLowerCase()
-																	.includes('favorável')
+																	.includes(CATEGORY_FAVORABLE)
 																const isWarning =
-																	cat.toLowerCase().includes('audiência') ||
-																	cat.toLowerCase().includes('agendada')
+																	cat
+																		.toLowerCase()
+																		.includes(CATEGORY_HEARING) ||
+																	cat.toLowerCase().includes(CATEGORY_SCHEDULED)
+
+																let badgeClasses = 'bg-gray-100 text-gray-700'
+																if (isPositive) {
+																	badgeClasses = 'bg-green-100 text-green-700'
+																} else if (isWarning) {
+																	badgeClasses = 'bg-amber-100 text-amber-700'
+																}
+
 																return (
 																	<span
-																		className={`rounded-full px-3 py-1 text-xs font-medium ${
-																			isPositive
-																				? 'bg-green-100 text-green-700'
-																				: isWarning
-																					? 'bg-amber-100 text-amber-700'
-																					: 'bg-gray-100 text-gray-700'
-																		}`}
+																		className={`rounded-full px-3 py-1 text-xs font-medium ${badgeClasses}`}
 																		key={cat}
 																	>
 																		{cat}
@@ -436,7 +456,7 @@ export function ProcessTimeline({folderId: _folderId}: ProcessTimelineProps) {
 														className='rounded-lg bg-white border border-gray-300 px-3 py-1.5 text-xs font-medium text-gray-700 hover:bg-gray-50 transition-colors'
 														type='button'
 													>
-														Visualizar
+														{LABEL_VIEW}
 													</button>
 												</div>
 											</div>
@@ -457,7 +477,7 @@ export function ProcessTimeline({folderId: _folderId}: ProcessTimelineProps) {
 																		<div className='absolute inset-0 rounded bg-red-500' />
 																		<div className='absolute inset-x-1 bottom-1 flex items-center justify-center'>
 																			<span className='text-[8px] font-bold text-white'>
-																				PDF
+																				{LABEL_PDF}
 																			</span>
 																		</div>
 																	</div>

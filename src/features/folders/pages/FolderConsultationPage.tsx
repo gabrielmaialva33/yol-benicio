@@ -7,6 +7,11 @@ import {FolderTabs} from '../components/FolderTabs'
 import {Pagination} from '../components/Pagination'
 import {useFolderConsultation} from '../hooks/use-folder-consultation'
 
+const ERROR_MESSAGE = 'Ocorreu um erro ao buscar as pastas.'
+const DOWNLOAD_BUTTON_LABEL = 'Baixar'
+const ADD_COLUMNS_BUTTON_LABEL = 'Adicionar colunas'
+const UPDATING_LABEL = 'Atualizando...'
+
 export function FolderConsultationPage() {
 	const {
 		folders,
@@ -50,7 +55,7 @@ export function FolderConsultationPage() {
 	}
 
 	if (isError && folders.length === 0) {
-		return <div>Ocorreu um erro ao buscar as pastas.</div>
+		return <div>{ERROR_MESSAGE}</div>
 	}
 
 	return (
@@ -74,13 +79,13 @@ export function FolderConsultationPage() {
 								disabled={selectedFolders.length === 0}
 								type='button'
 							>
-								Baixar
+								{DOWNLOAD_BUTTON_LABEL}
 							</button>
 							<button
 								className='px-3 sm:px-4 py-2 h-10 text-xs sm:text-sm font-bold text-[#00B8D9] bg-white border border-[#00B8D9]/48 rounded-[20px] hover:bg-[#00B8D9]/5 transition-colors whitespace-nowrap'
 								type='button'
 							>
-								Adicionar colunas
+								{ADD_COLUMNS_BUTTON_LABEL}
 							</button>
 						</div>
 					</div>
@@ -96,7 +101,9 @@ export function FolderConsultationPage() {
 							<div className='absolute inset-0 bg-white/60 z-10 flex items-center justify-center'>
 								<div className='flex items-center space-x-2'>
 									<div className='animate-spin rounded-full h-6 w-6 border-b-2 border-[#00B8D9]' />
-									<span className='text-sm text-gray-600'>Atualizando...</span>
+									<span className='text-sm text-gray-600'>
+										{UPDATING_LABEL}
+									</span>
 								</div>
 							</div>
 						)}
