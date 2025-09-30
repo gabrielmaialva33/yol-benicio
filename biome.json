@@ -104,7 +104,9 @@
 			"includes": ["src/**/*.test.tsx", "tests/**/*.spec.ts"],
 			"linter": {
 				"rules": {
-					"nursery": {},
+					"nursery": {
+						"noJsxLiterals": "off"
+					},
 					"performance": {
 						"useTopLevelRegex": "off"
 					}

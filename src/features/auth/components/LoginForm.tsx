@@ -9,6 +9,19 @@ const EMAIL_LABEL = 'E-mail'
 const PASSWORD_LABEL = 'Senha'
 const FORGOT_PASSWORD_LINK = 'Esqueci minha senha'
 
+function validateFormData(email: string, password: string) {
+	const newErrors = {email: '', password: ''}
+	if (!email) {
+		newErrors.email = 'E-mail é obrigatório'
+	} else if (!EMAIL_REGEX.test(email)) {
+		newErrors.email = 'E-mail inválido'
+	}
+	if (!password) {
+		newErrors.password = 'Senha é obrigatória'
+	}
+	return newErrors
+}
+
 export function LoginForm() {
 	const emailId = useId()
 	const passwordId = useId()
@@ -22,15 +35,7 @@ export function LoginForm() {
 		const email = formData.get('email') as string
 		const password = formData.get('password') as string
 
-		const newErrors = {email: '', password: ''}
-		if (!email) {
-			newErrors.email = 'E-mail é obrigatório'
-		} else if (!EMAIL_REGEX.test(email)) {
-			newErrors.email = 'E-mail inválido'
-		}
-		if (!password) {
-			newErrors.password = 'Senha é obrigatória'
-		}
+		const newErrors = validateFormData(email, password)
 
 		if (newErrors.email || newErrors.password) {
 			setErrors(newErrors)
@@ -96,7 +101,7 @@ export function LoginForm() {
 						className='self-stretch text-right text-base font-medium text-gray-500 underline'
 						href='/#'
 					>
-						Esqueci minha senha
+						{FORGOT_PASSWORD_LINK}
 					</a>
 				</div>
 				<button

@@ -7,6 +7,19 @@ interface DashboardErrorBoundaryProps {
 	section?: 'widget' | 'sidebar' | 'header' | 'main'
 }
 
+const ERROR_MESSAGES = {
+	widget: 'Este widget não pôde ser carregado',
+	sidebar: 'O menu lateral encontrou um problema',
+	header: 'O cabeçalho não pôde ser carregado',
+	main: 'O dashboard encontrou um problema'
+}
+
+const WIDGET_AUTO_RELOAD_MESSAGE =
+	'Os dados serão recarregados automaticamente em alguns segundos.'
+const MANUAL_RELOAD_MESSAGE = 'Por favor, tente recarregar esta seção.'
+const RELOAD_BUTTON_TEXT = 'Recarregar'
+const ERROR_INFO_TITLE = 'Informações do erro'
+
 function getHeightClass(section: string): string {
 	if (section === 'widget') {
 		return 'h-full min-h-[200px]'
@@ -36,18 +49,7 @@ export function DashboardErrorBoundary({
 		}
 	}
 
-	const getSectionMessage = () => {
-		switch (section) {
-			case 'widget':
-				return 'Este widget não pôde ser carregado'
-			case 'sidebar':
-				return 'O menu lateral encontrou um problema'
-			case 'header':
-				return 'O cabeçalho não pôde ser carregado'
-			default:
-				return 'O dashboard encontrou um problema'
-		}
-	}
+	const getSectionMessage = () => ERROR_MESSAGES[section] || ERROR_MESSAGES.main
 
 	return (
 		<ErrorBoundary
@@ -64,8 +66,8 @@ export function DashboardErrorBoundary({
 						</h3>
 						<p className='text-sm text-gray-600 mb-4'>
 							{section === 'widget'
-								? 'Os dados serão recarregados automaticamente em alguns segundos.'
-								: 'Por favor, tente recarregar esta seção.'}
+								? WIDGET_AUTO_RELOAD_MESSAGE
+								: MANUAL_RELOAD_MESSAGE}
 						</p>
 						<button
 							className='inline-flex items-center gap-2 px-4 py-2 bg-blue-500 text-white text-sm rounded-lg hover:bg-blue-600 transition-colors'
@@ -73,12 +75,12 @@ export function DashboardErrorBoundary({
 							type='button'
 						>
 							<RefreshCw className='w-4 h-4' />
-							Recarregar
+							{RELOAD_BUTTON_TEXT}
 						</button>
 						{import.meta.env.DEV && (
 							<details className='mt-4 text-left max-w-xs mx-auto'>
 								<summary className='cursor-pointer text-xs text-gray-500 hover:text-gray-700'>
-									Informações do erro
+									{ERROR_INFO_TITLE}
 								</summary>
 								<pre className='mt-2 p-2 bg-white border rounded text-xs overflow-auto'>
 									{error.message}

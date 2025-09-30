@@ -7,7 +7,8 @@ interface AuthErrorBoundaryProps {
 }
 
 const AUTH_ERROR_TITLE = 'Erro na Autenticação'
-const AUTH_ERROR_MESSAGE = 'Ocorreu um problema ao processar sua autenticação. Por favor, tente novamente.'
+const AUTH_ERROR_MESSAGE =
+	'Ocorreu um problema ao processar sua autenticação. Por favor, tente novamente.'
 const TECHNICAL_DETAILS_LABEL = 'Detalhes técnicos'
 const TRY_AGAIN_BUTTON = 'Tentar novamente'
 const RELOAD_PAGE_BUTTON = 'Recarregar página'
@@ -28,9 +29,7 @@ export function AuthErrorBoundary({children}: AuthErrorBoundaryProps) {
 							<h2 className='text-xl font-bold text-gray-900'>
 								{AUTH_ERROR_TITLE}
 							</h2>
-							<p className='text-center text-gray-600'>
-								{AUTH_ERROR_MESSAGE}
-							</p>
+							<p className='text-center text-gray-600'>{AUTH_ERROR_MESSAGE}</p>
 							{import.meta.env.DEV && (
 								<details className='w-full mt-4'>
 									<summary className='cursor-pointer text-sm text-gray-500 hover:text-gray-700'>

@@ -64,6 +64,14 @@ export interface BirthdayData {
 	email: string
 }
 
+export interface FavoriteFolderData {
+	id: string
+	name: string
+	description?: string
+	createdAt: string
+	updatedAt: string
+}
+
 /**
  * Dashboard API functions
  */
@@ -80,7 +88,7 @@ export async function getActiveFoldersStats(): Promise<ActiveFoldersData> {
 	return response.json()
 }
 
-export async function getFavoriteFolders(): Promise<any[]> {
+export async function getFavoriteFolders(): Promise<FavoriteFolderData[]> {
 	const response = await fetch(
 		`${API_BASE_URL}/api/dashboard/favorite-folders`,
 		{
