@@ -30,6 +30,9 @@ const FolderRegisterPage = lazy(() =>
 		default: m.FolderRegisterPage
 	}))
 )
+const ChatPage = lazy(() =>
+	import('../features/ai-chat').then(m => ({default: m.ChatPage}))
+)
 
 export function AppRouter() {
 	return (
@@ -60,6 +63,8 @@ export function AppRouter() {
 						path='folders/consultation/:folderId'
 					/>
 					<Route element={<FolderRegisterPage />} path='folders/register' />
+					<Route element={<ChatPage />} path='chat' />
+					<Route element={<ChatPage />} path='chat/:conversationId' />
 				</Route>
 				{/* Catch-all route that redirects to home */}
 				<Route element={<Navigate replace={true} to='/' />} path='*' />

@@ -9,6 +9,7 @@ import leftSquareIcon from '/icons/left-square.svg'
 import logoCollapsed from '/icons/logo.svg'
 import magnifierIcon from '/icons/magnifier.svg'
 import overviewIcon from '/icons/overview.svg'
+import chatIcon from '/icons/sparkles.svg'
 import logoExpanded from '/logo-yol.svg'
 import {SidebarItem} from './SidebarItem'
 
@@ -18,13 +19,14 @@ interface SubMenuItem {
 }
 
 interface MenuItem {
-	icon: string
+	icon: string | React.ComponentType<{className?: string}>
 	text: string
 	path?: string
 	active?: boolean
 	color?: string
 	badge?: number
 	subItems?: SubMenuItem[]
+	textOffset?: string
 }
 
 interface FavoriteFolder {
@@ -54,6 +56,12 @@ const pages: MenuItem[] = [
 			{text: 'Cadastrar', path: '/dashboard/folders/register'},
 			{text: 'Consulta', path: '/dashboard/folders/consultation'}
 		]
+	},
+	{
+		icon: chatIcon,
+		text: 'Chat IA',
+		path: '/dashboard/chat',
+		textOffset: '-ml-6'
 	}
 ]
 
@@ -130,6 +138,7 @@ const MenuItemComponent = (props: {
 			isCollapsed={props.isCollapsed}
 			isOpen={isDropdownOpen}
 			text={props.item.text}
+			textOffset={props.item.textOffset}
 		/>
 	)
 

@@ -1,3 +1,4 @@
+import {aiChatHandlers} from './handlers/ai-chat'
 import {authHandlers} from './handlers/auth'
 import {dashboardHandlers} from './handlers/dashboard'
 import {folderHandlers} from './handlers/folders'
@@ -9,5 +10,6 @@ export const handlers = [
 	...folderHandlers,
 	...taskHandlers,
 	...dashboardHandlers,
-	...userHandlers
+	...userHandlers,
+	...aiChatHandlers
 ]

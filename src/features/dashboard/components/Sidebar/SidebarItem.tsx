@@ -5,7 +5,7 @@ const OPEN_PAREN = '('
 const CLOSE_PAREN = ')'
 
 interface SidebarItemProps {
-	icon: string
+	icon: string | React.ComponentType<{className?: string}>
 	text: string
 	active?: boolean | undefined
 	isCollapsed: boolean
@@ -14,6 +14,7 @@ interface SidebarItemProps {
 	hasSubItems?: boolean
 	isOpen?: boolean
 	asButton?: boolean
+	textOffset?: string
 }
 
 const getIconClasses = (isCollapsed: boolean, active = false) => {
@@ -39,6 +40,19 @@ const renderIcon = (props: SidebarItemProps) => {
 
 	// Only render icon if there's one provided
 	if (props.icon) {
+		// Check if icon is a React component (lucide-react)
+		if (typeof props.icon === 'function') {
+			const IconComponent = props.icon
+			const iconClassName =
+				props.active && !props.isCollapsed
+					? 'w-6 h-6 text-white'
+					: props.active && props.isCollapsed
+						? 'w-6 h-6 text-orange-500'
+						: 'w-6 h-6 text-gray-300 group-hover:text-white'
+			return <IconComponent className={iconClassName} strokeWidth={2} />
+		}
+
+		// Otherwise it's a string path to SVG
 		return (
 			<img
 				alt={props.text}
@@ -67,7 +81,7 @@ const SidebarItem = (props: SidebarItemProps) => {
 	}
 
 	const className = `
-    relative flex items-center py-[14px] px-3 gap-[7px]
+    relative flex items-center py-[14px] px-3 gap-3
     font-semibold rounded-[10px] cursor-pointer
     transition-colors group text-base w-full
     ${props.isCollapsed ? 'justify-center' : ''}
@@ -78,7 +92,7 @@ const SidebarItem = (props: SidebarItemProps) => {
 		<>
 			{renderIcon(props)}
 			<span
-				className={`overflow-hidden text-ellipsis whitespace-nowrap transition-all ${props.isCollapsed ? 'w-0' : 'w-52'}`}
+				className={`overflow-hidden text-ellipsis whitespace-nowrap transition-all ${props.isCollapsed ? 'w-0' : 'w-52'} ${props.textOffset || ''}`}
 			>
 				{props.text}
 			</span>

@@ -31,7 +31,7 @@ if (container) {
 			<QueryClientProvider client={queryClient}>
 				<AuthProvider>
 					<ReactQueryDevtools initialIsOpen={false} />
-					<BrowserRouter basename='/yol-benicio/'>
+					<BrowserRouter>
 						<App />
 					</BrowserRouter>
 				</AuthProvider>
