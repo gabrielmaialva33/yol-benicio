@@ -1,10 +1,6 @@
 {
 	"$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
-	"vcs": {
-		"clientKind": "git",
-		"enabled": true,
-		"useIgnoreFile": true
-	},
+	"vcs": { "clientKind": "git", "enabled": true, "useIgnoreFile": true },
 	"assist": {
 		"actions": {
 			"source": {
@@ -40,7 +36,7 @@
 			"a11y": "error",
 			"complexity": "error",
 			"correctness": "error",
-			"nursery": "off",
+			"nursery": "error",
 			"performance": "error",
 			"recommended": true,
 			"security": "error",
@@ -53,27 +49,39 @@
 			"includes": ["**/*"],
 			"linter": {
 				"rules": {
-					"complexity": {
-						"noVoid": "off",
-						"noExcessiveLinesPerFunction": "off",
-						"noExcessiveCognitiveComplexity": "off"
-					},
 					"correctness": {
-						"useImportExtensions": "off",
-						"noUndeclaredDependencies": "off"
+						"useImportExtensions": "off"
+					},
+					"nursery": {
+						"useExplicitType": "off",
+						"noUnresolvedImports": "off",
+						"noSecrets": {
+							"level": "error",
+							"options": {
+								"entropyThreshold": 100
+							}
+						}
 					},
 					"suspicious": {
 						"noReactSpecificProps": "off",
-						"noExplicitAny": "off"
+						"noUnknownAtRules": "off"
 					},
 					"performance": {
 						"noImgElement": "off",
 						"noNamespaceImport": "off",
-						"useSolidForComponent": "off",
-						"noBarrelFile": "off"
+						"useSolidForComponent": "off"
 					},
 					"style": {
-						"useNamingConvention": "off",
+						"noMagicNumbers": "off",
+						"useExportsLast": "off",
+						"useBlockStatements": "off",
+						"useNamingConvention": {
+							"level": "error",
+							"options": {
+								"strictCase": false,
+								"requireAscii": true
+							}
+						},
 						"useFilenamingConvention": {
 							"level": "error",
 							"options": {
@@ -81,11 +89,7 @@
 								"requireAscii": true,
 								"filenameCases": ["camelCase", "kebab-case", "PascalCase"]
 							}
-						},
-						"noMagicNumbers": "off",
-						"useExportsLast": "off",
-						"noDefaultExport": "off",
-						"useComponentExportOnlyModules": "off"
+						}
 					}
 				}
 			}
@@ -104,7 +108,7 @@
 			}
 		},
 		{
-			"includes": ["src/**/*.test.tsx", "tests/**/*.spec.ts"],
+			"includes": ["src/**/*.test.tsx"],
 			"linter": {
 				"rules": {
 					"performance": {
@@ -120,16 +124,6 @@
 			},
 			"linter": {
 				"enabled": false
-			}
-		},
-		{
-			"includes": ["src/global.css"],
-			"linter": {
-				"rules": {
-					"suspicious": {
-						"noUnknownAtRules": "off"
-					}
-				}
 			}
 		}
 	]
