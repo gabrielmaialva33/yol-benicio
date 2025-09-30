@@ -1,5 +1,6 @@
 import {fireEvent, render, screen} from '@testing-library/react'
 import {beforeEach, describe, expect, it, vi} from 'vitest'
+import {useTasks} from '../../../../shared/hooks/use-tasks'
 import type {Task} from '../../../../shared/types/domain'
 import {TasksCard} from './TasksCard'
 
@@ -50,8 +51,6 @@ vi.mock('./TaskItem', () => ({
 		</div>
 	)
 }))
-
-import {useTasks} from '../../../../shared/hooks/use-tasks'
 
 describe('TasksCard', () => {
 	const TASK_IDS = {

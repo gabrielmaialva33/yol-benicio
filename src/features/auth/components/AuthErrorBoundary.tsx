@@ -6,6 +6,12 @@ interface AuthErrorBoundaryProps {
 	children: ReactNode
 }
 
+const AUTH_ERROR_TITLE = 'Erro na Autenticação'
+const AUTH_ERROR_MESSAGE = 'Ocorreu um problema ao processar sua autenticação. Por favor, tente novamente.'
+const TECHNICAL_DETAILS_LABEL = 'Detalhes técnicos'
+const TRY_AGAIN_BUTTON = 'Tentar novamente'
+const RELOAD_PAGE_BUTTON = 'Recarregar página'
+
 /**
  * Error Boundary específico para a feature de autenticação
  */
@@ -20,16 +26,15 @@ export function AuthErrorBoundary({children}: AuthErrorBoundaryProps) {
 								<LogIn className='w-8 h-8 text-red-600' />
 							</div>
 							<h2 className='text-xl font-bold text-gray-900'>
-								Erro na Autenticação
+								{AUTH_ERROR_TITLE}
 							</h2>
 							<p className='text-center text-gray-600'>
-								Ocorreu um problema ao processar sua autenticação. Por favor,
-								tente novamente.
+								{AUTH_ERROR_MESSAGE}
 							</p>
 							{import.meta.env.DEV && (
 								<details className='w-full mt-4'>
 									<summary className='cursor-pointer text-sm text-gray-500 hover:text-gray-700'>
-										Detalhes técnicos
+										{TECHNICAL_DETAILS_LABEL}
 									</summary>
 									<pre className='mt-2 p-2 bg-gray-50 rounded text-xs overflow-auto'>
 										{error.message}
@@ -41,14 +46,14 @@ export function AuthErrorBoundary({children}: AuthErrorBoundaryProps) {
 								onClick={reset}
 								type='button'
 							>
-								Tentar novamente
+								{TRY_AGAIN_BUTTON}
 							</button>
 							<button
 								className='text-sm text-gray-600 hover:text-gray-800'
 								onClick={() => window.location.reload()}
 								type='button'
 							>
-								Recarregar página
+								{RELOAD_PAGE_BUTTON}
 							</button>
 						</div>
 					</div>

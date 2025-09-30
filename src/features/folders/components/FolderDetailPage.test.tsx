@@ -1,6 +1,8 @@
 import {fireEvent, render, screen} from '@testing-library/react'
 import {useParams} from 'react-router'
 import {beforeEach, describe, expect, it, vi} from 'vitest'
+import {useFolderDetail} from '../hooks/use-folder-detail'
+import type {FolderDetail} from '../types/folder.types'
 import {FolderDetailPage} from './FolderDetailPage'
 
 // Mock react-router
@@ -60,9 +62,6 @@ vi.mock('./ProcessTimeline', () => ({
 		<div data-testid='process-timeline'>Timeline for {folderId}</div>
 	)
 }))
-
-import {useFolderDetail} from '../hooks/use-folder-detail'
-import type {FolderDetail} from '../types/folder.types'
 
 describe('FolderDetailPage', () => {
 	const mockFolder: FolderDetail = {

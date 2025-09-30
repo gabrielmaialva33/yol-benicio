@@ -127,9 +127,11 @@ $ pnpm dev
 
 ## 🧭 Exploração do Projeto
 
-Esta seção traz uma visão prática e rápida de como o projeto está organizado, como executar, testar e contribuir no dia a dia.
+Esta seção traz uma visão prática e rápida de como o projeto está organizado, como executar, testar e contribuir no dia
+a dia.
 
 ### Visão Geral
+
 - Build tool: Vite 7 (React + TypeScript)
 - UI: React 19, Tailwind CSS 4
 - Dados e Estado: TanStack Query 5
@@ -139,6 +141,7 @@ Esta seção traz uma visão prática e rápida de como o projeto está organiza
 - Lint/Format: Biome + checagem de tipos (tsc)
 
 ### Scripts úteis
+
 ```bash
 # Desenvolvimento (abre o navegador automaticamente)
 pnpm dev
@@ -167,6 +170,7 @@ pnpm validate
 ```
 
 ### Estrutura principal de pastas
+
 ```
 / (raiz)
 ├─ index.html
@@ -200,7 +204,9 @@ pnpm validate
 ```
 
 ### Roteamento
+
 Definido em src/app/router.tsx com carregamento lazy:
+
 - '/' → LoginPage
 - '/dashboard' → layout do Dashboard (Header + Sidebar)
   - index → DashboardContent
@@ -210,11 +216,14 @@ Definido em src/app/router.tsx com carregamento lazy:
 - '*' → redireciona para '/'
 
 Observação: Por estar publicado no GitHub Pages, o projeto usa basename/base '/yol-benicio/':
+
 - vite.config.ts → base: '/yol-benicio/'
 - src/main.tsx → <BrowserRouter basename='/yol-benicio/'>
-Em desenvolvimento, o servidor roda em http://localhost:5173; se notar URLs com prefixo, acesse http://localhost:5173/yol-benicio/.
+  Em desenvolvimento, o servidor roda em http://localhost:5173; se notar URLs com prefixo,
+  acesse http://localhost:5173/yol-benicio/.
 
 ### MSW (Mock Service Worker)
+
 - Inicialização em desenvolvimento e quando hospedado no GitHub Pages:
   - src/main.tsx inicia o worker quando import.meta.env.DEV ou hostname inclui 'github.io'.
   - O service worker é servido em '/yol-benicio/mock-service-worker.js'.
@@ -222,10 +231,13 @@ Em desenvolvimento, o servidor roda em http://localhost:5173; se notar URLs com 
 - Nos testes unitários (Vitest), o MSW roda em modo server (src/test-setup.ts via src/mocks/server.ts).
 
 ### API e Hooks
-- O módulo src/shared/hooks/use-api.ts expõe createApiHooks para CRUD genérico (useList, useGet, useCreate, useUpdate, useDelete) com TanStack Query.
+
+- O módulo src/shared/hooks/use-api.ts expõe createApiHooks para CRUD genérico (useList, useGet, useCreate, useUpdate,
+  useDelete) com TanStack Query.
 - Base de URL e headers são montados dinamicamente; em mocks, as rotas são atendidas pelos handlers do MSW.
 
 ### Convenções
+
 - Imports absolutos (graças ao baseUrl 'src' e vite-tsconfig-paths).
 - TypeScript em modo estrito, Jest-DOM para assertions em testes, happy-dom como ambiente.
 - Tailwind 4 com plugin oficial @tailwindcss/vite e Autoprefixer.

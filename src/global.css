@@ -65,6 +65,7 @@
 	.border-default {
 		border-color: #e1e3ea;
 	}
+
 	.card {
 		display: flex;
 		flex-direction: column;
@@ -73,22 +74,27 @@
 		border-radius: var(--radius-xl);
 		box-shadow: var(--shadow-card);
 	}
+
 	.card-tinted {
 		color: #004b50;
 		background: var(--color-surface-alt);
 	}
+
 	.card-title {
 		font-size: var(--text-h3);
 		font-weight: 600;
 		color: var(--color-text-primary);
 	}
+
 	.shadow-card {
 		box-shadow: var(--shadow-card);
 	}
+
 	.progress-track {
 		background: var(--color-neutral-200);
 		border-radius: var(--radius-pill);
 	}
+
 	.progress-bar {
 		height: 0.5rem;
 		background: var(--color-brand-teal);
