@@ -153,7 +153,6 @@ test.describe('Accessibility Tests', () => {
 
 		// Check specifically for color contrast issues
 		await checkA11y(page, null, {
-			runOnly: ['color-contrast'],
 			detailedReport: true
 		})
 	})
@@ -211,7 +210,8 @@ test.describe('Accessibility Tests', () => {
 			'button:has([alt="sair"])'
 		]
 
-		for (const selector of interactiveElements) {
+		// Use Promise.all to avoid await in loop
+		const focusPromises = interactiveElements.map(async selector => {
 			const element = page.locator(selector)
 			await element.focus()
 
@@ -219,7 +219,12 @@ test.describe('Accessibility Tests', () => {
 			const isFocused = await element.evaluate(
 				el => document.activeElement === el
 			)
-			expect(isFocused).toBeTruthy()
+			return isFocused
+		})
+
+		const results = await Promise.all(focusPromises)
+		for (const result of results) {
+			expect(result).toBeTruthy()
 		}
 	})
 })

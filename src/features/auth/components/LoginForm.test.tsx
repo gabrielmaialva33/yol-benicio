@@ -48,15 +48,28 @@ describe('LoginForm', () => {
 
 	it('should display an error message on login failure', async () => {
 		server.use(
-			http.post('/api/login', () => new HttpResponse(null, {status: 401}))
+			http.post('http://localhost:3333/api/v1/sessions/sign-in', () =>
+				HttpResponse.json(
+					{
+						errors: [
+							{
+								message: 'E-mail ou senha inválidos',
+								field: 'uid',
+								rule: 'auth'
+							}
+						]
+					},
+					{status: 401}
+				)
+			)
 		)
 
 		renderLoginForm()
 		fireEvent.change(screen.getByPlaceholderText('E-mail'), {
-			target: {value: 'test@test.com'}
+			target: {value: 'invalid@test.com'}
 		})
 		fireEvent.change(screen.getByPlaceholderText('Senha'), {
-			target: {value: 'password123'}
+			target: {value: 'wrongpassword'}
 		})
 		fireEvent.click(screen.getByRole('button', {name: /Entrar/i}))
 

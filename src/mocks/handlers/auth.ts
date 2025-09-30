@@ -56,6 +56,62 @@ const getUserRole = (user: User) => {
 }
 
 export const authHandlers = [
+	// Sign-in endpoint for v1 API with full URL
+	http.post(
+		'http://localhost:3333/api/v1/sessions/sign-in',
+		async ({request}) => {
+			const body = (await request.json()) as {uid: string; password: string}
+
+			// Valid credentials - accept test credentials from tests
+			if (
+				(body.uid === 'test@test.com' && body.password === 'password123') ||
+				(body.uid === 'test@benicio.com.br' && body.password === 'benicio123')
+			) {
+				const user = systemUsers.testLawyer
+				const now = DateTime.now()
+
+				const adonisUser: AdonisUser = {
+					...user,
+					metadata: {
+						email_verified: true,
+						email_verified_at: now.toISO(),
+						email_verification_token: '',
+						email_verification_sent_at: now.toISO()
+					},
+					created_at: now.minus({days: 30}).toISO(),
+					updated_at: now.toISO(),
+					roles: [
+						{
+							...getRoleInfo(getUserRole(user)),
+							description: null,
+							slug: getUserRole(user),
+							created_at: now.minus({days: 90}).toISO(),
+							updated_at: now.minus({days: 90}).toISO()
+						}
+					],
+					auth: {
+						access_token: 'mock-token',
+						refresh_token: 'mock-refresh-token'
+					}
+				}
+
+				return HttpResponse.json(adonisUser)
+			}
+
+			// Invalid credentials
+			const errorResponse: ErrorResponse = {
+				errors: [
+					{
+						message: 'E-mail ou senha inválidos',
+						field: 'uid',
+						rule: 'auth'
+					}
+				]
+			}
+			return HttpResponse.json(errorResponse, {status: 401})
+		}
+	),
+
 	// Login - Adonis v6 format
 	http.post('/api/auth/login', async ({request}) => {
 		const body = (await request.json()) as LoginRequest
@@ -166,10 +222,30 @@ export const authHandlers = [
 		return HttpResponse.json(errorResponse, {status: 401})
 	}),
 
+	// Logout v1 with full URL
+	http.post('http://localhost:3333/api/v1/sessions/logout', () =>
+		HttpResponse.json({data: {message: 'Logout successful'}})
+	),
+
+	// Logout v1
+	http.post('/api/v1/sessions/logout', () =>
+		HttpResponse.json({data: {message: 'Logout successful'}})
+	),
+
 	// Logout
 	http.post('/api/auth/logout', () =>
 		HttpResponse.json({data: {message: 'Logout successful'}})
 	),
+
+	// Me (current user) v1 with full URL
+	http.get('http://localhost:3333/api/v1/me', () => {
+		return HttpResponse.json(systemUsers.testLawyer)
+	}),
+
+	// Me (current user) v1
+	http.get('/api/v1/me', () => {
+		return HttpResponse.json(systemUsers.testLawyer)
+	}),
 
 	// Me (current user)
 	http.get('/api/auth/me', () => {
@@ -177,6 +253,22 @@ export const authHandlers = [
 			data: systemUsers.testLawyer
 		}
 		return HttpResponse.json(response)
+	}),
+
+	// Refresh token v1 with full URL
+	http.post('http://localhost:3333/api/v1/sessions/refresh', () => {
+		return HttpResponse.json({
+			access_token: 'new-mock-jwt-token',
+			refresh_token: 'new-mock-refresh-token'
+		})
+	}),
+
+	// Refresh token v1
+	http.post('/api/v1/sessions/refresh', () => {
+		return HttpResponse.json({
+			access_token: 'new-mock-jwt-token',
+			refresh_token: 'new-mock-refresh-token'
+		})
 	}),
 
 	// Refresh token

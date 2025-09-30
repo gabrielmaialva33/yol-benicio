@@ -7,10 +7,14 @@ const mockNavigate = vi.fn()
 let mockPathname = '/dashboard'
 
 // Mock react-router
-vi.mock('react-router', () => ({
-	useNavigate: () => mockNavigate,
-	useLocation: () => ({pathname: mockPathname})
-}))
+vi.mock('react-router', async () => {
+	const actual = await vi.importActual('react-router')
+	return {
+		...actual,
+		useNavigate: () => mockNavigate,
+		useLocation: () => ({pathname: mockPathname})
+	}
+})
 
 // Mock components
 vi.mock('./NotificationsDropdown', () => ({
@@ -21,6 +25,10 @@ vi.mock('./NotificationsDropdown', () => ({
 
 vi.mock('./MessagesDropdown', () => ({
 	MessagesDropdown: () => <div data-testid='messages-dropdown'>Messages</div>
+}))
+
+vi.mock('../../../shared/components/Breadcrumb', () => ({
+	Breadcrumb: () => <div data-testid='breadcrumb'>Breadcrumb</div>
 }))
 
 // Mock hooks
@@ -53,7 +61,7 @@ describe('Header - Title and Content', () => {
 		// Check for title and subtitle
 		expect(screen.getByText('Visão Geral')).toBeInTheDocument()
 		expect(
-			screen.getByText('Suas tarefas principais estão nessa sessão.')
+			screen.getByText('Suas tarefas principais estão nessa seção.')
 		).toBeInTheDocument()
 	})
 

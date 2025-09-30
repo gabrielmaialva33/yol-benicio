@@ -52,7 +52,8 @@ export function AuthProvider({children}: AuthProviderProps) {
 	const logout = async () => {
 		try {
 			await apiLogout()
-		} catch {
+		} catch (_error) {
+			// Silently ignore logout errors
 		} finally {
 			setUser(null)
 			setToken(null)

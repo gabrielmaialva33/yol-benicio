@@ -2,19 +2,22 @@ import {QueryClient, QueryClientProvider} from '@tanstack/react-query'
 import {fireEvent, render, screen, waitFor} from '@testing-library/react'
 import {BrowserRouter} from 'react-router'
 import {afterEach, beforeEach, describe, expect, it, vi} from 'vitest'
+import {AuthProvider} from '../../../../shared/hooks/use-auth'
 import {Sidebar} from './index'
 
 const mockFavoriteClients = [
 	{
 		id: 1,
-		name: 'Cliente A',
-		folderCount: 5,
+		code: 'CLI-A',
+		title: 'Cliente A',
+		client_name: 'Cliente A',
 		color: 'bg-blue-500'
 	},
 	{
 		id: 2,
-		name: 'Cliente B',
-		folderCount: 3,
+		code: 'CLI-B',
+		title: 'Cliente B',
+		client_name: 'Cliente B',
 		color: 'bg-green-500'
 	}
 ]
@@ -33,7 +36,7 @@ const renderWithProviders = (component: React.ReactElement) => {
 	return render(
 		<BrowserRouter>
 			<QueryClientProvider client={testQueryClient}>
-				{component}
+				<AuthProvider>{component}</AuthProvider>
 			</QueryClientProvider>
 		</BrowserRouter>
 	)
@@ -126,7 +129,12 @@ describe('Sidebar - API and Styling', () => {
 
 		await waitFor(() => {
 			expect(global.fetch).toHaveBeenCalledWith(
-				'/api/dashboard/favorite-clients'
+				'http://localhost:3333/api/dashboard/favorite-folders',
+				expect.objectContaining({
+					headers: expect.objectContaining({
+						'Content-Type': 'application/json'
+					})
+				})
 			)
 		})
 	})

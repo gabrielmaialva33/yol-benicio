@@ -51,8 +51,8 @@ vi.mock('./FolderDetailSidebar', () => ({
 	)
 }))
 
-vi.mock('./FolderDetailForm', () => ({
-	FolderDetailForm: ({folder}: {folder: {id: string}}) => (
+vi.mock('./FolderProcessForm', () => ({
+	FolderProcessForm: ({folder}: {folder: {id: string}}) => (
 		<div data-testid='folder-detail-form'>Form for {folder.id}</div>
 	)
 }))

@@ -53,7 +53,7 @@ interface TableContextType<T> {
 	selectedRows: Set<string | number>
 	isLoading?: boolean
 	actions: {
-		setSort: (key: keyof T | string) => void
+		setSort: (key: string | number | symbol) => void
 		setPage: (page: number) => void
 		setPageSize: (size: number) => void
 		toggleRowSelection: (id: string | number) => void
@@ -89,7 +89,7 @@ export function Table<T extends Record<string, any>>({
 	onPageChange,
 	onPageSizeChange,
 	isLoading = false,
-	selectable = false
+	selectable: _selectable = false
 }: TableProps<T>) {
 	const [sort, setInternalSort] = useState<TableSort<T> | null>(null)
 	const [selectedRows, setSelectedRows] = useState<Set<string | number>>(
@@ -118,17 +118,22 @@ export function Table<T extends Record<string, any>>({
 	}, [data, sort, onSort])
 
 	const actions = {
-		setSort: (key: keyof T | string) => {
+		setSort: (key: string | number | symbol) => {
+			let direction: SortDirection = 'asc'
+
+			if (sort?.key === key) {
+				if (sort.direction === 'asc') {
+					direction = 'desc'
+				} else if (sort.direction === 'desc') {
+					direction = null
+				} else {
+					direction = 'asc'
+				}
+			}
+
 			const newSort: TableSort<T> = {
 				key,
-				direction:
-					sort?.key === key
-						? sort.direction === 'asc'
-							? 'desc'
-							: sort.direction === 'desc'
-								? null
-								: 'asc'
-						: 'asc'
+				direction
 			}
 
 			if (newSort.direction === null) {
@@ -227,6 +232,7 @@ Table.Filters = function TableFilters({children}: {children: React.ReactNode}) {
 			<button
 				className='flex items-center gap-2 text-gray-600 text-sm hover:text-gray-900'
 				onClick={() => setIsOpen(!isOpen)}
+				type='button'
 			>
 				<Filter className='h-4 w-4' />
 				{t('filters.title')}
@@ -317,6 +323,7 @@ Table.Pagination = function TablePagination() {
 						)}
 						disabled={page <= 1}
 						onClick={() => actions.setPage(page - 1)}
+						type='button'
 					>
 						<ChevronLeft className='h-4 w-4' />
 					</button>
@@ -332,6 +339,7 @@ Table.Pagination = function TablePagination() {
 						)}
 						disabled={page >= totalPages}
 						onClick={() => actions.setPage(page + 1)}
+						type='button'
 					>
 						<ChevronRight className='h-4 w-4' />
 					</button>
@@ -481,7 +489,10 @@ function TableSkeleton({columns}: {columns: number}) {
 				<thead className='border-gray-200 border-b bg-gray-50'>
 					<tr>
 						{Array.from({length: columns}).map((_, i) => (
-							<th className='px-4 py-3' key={i}>
+							<th
+								className='px-4 py-3'
+								key={`table-skeleton-header-${Date.now()}-${i}`}
+							>
 								<div className='h-4 w-24 animate-pulse rounded bg-gray-200' />
 							</th>
 						))}
@@ -489,9 +500,12 @@ function TableSkeleton({columns}: {columns: number}) {
 				</thead>
 				<tbody className='divide-y divide-gray-200'>
 					{Array.from({length: 5}).map((_, i) => (
-						<tr key={i}>
+						<tr key={`table-skeleton-row-${Date.now()}-${i}`}>
 							{Array.from({length: columns}).map((_, j) => (
-								<td className='px-4 py-3' key={j}>
+								<td
+									className='px-4 py-3'
+									key={`table-skeleton-cell-${Date.now()}-${i}-${j}`}
+								>
 									<div className='h-4 w-32 animate-pulse rounded bg-gray-200' />
 								</td>
 							))}

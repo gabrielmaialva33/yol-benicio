@@ -178,6 +178,40 @@ export const dashboardHandlers = [
 		return HttpResponse.json(response)
 	}),
 
+	// Area division - for pie chart with full URL
+	http.get('http://localhost:3333/api/area-division', () => {
+		const HundredPercent = 100
+		const areaDivision = Object.values(FolderArea)
+			.map(area => {
+				const count = folders.filter(f => f.area === area).length
+				const percentage = Math.round((count / folders.length) * HundredPercent)
+
+				const colors: Record<string, string> = {
+					[FolderArea.CIVIL_LITIGATION]: '#14B8A6',
+					[FolderArea.CRIMINAL]: '#F43F5E',
+					[FolderArea.LABOR]: '#8B5CF6',
+					[FolderArea.ADMINISTRATIVE]: '#F59E0B',
+					[FolderArea.CONSUMER]: '#3B82F6',
+					[FolderArea.ENVIRONMENTAL]: '#10B981',
+					[FolderArea.CORPORATE]: '#6366F1',
+					[FolderArea.TAX]: '#EC4899',
+					[FolderArea.FAMILY]: '#84CC16',
+					[FolderArea.INTELLECTUAL_PROPERTY]: '#A855F7',
+					[FolderArea.REAL_ESTATE]: '#EAB308',
+					[FolderArea.INTERNATIONAL]: '#06B6D4'
+				}
+
+				return {
+					name: areaNames[area],
+					value: percentage,
+					color: colors[area] || '#6B7280'
+				}
+			})
+			.filter(item => item.value > 0)
+
+		return HttpResponse.json(areaDivision)
+	}),
+
 	// Area division - for pie chart
 	http.get('/api/area-division', () => {
 		const HundredPercent = 100
@@ -268,6 +302,55 @@ export const dashboardHandlers = [
 		return HttpResponse.json(activities)
 	}),
 
+	// Requests - for area chart with full URL
+	http.get('http://localhost:3333/api/requests', () => {
+		const months = [
+			'Jan',
+			'Fev',
+			'Mar',
+			'Abr',
+			'Mai',
+			'Jun',
+			'Jul',
+			'Ago',
+			'Set',
+			'Out',
+			'Nov',
+			'Dez'
+		]
+		const currentMonth = DateTime.now().month - 1 // 0-indexed
+
+		const requestsData = months
+			.slice(0, currentMonth + 1)
+			.map((month, index) => {
+				// Simulate growing data with some variation
+				const BaseValueStart = 10
+				const BaseValueMultiplier = 1.5
+				const BaseValueRandom = 4
+				const NewRequestsRandom = 5
+				const NewRequestsOffset = 3
+				const PercentageDivisor = 20
+				const HundredPercent = 100
+				const baseValue =
+					BaseValueStart +
+					index * BaseValueMultiplier +
+					Math.random() * BaseValueRandom
+				const newRequests =
+					Math.floor(Math.random() * NewRequestsRandom) + NewRequestsOffset
+
+				return {
+					month,
+					value: Math.round(baseValue),
+					new: newRequests,
+					percentage: Math.round(
+						(newRequests / PercentageDivisor) * HundredPercent
+					)
+				}
+			})
+
+		return HttpResponse.json(requestsData)
+	}),
+
 	// Requests - for area chart
 	http.get('/api/requests', () => {
 		const months = [
@@ -315,6 +398,53 @@ export const dashboardHandlers = [
 			})
 
 		return HttpResponse.json(requestsData)
+	}),
+
+	// Hearings and deadlines with full URL
+	http.get('http://localhost:3333/api/hearings', () => {
+		const now = DateTime.now()
+
+		// Simulate hearings and deadlines data
+		const HearingsPercentage = 75
+		const HearingsTotal = 12
+		const HearingsCompleted = 9
+		const HearingsDays = 5
+		const ProceduralDeadlinesPercentage = 60
+		const ProceduralDeadlinesTotal = 20
+		const ProceduralDeadlinesCompleted = 12
+		const ProceduralDeadlinesDays = 10
+		const AdministrativeDeadlinesPercentage = 90
+		const AdministrativeDeadlinesTotal = 10
+		const AdministrativeDeadlinesCompleted = 9
+		const AdministrativeDeadlinesDays = 15
+		const hearingsData = [
+			{
+				label: 'Audiências',
+				percentage: HearingsPercentage,
+				total: HearingsTotal,
+				completed: HearingsCompleted,
+				color: '#14B8A6',
+				date: now.plus({days: HearingsDays}).toISO()
+			},
+			{
+				label: 'Prazos processuais',
+				percentage: ProceduralDeadlinesPercentage,
+				total: ProceduralDeadlinesTotal,
+				completed: ProceduralDeadlinesCompleted,
+				color: '#F43F5E',
+				date: now.plus({days: ProceduralDeadlinesDays}).toISO()
+			},
+			{
+				label: 'Prazos administrativos',
+				percentage: AdministrativeDeadlinesPercentage,
+				total: AdministrativeDeadlinesTotal,
+				completed: AdministrativeDeadlinesCompleted,
+				color: '#8B5CF6',
+				date: now.plus({days: AdministrativeDeadlinesDays}).toISO()
+			}
+		]
+
+		return HttpResponse.json(hearingsData)
 	}),
 
 	// Hearings and deadlines

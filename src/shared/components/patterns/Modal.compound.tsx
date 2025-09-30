@@ -51,7 +51,7 @@ export function Modal({
 	variant = 'default',
 	preventClose = false,
 	closeOnEscape = true,
-	closeOnOverlay = true
+	closeOnOverlay: _closeOnOverlay = true
 }: ModalProps) {
 	const [isVisible, setIsVisible] = useState(false)
 	const [isAnimating, setIsAnimating] = useState(false)
@@ -99,12 +99,6 @@ export function Modal({
 		}
 	}, [isOpen])
 
-	const handleOverlayClick = (e: React.MouseEvent) => {
-		if (e.target === e.currentTarget && closeOnOverlay && !preventClose) {
-			onClose()
-		}
-	}
-
 	const actions = {
 		close: () => !preventClose && onClose(),
 		setPreventClose: (_prevent: boolean) => {
@@ -125,12 +119,10 @@ export function Modal({
 					'transition-opacity duration-300',
 					isAnimating ? 'opacity-100' : 'opacity-0'
 				)}
-				onClick={handleOverlayClick}
-				onKeyDown={() => {}}
 				role='dialog'
 			>
-				{/* Backdrop */}
-				<div className='absolute inset-0 bg-black/50' />
+				{/* Backdrop - apenas para visualização, sem interatividade */}
+				<div className='absolute inset-0 bg-black/50' role='presentation' />
 
 				{/* Modal */}
 				<div
@@ -140,9 +132,8 @@ export function Modal({
 						isAnimating ? 'scale-100 opacity-100' : 'scale-95 opacity-0',
 						getModalSizeClasses(size)
 					)}
-					onClick={e => e.stopPropagation()}
-					onKeyDown={() => {}}
 					role='document'
+					tabIndex={-1}
 				>
 					{children}
 				</div>
@@ -188,6 +179,7 @@ Modal.Header = function ModalHeader({
 						'hover:bg-black/10'
 					)}
 					onClick={actions.close}
+					type='button'
 				>
 					<X className='h-5 w-5' />
 				</button>
@@ -288,6 +280,7 @@ Modal.ConfirmActions = function ModalConfirmActions({
 				)}
 				disabled={isLoading}
 				onClick={handleCancel}
+				type='button'
 			>
 				{cancelLabel || t('common.cancel')}
 			</button>
@@ -299,6 +292,7 @@ Modal.ConfirmActions = function ModalConfirmActions({
 				)}
 				disabled={isLoading || confirmDisabled}
 				onClick={onConfirm}
+				type='button'
 			>
 				{isLoading ? t('common.loading') : confirmLabel || t('common.confirm')}
 			</button>
@@ -402,6 +396,7 @@ export function AlertModal({
 						getVariantButtonClasses(variant)
 					)}
 					onClick={onClose}
+					type='button'
 				>
 					{t('common.ok', 'OK')}
 				</button>

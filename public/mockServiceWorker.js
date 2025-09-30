@@ -234,7 +234,7 @@ async function getResponse(event, client, requestId, requestInterceptedAt) {
       }
     }
 
-    return fetch(requestClone, {headers})
+    return fetch(requestClone, { headers })
   }
 
   // Bypass mocking when the client is not active.

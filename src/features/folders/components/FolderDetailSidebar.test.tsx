@@ -50,11 +50,12 @@ describe('FolderDetailSidebar - Rendering', () => {
 
 		const sidebar = container.firstChild
 		expect(sidebar).toHaveClass(
-			'w-64',
+			'w-72',
 			'bg-white',
-			'rounded-lg',
-			'p-4',
-			'shadow-sm'
+			'rounded-2xl',
+			'p-6',
+			'shadow-sm',
+			'border'
 		)
 	})
 })
@@ -71,10 +72,10 @@ describe('FolderDetailSidebar - Interactions', () => {
 		)
 
 		const andamentoButton = screen.getByText('Andamento')
-		expect(andamentoButton).toHaveClass('bg-cyan-500', 'text-white')
+		expect(andamentoButton).toHaveClass('bg-[#00B8D9]', 'text-white')
 
 		const processoButton = screen.getByText('Processo')
-		expect(processoButton).toHaveClass('text-gray-700', 'hover:bg-gray-100')
+		expect(processoButton).toHaveClass('text-[#161C24]', 'hover:bg-gray-50')
 	})
 
 	it('should call onTabChange when clicking menu items', () => {
@@ -112,8 +113,8 @@ describe('FolderDetailSidebar - Interactions', () => {
 		).map(item => screen.getByText(item.name))
 
 		for (const button of nonActiveButtons) {
-			expect(button).toHaveClass('text-gray-700', 'hover:bg-gray-100')
-			expect(button).not.toHaveClass('bg-cyan-500', 'text-white')
+			expect(button).toHaveClass('text-[#161C24]', 'hover:bg-gray-50')
+			expect(button).not.toHaveClass('bg-[#00B8D9]', 'text-white')
 		}
 	})
 })

@@ -5,7 +5,10 @@ import {Dashboard} from './index'
 
 // Mock react-router
 vi.mock('react-router', () => ({
-	Outlet: vi.fn()
+	Outlet: vi.fn(),
+	useLocation: () => ({
+		pathname: '/dashboard'
+	})
 }))
 
 // Mock components

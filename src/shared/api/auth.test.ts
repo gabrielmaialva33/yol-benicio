@@ -18,14 +18,16 @@ describe('auth api', () => {
 		vi.spyOn(global, 'fetch').mockResolvedValueOnce({
 			ok: true,
 			json: async () => ({
-				token: 'abc',
-				refresh_token: 'ref',
+				auth: {
+					access_token: 'abc',
+					refresh_token: 'ref'
+				},
 				id: 1,
 				email: 'a@b.com'
 			})
 		} as unknown as Response)
-		const res = await login({email: 'a@b.com', password: 'x'})
-		expect(res.token).toBe('abc')
+		const res = await login('a@b.com', 'x')
+		expect(res.auth.access_token).toBe('abc')
 		expect(getStoredToken()).toBe('abc')
 	})
 
@@ -34,9 +36,7 @@ describe('auth api', () => {
 			ok: false,
 			json: async () => ({errors: [{message: 'Credenciais inválidas'}]})
 		} as unknown as Response)
-		await expect(login({email: 'a@b.com', password: 'x'})).rejects.toThrow(
-			'Credenciais inválidas'
-		)
+		await expect(login('a@b.com', 'x')).rejects.toThrow('Credenciais inválidas')
 	})
 
 	it('logout limpa token', async () => {
@@ -50,6 +50,6 @@ describe('auth api', () => {
 	})
 
 	it('getMe sem token falha', async () => {
-		await expect(getMe()).rejects.toThrow('Unauthorized')
+		await expect(getMe()).rejects.toThrow('Não autenticado')
 	})
 })

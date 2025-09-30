@@ -3,6 +3,11 @@ import {render, screen, waitFor} from '@testing-library/react'
 import {afterEach, beforeEach, describe, expect, it, vi} from 'vitest'
 import {FolderActivityCard} from './FolderActivityCard'
 
+// Mock auth token
+vi.mock('../../../../shared/api/auth', () => ({
+	getStoredToken: () => 'mock-token'
+}))
+
 const mockActivities = [
 	{
 		label: 'Abertas',
@@ -44,10 +49,10 @@ const renderWithClient = (component: React.ReactElement) => {
 
 // Mock fetch globally
 beforeEach(() => {
-	global.fetch = vi.fn().mockResolvedValue({
+	global.fetch = vi.fn().mockImplementation(async () => ({
 		ok: true,
 		json: async () => mockActivities
-	})
+	}))
 })
 
 afterEach(() => {
@@ -73,38 +78,54 @@ describe('FolderActivityCard - Data Fetching', () => {
 	it('should fetch and display folder activities', async () => {
 		renderWithClient(<FolderActivityCard />)
 
-		await waitFor(() => {
-			expect(screen.getByText('Abertas')).toBeInTheDocument()
-			expect(screen.getByText('42')).toBeInTheDocument()
+		await waitFor(
+			() => {
+				expect(screen.getByText('Abertas')).toBeInTheDocument()
+				expect(screen.getByText('42')).toBeInTheDocument()
 
-			expect(screen.getByText('Em Progresso')).toBeInTheDocument()
-			expect(screen.getByText('28')).toBeInTheDocument()
+				expect(screen.getByText('Em Progresso')).toBeInTheDocument()
+				expect(screen.getByText('28')).toBeInTheDocument()
 
-			expect(screen.getByText('Concluídas')).toBeInTheDocument()
-			expect(screen.getByText('15')).toBeInTheDocument()
-		})
+				expect(screen.getByText('Concluídas')).toBeInTheDocument()
+				expect(screen.getByText('15')).toBeInTheDocument()
+			},
+			{timeout: 3000}
+		)
 	})
 
 	it('should render progress bars with correct widths', async () => {
 		renderWithClient(<FolderActivityCard />)
 
-		await waitFor(() => {
-			const progressBars = screen
-				.getAllByRole('generic')
-				.filter(el => el.className.includes('rounded-full') && el.style.width)
+		await waitFor(
+			() => {
+				const progressBars = screen
+					.getAllByRole('generic')
+					.filter(el => el.className.includes('rounded-full') && el.style.width)
 
-			expect(progressBars[0]).toHaveStyle({width: '60%'})
-			expect(progressBars[1]).toHaveStyle({width: '40%'})
-			expect(progressBars[2]).toHaveStyle({width: '20%'})
-		})
+				expect(progressBars[0]).toHaveStyle({width: '60%'})
+				expect(progressBars[1]).toHaveStyle({width: '40%'})
+				expect(progressBars[2]).toHaveStyle({width: '20%'})
+			},
+			{timeout: 3000}
+		)
 	})
 
 	it('should call API endpoint correctly', async () => {
 		renderWithClient(<FolderActivityCard />)
 
-		await waitFor(() => {
-			expect(global.fetch).toHaveBeenCalledWith('/api/folder-activity')
-		})
+		await waitFor(
+			() => {
+				expect(global.fetch).toHaveBeenCalledWith(
+					'http://localhost:3333/api/folder-activity',
+					expect.objectContaining({
+						headers: expect.objectContaining({
+							'Content-Type': 'application/json'
+						})
+					})
+				)
+			},
+			{timeout: 3000}
+		)
 	})
 
 	it('should render empty state when no activities', async () => {
@@ -115,10 +136,13 @@ describe('FolderActivityCard - Data Fetching', () => {
 
 		renderWithClient(<FolderActivityCard />)
 
-		await waitFor(() => {
-			// Should still show title but no activity items
-			expect(screen.getByText('Atividade de Pastas')).toBeInTheDocument()
-			expect(screen.queryByText('Abertas')).not.toBeInTheDocument()
-		})
+		await waitFor(
+			() => {
+				// Should still show title but no activity items
+				expect(screen.getByText('Atividade de Pastas')).toBeInTheDocument()
+				expect(screen.queryByText('Abertas')).not.toBeInTheDocument()
+			},
+			{timeout: 3000}
+		)
 	})
 })

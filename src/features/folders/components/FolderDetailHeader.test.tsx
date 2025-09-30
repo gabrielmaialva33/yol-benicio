@@ -89,13 +89,22 @@ describe('FolderDetailHeader - Rendering', () => {
 
 		const statusBadge = screen.getByText('Ativo')
 		expect(statusBadge).toBeInTheDocument()
-		expect(statusBadge).toHaveClass('bg-green-100', 'text-green-800')
+		expect(statusBadge).toHaveClass('bg-blue-50', 'text-blue-700')
 	})
 
 	it('should render date and time', () => {
 		render(<FolderDetailHeader folder={mockFolder} />)
 
-		expect(screen.getByText('2024-01-15 14:30')).toBeInTheDocument()
+		// Use getAllByText and check the first one that contains the date
+		const dateElements = screen.getAllByText(/2024-01-15/)
+		expect(dateElements.length).toBeGreaterThan(0)
+
+		const timeElements = screen.getAllByText(/14:30/)
+		expect(timeElements.length).toBeGreaterThan(0)
+
+		// The text is split across multiple elements, so we check for the presence of the words
+		expect(screen.getByText(/Criado/)).toBeInTheDocument()
+		expect(screen.getByText(/às/)).toBeInTheDocument()
 	})
 
 	it('should render back button with chevron icon', () => {
@@ -120,7 +129,7 @@ describe('FolderDetailHeader - Rendering', () => {
 		const addFilesButton = screen.getByText('Adicionar arquivos')
 		expect(addFilesButton).toBeInTheDocument()
 		expect(addFilesButton.tagName).toBe('BUTTON')
-		expect(addFilesButton).toHaveClass('bg-cyan-500')
+		expect(addFilesButton).toHaveClass('bg-[#00B8D9]')
 	})
 })
 
@@ -146,13 +155,17 @@ describe('FolderDetailHeader - Status and Interactions', () => {
 		render(<FolderDetailHeader folder={folderWithUnknownStatus} />)
 
 		const statusBadge = screen.getByText('Arquivado')
-		expect(statusBadge).toHaveClass('bg-gray-100', 'text-gray-800')
+		expect(statusBadge).toHaveClass('bg-gray-50', 'text-gray-700')
 	})
 
 	it('should have correct header layout', () => {
 		const {container} = render(<FolderDetailHeader folder={mockFolder} />)
 
-		const header = container.firstChild
-		expect(header).toHaveClass('flex', 'items-center', 'justify-between')
+		const headerContainer = container.firstChild
+		expect(headerContainer).toHaveClass('rounded-2xl', 'border', 'bg-white')
+
+		// Check the inner div that has the flex layout
+		const flexContainer = container.querySelector('div.flex')
+		expect(flexContainer).toHaveClass('flex', 'items-center', 'justify-between')
 	})
 })

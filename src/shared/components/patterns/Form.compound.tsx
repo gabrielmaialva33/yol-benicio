@@ -208,7 +208,7 @@ Form.Field = function FormField({
 	placeholder,
 	required = false,
 	disabled = false,
-	rules = [],
+	rules: _rules = [],
 	options = [],
 	rows = 3,
 	autoComplete,
@@ -512,6 +512,7 @@ Form.Success = function FormSuccess({
 					<button
 						className='text-green-500 hover:text-green-700'
 						onClick={onClose}
+						type='button'
 					>
 						<X className='h-4 w-4' />
 					</button>
