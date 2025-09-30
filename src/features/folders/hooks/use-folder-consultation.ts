@@ -60,10 +60,10 @@ export function useFolderConsultation() {
 	return {
 		folders: data?.data ?? [],
 		pagination: {
-			page: data?.meta.current_page ?? 1,
-			limit: data?.meta.per_page ?? 10,
-			total: data?.meta.total ?? 0,
-			totalPages: data?.meta.last_page ?? 1
+			page: data?.meta?.current_page ?? 1,
+			limit: data?.meta?.per_page ?? 10,
+			total: data?.meta?.total ?? 0,
+			totalPages: data?.meta?.last_page ?? 1
 		},
 		filters,
 		setFilters,

@@ -272,15 +272,6 @@ export function FolderRegisterPage() {
 
 	return (
 		<div className='p-8 bg-[#F1F1F2] min-h-full'>
-			<div className='mb-8'>
-				<h1 className='text-2xl font-semibold text-[#161C24]'>
-					Cadastro de Pasta
-				</h1>
-				<p className='text-sm text-[#919EAB] mt-2'>
-					Preencha os dados do novo processo
-				</p>
-			</div>
-
 			<form onSubmit={handleSubmit}>
 				{/* Informações Básicas */}
 				<div className='bg-white rounded-2xl p-8 shadow-sm border border-gray-100 mb-8'>

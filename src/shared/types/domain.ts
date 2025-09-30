@@ -162,14 +162,17 @@ export interface Task extends Timestamps {
 	due_date: string
 	status: TaskStatus
 	priority: TaskPriority
+	folder_id?: number
 	folder?: Folder
-	assigned_to: User
-	created_by: User
+	assigned_to_id: number
+	assigned_to?: User
+	created_by_id: number
+	created_by?: User
 	completed_at?: string
-	metadata: {
+	tags?: string[] | null
+	metadata?: {
 		estimated_hours?: number
 		actual_hours?: number
-		tags?: string[]
 		checklist?: Array<{
 			id: string
 			text: string

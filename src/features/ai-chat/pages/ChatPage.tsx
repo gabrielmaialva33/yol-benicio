@@ -36,7 +36,8 @@ export function ChatPage() {
 		sendStreamingMessage,
 		isStreaming,
 		streamingContent,
-		reset: resetStreaming
+		reset: resetStreaming,
+		newConversationId
 	} = useStreamingChat()
 
 	// Delete conversation hook
@@ -51,6 +52,8 @@ export function ChatPage() {
 			if (currentConversationId) {
 				request.conversation_id = currentConversationId
 			}
+
+			// Send message and handle new conversation creation
 			await sendStreamingMessage(request)
 
 			// Refetch conversation to get updated messages
@@ -98,6 +101,13 @@ export function ChatPage() {
 	useEffect(() => {
 		resetStreaming()
 	}, [resetStreaming])
+
+	// Navigate to new conversation after creation
+	useEffect(() => {
+		if (newConversationId && !currentConversationId && !isStreaming) {
+			navigate(`/dashboard/chat/${newConversationId}`)
+		}
+	}, [newConversationId, currentConversationId, isStreaming, navigate])
 
 	return (
 		<div className='flex h-[calc(100vh-64px)]'>

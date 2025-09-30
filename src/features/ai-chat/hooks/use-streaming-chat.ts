@@ -13,12 +13,14 @@ export function useStreamingChat() {
 	const [isStreaming, setIsStreaming] = useState(false)
 	const [streamingContent, setStreamingContent] = useState('')
 	const [error, setError] = useState<Error | null>(null)
+	const [newConversationId, setNewConversationId] = useState<number | null>(null)
 
 	const sendStreamingMessage = useCallback(
 		async (request: SendMessageRequest) => {
 			setIsStreaming(true)
 			setStreamingContent('')
 			setError(null)
+			setNewConversationId(null)
 
 			try {
 				await streamMessage(request, chunk => {
@@ -28,6 +30,10 @@ export function useStreamingChat() {
 						queryClient.invalidateQueries({queryKey: ['ai-conversations']})
 					} else {
 						setStreamingContent(prev => prev + chunk.content)
+						// Capture new conversation ID if it's a new conversation
+						if (chunk.conversation?.id && !request.conversation_id) {
+							setNewConversationId(chunk.conversation.id)
+						}
 					}
 				})
 			} catch (err) {
@@ -49,6 +55,7 @@ export function useStreamingChat() {
 		isStreaming,
 		streamingContent,
 		error,
-		reset
+		reset,
+		newConversationId
 	}
 }

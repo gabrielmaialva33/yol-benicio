@@ -19,27 +19,31 @@ export function AuthProvider({children}: {children: React.ReactNode}) {
 	const [loading, setLoading] = useState<boolean>(true)
 	const [error, setError] = useState<string | null>(null)
 
-	const loadUser = useCallback(async () => {
-		if (!token) {
-			setLoading(false)
-			return
-		}
-		try {
-			const me = await getMe()
-			setUser(me)
-		} catch {
-			// token inválido
-			clearStoredToken()
-			setToken(null)
-			setUser(null)
-		} finally {
-			setLoading(false)
-		}
-	}, [token])
-
 	useEffect(() => {
+		const loadUser = async () => {
+			if (!token) {
+				setLoading(false)
+				return
+			}
+			// Don't fetch if we already have user data
+			if (user) {
+				setLoading(false)
+				return
+			}
+			try {
+				const me = await getMe()
+				setUser(me)
+			} catch {
+				// token inválido
+				clearStoredToken()
+				setToken(null)
+				setUser(null)
+			} finally {
+				setLoading(false)
+			}
+		}
 		void loadUser()
-	}, [loadUser])
+	}, [token, user])
 
 	const login = useCallback(async (email: string, password: string) => {
 		setError(null)
@@ -84,8 +88,16 @@ export function AuthProvider({children}: {children: React.ReactNode}) {
 	}, [])
 
 	const refresh = useCallback(async () => {
-		await loadUser()
-	}, [loadUser])
+		if (!token) return
+		try {
+			const me = await getMe()
+			setUser(me)
+		} catch {
+			clearStoredToken()
+			setToken(null)
+			setUser(null)
+		}
+	}, [token])
 
 	const value = useMemo<AuthContextValue>(
 		() => ({

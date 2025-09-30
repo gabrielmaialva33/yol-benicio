@@ -1,6 +1,5 @@
 'use client'
 
-import {useQuery} from '@tanstack/react-query'
 import {useState} from 'react'
 import {Link, useLocation} from 'react-router'
 import downIcon from '/icons/down.svg'
@@ -12,6 +11,7 @@ import overviewIcon from '/icons/overview.svg'
 import chatIcon from '/icons/sparkles.svg'
 import logoExpanded from '/logo-yol.svg'
 import {SidebarItem} from './SidebarItem'
+import {useFavoriteFolders} from '../../hooks/use-favorite-folders'
 
 interface SubMenuItem {
 	text: string
@@ -27,19 +27,6 @@ interface MenuItem {
 	badge?: number
 	subItems?: SubMenuItem[]
 	textOffset?: string
-}
-
-interface FavoriteFolder {
-	id: number
-	title: string
-	code: string
-	client_name: string
-	color: string
-}
-
-async function getFavoriteFolders(): Promise<FavoriteFolder[]> {
-	const response = await fetch('/api/dashboard/favorite-folders')
-	return response.json()
 }
 
 const pages: MenuItem[] = [
@@ -250,10 +237,7 @@ const Sidebar = () => {
 	const [isCollapsed, setIsCollapsed] = useState(
 		typeof window !== 'undefined' && window.innerWidth < MOBILE_BREAKPOINT
 	)
-	const {data: favoriteFolders = []} = useQuery<FavoriteFolder[]>({
-		queryKey: ['favorite-folders'],
-		queryFn: getFavoriteFolders
-	})
+	const {favoriteFolders} = useFavoriteFolders()
 
 	const toggleSidebar = () => setIsCollapsed(!isCollapsed)
 
