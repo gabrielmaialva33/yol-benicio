@@ -51,7 +51,7 @@ afterEach(() => {
 	vi.restoreAllMocks()
 })
 
-describe('Sidebar', () => {
+describe('Sidebar - Basic Rendering', () => {
 	it('should render logo when expanded', () => {
 		renderWithProviders(<Sidebar />)
 
@@ -73,7 +73,9 @@ describe('Sidebar', () => {
 		expect(screen.getByText('Visão Geral')).toBeInTheDocument()
 		expect(screen.getByText('Pastas')).toBeInTheDocument()
 	})
+})
 
+describe('Sidebar - Interactions and Behavior', () => {
 	it('should toggle collapse state when button is clicked', () => {
 		const {container} = renderWithProviders(<Sidebar />)
 
@@ -116,7 +118,9 @@ describe('Sidebar', () => {
 		expect(screen.getByText('Cadastrar')).toBeInTheDocument()
 		expect(screen.getByText('Consulta')).toBeInTheDocument()
 	})
+})
 
+describe('Sidebar - API and Styling', () => {
 	it('should call API endpoint for favorite clients', async () => {
 		renderWithProviders(<Sidebar />)
 

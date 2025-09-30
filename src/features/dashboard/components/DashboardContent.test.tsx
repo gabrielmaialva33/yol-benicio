@@ -41,9 +41,7 @@ vi.mock('./Widgets/BirthdaysCard', () => ({
 	BirthdaysCard: () => <div data-testid='birthdays-card'>Birthdays Card</div>
 }))
 
-describe('DashboardContent', () => {
-	const EXPECTED_GRID_SECTIONS = 3
-
+describe('DashboardContent - Widget Rendering', () => {
 	it('should render all dashboard Widgets', () => {
 		render(<DashboardContent />)
 
@@ -61,6 +59,10 @@ describe('DashboardContent', () => {
 		expect(screen.getByTestId('billing-card')).toBeInTheDocument()
 		expect(screen.getByTestId('birthdays-card')).toBeInTheDocument()
 	})
+})
+
+describe('DashboardContent - Layout Structure', () => {
+	const EXPECTED_GRID_SECTIONS = 3
 
 	it('should have correct grid layout structure', () => {
 		const {container} = render(<DashboardContent />)
@@ -91,7 +93,9 @@ describe('DashboardContent', () => {
 		// Third grid - 3 columns with special layout
 		expect(grids[2]).toHaveClass('grid-cols-1', 'lg:grid-cols-3', 'gap-6')
 	})
+})
 
+describe('DashboardContent - Component Positioning', () => {
 	it('should render hearings card with 2-column span', () => {
 		const {container} = render(<DashboardContent />)
 

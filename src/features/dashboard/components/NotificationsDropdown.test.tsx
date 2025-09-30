@@ -38,9 +38,7 @@ vi.mock('../../../mocks/data/notifications', () => ({
 	}
 }))
 
-describe('NotificationsDropdown', () => {
-	const EXPECTED_NOTIFICATION_COUNT = 3
-
+describe('NotificationsDropdown - Content Rendering', () => {
 	it('should render notifications dropdown with title', () => {
 		render(<NotificationsDropdown />)
 
@@ -54,6 +52,18 @@ describe('NotificationsDropdown', () => {
 		expect(screen.getByText('Documento aprovado')).toBeInTheDocument()
 		expect(screen.getByText('Prazo se aproximando')).toBeInTheDocument()
 	})
+
+	it('should render view all notifications button', () => {
+		render(<NotificationsDropdown />)
+
+		const button = screen.getByText('Ver todas as notificações')
+		expect(button).toBeInTheDocument()
+		expect(button.tagName).toBe('BUTTON')
+	})
+})
+
+describe('NotificationsDropdown - Avatars and Time', () => {
+	const EXPECTED_NOTIFICATION_COUNT = 3
 
 	it('should render avatars for each notification', () => {
 		render(<NotificationsDropdown />)
@@ -71,15 +81,9 @@ describe('NotificationsDropdown', () => {
 		const relativeTimes = screen.getAllByText('há 1 hora')
 		expect(relativeTimes).toHaveLength(EXPECTED_NOTIFICATION_COUNT)
 	})
+})
 
-	it('should render view all notifications button', () => {
-		render(<NotificationsDropdown />)
-
-		const button = screen.getByText('Ver todas as notificações')
-		expect(button).toBeInTheDocument()
-		expect(button.tagName).toBe('BUTTON')
-	})
-
+describe('NotificationsDropdown - Styling and Structure', () => {
 	it('should have correct dropdown styling', () => {
 		const {container} = render(<NotificationsDropdown />)
 

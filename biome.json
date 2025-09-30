@@ -71,7 +71,8 @@
 					},
 					"performance": {
 						"noImgElement": "off",
-						"noNamespaceImport": "off"
+						"noNamespaceImport": "off",
+						"useSolidForComponent": "off"
 					},
 					"style": {
 						"useNamingConvention": "off",

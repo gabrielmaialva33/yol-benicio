@@ -41,7 +41,7 @@ vi.mock('../../../mocks/data/messages', () => ({
 	messages: {unread: 3}
 }))
 
-describe('Header', () => {
+describe('Header - Title and Content', () => {
 	beforeEach(() => {
 		mockNavigate.mockClear()
 		mockPathname = '/dashboard'
@@ -74,6 +74,13 @@ describe('Header', () => {
 
 		// Should fallback to dashboard title
 		expect(screen.getByText('Visão Geral')).toBeInTheDocument()
+	})
+})
+
+describe('Header - UI Components', () => {
+	beforeEach(() => {
+		mockNavigate.mockClear()
+		mockPathname = '/dashboard'
 	})
 
 	it('should render notification button with red dot', () => {
@@ -128,6 +135,13 @@ describe('Header', () => {
 		const MINIMUM_BUTTON_COUNT = 4
 		const buttons = screen.getAllByRole('button')
 		expect(buttons.length).toBeGreaterThanOrEqual(MINIMUM_BUTTON_COUNT)
+	})
+})
+
+describe('Header - Interactions and Behavior', () => {
+	beforeEach(() => {
+		mockNavigate.mockClear()
+		mockPathname = '/dashboard'
 	})
 
 	it('should handle logout button click', () => {

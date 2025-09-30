@@ -8,6 +8,10 @@ import {
 } from '../../../../shared/ui/primitives/Card'
 import {type ActiveFoldersData, getActiveFoldersStats} from '../../api'
 
+const ACTIVE_FOLDERS_TITLE = 'Pastas ativas'
+const NEW_THIS_MONTH_SUFFIX = 'novos neste mês'
+const VIEW_FOLDERS_BUTTON = 'Visualizar pastas'
+
 export function ActiveFoldersCard() {
 	const {data: folders} = useQuery<ActiveFoldersData>({
 		queryKey: ['active-folders-stats'],
@@ -22,12 +26,12 @@ export function ActiveFoldersCard() {
 	return (
 		<Card className='justify-between'>
 			<CardHeader className='mb-0'>
-				<CardTitle className='mb-2'>Pastas ativas</CardTitle>
+				<CardTitle className='mb-2'>{ACTIVE_FOLDERS_TITLE}</CardTitle>
 				<div className='text-5xl font-bold text-[#1F2A37]'>
 					{folders?.active}
 				</div>
 				<div className='text-sm text-[var(--color-text-secondary)]'>
-					{folders?.newThisMonth} novos neste mês
+					{folders?.newThisMonth} {NEW_THIS_MONTH_SUFFIX}
 				</div>
 			</CardHeader>
 			<CardContent className='h-24 -mx-6 mb-2'>
@@ -48,7 +52,7 @@ export function ActiveFoldersCard() {
 				className='text-sm font-medium text-[#1CD6F4] underline'
 				type='button'
 			>
-				Visualizar pastas
+				{VIEW_FOLDERS_BUTTON}
 			</button>
 		</Card>
 	)

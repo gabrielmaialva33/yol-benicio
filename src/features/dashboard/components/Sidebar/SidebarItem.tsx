@@ -1,6 +1,9 @@
 import {useState} from 'react'
 import downIcon from '/icons/down.svg'
 
+const OPEN_PAREN = '('
+const CLOSE_PAREN = ')'
+
 interface SidebarItemProps {
 	icon: string
 	text: string
@@ -97,7 +100,13 @@ const SidebarItem = (props: SidebarItemProps) => {
 			{showTooltip && props.isCollapsed && (
 				<div className='absolute left-full ml-2 px-2 py-1 bg-gray-800 text-white text-sm rounded whitespace-nowrap z-50'>
 					{props.text}
-					{props.badge && <span className='ml-2'>({props.badge})</span>}
+					{props.badge && (
+						<span className='ml-2'>
+							{OPEN_PAREN}
+							{props.badge}
+							{CLOSE_PAREN}
+						</span>
+					)}
 				</div>
 			)}
 		</>

@@ -7,6 +7,10 @@ import {
 	CardTitle
 } from '../../../../shared/ui/primitives/Card'
 
+const UP_ICON_TITLE = 'Up'
+const DOWN_ICON_TITLE = 'Down'
+const BILLING_TITLE = 'Faturamento'
+
 export function BillingCard() {
 	const percentageColor =
 		billingData.percentage > 0 ? 'text-green-500' : 'text-red-500'
@@ -18,7 +22,7 @@ export function BillingCard() {
 				stroke='currentColor'
 				viewBox='0 0 24 24'
 			>
-				<title>Up</title>
+				<title>{UP_ICON_TITLE}</title>
 				<path
 					d='M5 17l5-5 5 5M5 7h10v10'
 					strokeLinecap='round'
@@ -33,7 +37,7 @@ export function BillingCard() {
 				stroke='currentColor'
 				viewBox='0 0 24 24'
 			>
-				<title>Down</title>
+				<title>{DOWN_ICON_TITLE}</title>
 				<path
 					d='M19 7l-10 10-5-5'
 					strokeLinecap='round'
@@ -47,7 +51,7 @@ export function BillingCard() {
 		<Card tinted={true}>
 			<CardHeader className='flex items-start justify-between mb-4'>
 				<CardTitle className='text-[var(--color-text-primary)]'>
-					Faturamento
+					{BILLING_TITLE}
 				</CardTitle>
 				<div className='text-right'>
 					<div

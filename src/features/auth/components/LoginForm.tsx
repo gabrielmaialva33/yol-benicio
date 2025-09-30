@@ -9,6 +9,42 @@ const EMAIL_LABEL = 'E-mail'
 const PASSWORD_LABEL = 'Senha'
 const FORGOT_PASSWORD_LINK = 'Esqueci minha senha'
 
+interface InputFieldProps {
+	id: string
+	name: string
+	type: 'email' | 'password'
+	placeholder: string
+	autoComplete: string
+	label: string
+}
+
+function InputField({
+	id,
+	name,
+	type,
+	placeholder,
+	autoComplete,
+	label
+}: InputFieldProps) {
+	return (
+		<div className='flex h-[50px] items-center gap-2.5 self-stretch rounded-md border border-default px-3 py-2.5'>
+			<div className='flex w-full flex-col items-start justify-center'>
+				<label className='sr-only' htmlFor={id}>
+					{label}
+				</label>
+				<input
+					autoComplete={autoComplete}
+					className='w-full bg-transparent text-base font-semibold text-gray-500 placeholder-gray-500 focus:outline-none'
+					id={id}
+					name={name}
+					placeholder={placeholder}
+					type={type}
+				/>
+			</div>
+		</div>
+	)
+}
+
 function validateFormData(email: string, password: string) {
 	const newErrors = {email: '', password: ''}
 	if (!email) {
@@ -64,37 +100,23 @@ export function LoginForm() {
 				onSubmit={handleSubmit}
 			>
 				<div className='flex flex-col items-start gap-5 self-stretch'>
-					<div className='flex h-[50px] items-center gap-2.5 self-stretch rounded-md border border-default px-3 py-2.5'>
-						<div className='flex w-full flex-col items-start justify-center'>
-							<label className='sr-only' htmlFor={emailId}>
-								{EMAIL_LABEL}
-							</label>
-							<input
-								autoComplete='email'
-								className='w-full bg-transparent text-base font-semibold text-gray-500 placeholder-gray-500 focus:outline-none'
-								id={emailId}
-								name='email'
-								placeholder='E-mail'
-								type='email'
-							/>
-						</div>
-					</div>
+					<InputField
+						autoComplete='email'
+						id={emailId}
+						label={EMAIL_LABEL}
+						name='email'
+						placeholder='E-mail'
+						type='email'
+					/>
 					{errors.email && <p className='text-red-500'>{errors.email}</p>}
-					<div className='flex h-[50px] items-center gap-2.5 self-stretch rounded-md border border-default px-3 py-2.5'>
-						<div className='flex w-full flex-col items-start justify-center'>
-							<label className='sr-only' htmlFor={passwordId}>
-								{PASSWORD_LABEL}
-							</label>
-							<input
-								autoComplete='current-password'
-								className='w-full bg-transparent text-base font-semibold text-gray-500 placeholder-gray-500 focus:outline-none'
-								id={passwordId}
-								name='password'
-								placeholder='Senha'
-								type='password'
-							/>
-						</div>
-					</div>
+					<InputField
+						autoComplete='current-password'
+						id={passwordId}
+						label={PASSWORD_LABEL}
+						name='password'
+						placeholder='Senha'
+						type='password'
+					/>
 					{errors.password && <p className='text-red-500'>{errors.password}</p>}
 					{authError && <p className='text-red-500'>{authError}</p>}
 					<a
