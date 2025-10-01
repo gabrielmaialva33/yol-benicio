@@ -53,8 +53,10 @@ export function useChatPage() {
 
 			// Refetch conversation to get updated messages
 			setTimeout(() => {
-				resetStreaming()
-				refetchConversation()
+				if (currentConversationId) {
+					resetStreaming()
+					refetchConversation()
+				}
 			}, CACHE_TIMES.ONE_SECOND)
 		},
 		[
