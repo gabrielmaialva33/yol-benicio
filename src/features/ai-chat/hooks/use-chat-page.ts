@@ -3,7 +3,7 @@
  */
 
 import {useQueryClient} from '@tanstack/react-query'
-import {useCallback, useEffect} from 'react'
+import {useCallback, useEffect, useRef} from 'react'
 import {useNavigate, useParams} from 'react-router'
 import type {ChatMessage, Conversation} from '../types'
 import {useConversation} from './use-conversation'
@@ -15,6 +15,7 @@ export function useChatPage() {
 	const {conversationId} = useParams<{conversationId?: string}>()
 	const navigate = useNavigate()
 	const queryClient = useQueryClient()
+	const previousConversationId = useRef<number | undefined>(undefined)
 	const currentConversationId = conversationId
 		? Number.parseInt(conversationId, 10)
 		: undefined
@@ -106,17 +107,31 @@ export function useChatPage() {
 		}
 	}, [currentConversationId, handleDeleteConversation])
 
-	// Reset streaming when conversation changes
+	// Reset streaming when switching to a different existing conversation
 	useEffect(() => {
-		resetStreaming()
-	}, [resetStreaming])
+		const prev = previousConversationId.current
+		const curr = currentConversationId
+
+		// Only reset if switching between two existing conversations
+		// Don't reset when navigating from undefined to new conversation
+		if (
+			prev !== undefined &&
+			curr !== undefined &&
+			prev !== curr &&
+			prev !== newConversationId
+		) {
+			resetStreaming()
+		}
+
+		previousConversationId.current = currentConversationId
+	}, [currentConversationId, newConversationId, resetStreaming])
 
 	// Navigate to new conversation after creation
 	useEffect(() => {
-		if (newConversationId && !currentConversationId && !isStreaming) {
+		if (newConversationId && !currentConversationId) {
 			navigate(`/dashboard/chat/${newConversationId}`)
 		}
-	}, [newConversationId, currentConversationId, isStreaming, navigate])
+	}, [newConversationId, currentConversationId, navigate])
 
 	return {
 		conversations,
