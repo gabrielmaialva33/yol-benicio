@@ -1,8 +1,7 @@
 import {ProtectedRoute} from '@shared/components/ProtectedRoute'
+import {LoadingScreen} from '@shared/components/LoadingScreen'
 import {lazy, Suspense} from 'react'
 import {Navigate, Route, Routes} from 'react-router'
-
-const LOADING_TEXT = 'Loading...'
 
 const LoginPage = lazy(() =>
 	import('../features/auth').then(m => ({default: m.LoginPage}))
@@ -36,13 +35,7 @@ const ChatPage = lazy(() =>
 
 export function AppRouter() {
 	return (
-		<Suspense
-			fallback={
-				<main>
-					<div data-testid='loading'>{LOADING_TEXT}</div>
-				</main>
-			}
-		>
+		<Suspense fallback={<LoadingScreen />}>
 			<Routes>
 				<Route element={<LoginPage />} index={true} />
 				<Route

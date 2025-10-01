@@ -10,6 +10,7 @@ import {App} from './App'
 import {ENABLE_MSW} from './config/api'
 import {worker} from './mocks/browser'
 import {AuthProvider} from './shared/hooks/use-auth'
+import {LoadingScreen} from './shared/components/LoadingScreen'
 
 const queryClient = new QueryClient()
 
@@ -25,14 +26,12 @@ if (
 	})
 }
 
-const LOADING_MESSAGE = 'Loading...'
-
 const container = document.querySelector('#root')
 if (container) {
 	const root = createRoot(container)
 	root.render(
 		<StrictMode>
-			<Suspense fallback={<div>{LOADING_MESSAGE}</div>}>
+			<Suspense fallback={<LoadingScreen />}>
 				<QueryClientProvider client={queryClient}>
 					<AuthProvider>
 						<ReactQueryDevtools initialIsOpen={false} />
