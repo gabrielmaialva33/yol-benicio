@@ -1,20 +1,26 @@
 # YOL Benício - Development Guidelines
 
 ## Project Overview
-YOL Benício is a React 19 + TypeScript web application built with Vite, featuring a dashboard-based legal case management system. The project uses modern development practices including comprehensive testing, API mocking, and strict code quality standards.
+
+YOL Benício is a React 19 + TypeScript web application built with Vite, featuring a dashboard-based legal case
+management system. The project uses modern development practices including comprehensive testing, API mocking, and
+strict code quality standards.
 
 ## Build/Configuration Instructions
 
 ### Package Manager
+
 - **Required**: pnpm 10.11.1+ (specified in `packageManager` field)
 - Install dependencies: `pnpm install`
 
 ### Development Server
+
 ```bash
 pnpm dev  # Starts development server on http://localhost:5173 with auto-open
 ```
 
 ### Build Process
+
 ```bash
 pnpm prebuild  # Initializes MSW in public/ directory
 pnpm build     # Creates production build
@@ -22,12 +28,14 @@ pnpm preview   # Preview production build locally
 ```
 
 ### Key Configuration Files
+
 - **Vite**: Uses GitHub Pages deployment base (`/yol-benicio/`)
 - **API Proxy**: Development server proxies `/api` requests to `http://localhost:3333`
 - **TypeScript**: Project references structure with separate app/node configurations
 - **MSW**: Mock Service Worker for API mocking (required for build)
 
 ### Path Aliases (tsconfig.app.json)
+
 ```
 @features/*  → src/features/*
 @shared/*    → src/shared/*
@@ -41,6 +49,7 @@ pnpm preview   # Preview production build locally
 ## Testing Information
 
 ### Testing Stack
+
 - **Unit Tests**: Vitest + React Testing Library + Happy DOM
 - **E2E Tests**: Playwright (Chrome, Firefox, Safari, Mobile)
 - **API Mocking**: MSW (Mock Service Worker)
@@ -49,12 +58,14 @@ pnpm preview   # Preview production build locally
 ### Running Tests
 
 #### Unit Tests
+
 ```bash
 pnpm test           # Run tests in watch mode
 pnpm test:ci        # Run tests once (CI mode)
 ```
 
 #### E2E Tests
+
 ```bash
 pnpm test:e2e       # Run E2E tests headless (CI)
 pnpm test:e2e:headed # Run E2E tests with browser UI
@@ -63,6 +74,7 @@ pnpm test:e2e:debug # Run in debug mode
 ```
 
 #### Comprehensive Validation
+
 ```bash
 pnpm validate  # Runs linting, unit tests, and E2E tests
 ```
@@ -70,17 +82,19 @@ pnpm validate  # Runs linting, unit tests, and E2E tests
 ### Test Configuration Details
 
 #### Unit Test Setup (vitest)
+
 - **Environment**: Happy DOM
 - **Globals**: Enabled for describe/it/expect
 - **Setup**: `src/test-setup.ts` configures MSW server
 - **Coverage Thresholds**:
-  - Lines: 10%
-  - Functions: 15%
-  - Branches: 25%
-  - Statements: 10%
+    - Lines: 10%
+    - Functions: 15%
+    - Branches: 25%
+    - Statements: 10%
 - **Test Files**: `src/**/*.test.ts(x)`
 
 #### E2E Test Setup (Playwright)
+
 - **Browsers**: Chrome, Firefox, Safari (Desktop + Mobile)
 - **Base URL**: `http://localhost:5173`
 - **Test Directory**: `./tests/`
@@ -90,6 +104,7 @@ pnpm validate  # Runs linting, unit tests, and E2E tests
 ### Test Patterns & Examples
 
 #### Unit Test Example
+
 ```typescript
 import {describe, it, expect, beforeEach, vi} from 'vitest'
 import {formatUserName} from './example-util'
@@ -107,6 +122,7 @@ describe('formatUserName', () => {
 ```
 
 #### E2E Test Example
+
 ```typescript
 import {expect, test} from '@playwright/test'
 
@@ -125,6 +141,7 @@ test.describe('Feature', () => {
 ```
 
 ### MSW Integration
+
 - **Setup**: Configured in `src/test-setup.ts`
 - **Handlers**: Located in `src/mocks/handlers/`
 - **Data**: Mock data in `src/mocks/data/`
@@ -133,6 +150,7 @@ test.describe('Feature', () => {
 ## Code Style & Development Conventions
 
 ### Code Formatter & Linter
+
 - **Tool**: Biome (replaces ESLint + Prettier)
 - **Commands**:
   ```bash
@@ -143,6 +161,7 @@ test.describe('Feature', () => {
   ```
 
 ### Code Style Rules
+
 - **Indentation**: Tabs
 - **Quotes**: Single quotes, single quotes in JSX
 - **Semicolons**: As needed (minimal)
@@ -151,22 +170,25 @@ test.describe('Feature', () => {
 - **Bracket Spacing**: None `{foo}` not `{ foo }`
 
 ### File Naming Conventions
+
 - **Allowed Formats**: camelCase, kebab-case, PascalCase
 - **Components**: PascalCase (e.g., `LoginForm.tsx`)
 - **Utilities**: camelCase (e.g., `formatDate.ts`)
 - **Test Files**: `*.test.ts(x)` or `*.spec.ts`
 
 ### TypeScript Configuration
+
 - **Strict Mode**: Enabled with additional strict options
 - **Notable Settings**:
-  - `exactOptionalPropertyTypes: true`
-  - `noUncheckedIndexedAccess: true`
-  - `noUnusedLocals: true`
-  - `noUnusedParameters: true`
+    - `exactOptionalPropertyTypes: true`
+    - `noUncheckedIndexedAccess: true`
+    - `noUnusedLocals: true`
+    - `noUnusedParameters: true`
 
 ### Project Architecture
 
 #### Feature-Based Structure
+
 ```
 src/
 ├── features/          # Feature modules
@@ -185,6 +207,7 @@ src/
 ```
 
 #### Component Co-location
+
 - Place test files next to source files
 - Keep related files together in feature directories
 - Use index files for clean imports
@@ -192,22 +215,26 @@ src/
 ### Development Best Practices
 
 #### Testing
+
 - **Test File Location**: Co-locate with source (`Component.tsx` → `Component.test.tsx`)
 - **Mock Strategy**: Use MSW for API calls, vi.mock for modules
 - **Test Descriptions**: Use Portuguese for UI text, English for logic
 - **Async Testing**: Use `findBy*` queries for async elements
 
 #### Error Handling
+
 - Use Error Boundaries for component-level error handling
 - Implement proper loading states
 - Handle network errors gracefully
 
 #### State Management
+
 - React Query (TanStack Query) for server state
 - React Context for global client state
 - Local state with useState/useReducer
 
 #### Styling
+
 - **Framework**: Tailwind CSS 4.x
 - **Animations**: tailwindcss-animate
 - **Icons**: Lucide React
@@ -215,11 +242,13 @@ src/
 ### Development Workflow
 
 #### Before Committing
+
 ```bash
 pnpm validate  # Runs linting, type checking, and all tests
 ```
 
 #### Adding New Features
+
 1. Create feature directory under `src/features/`
 2. Add components, hooks, and types
 3. Write unit tests for logic
@@ -227,6 +256,7 @@ pnpm validate  # Runs linting, type checking, and all tests
 5. Update mock data if needed
 
 #### API Integration
+
 - Development: Uses MSW mocks
 - Production: Real API endpoints
 - Proxy setup handles `/api` routing in development
@@ -234,21 +264,25 @@ pnpm validate  # Runs linting, type checking, and all tests
 ### Common Issues & Solutions
 
 #### MSW Not Working
+
 - Ensure `pnpm prebuild` was run
 - Check `public/mockServiceWorker.js` exists
 - Verify handlers are properly registered
 
 #### Tests Failing in CI
+
 - Check coverage thresholds in `vite.config.ts`
 - Ensure deterministic test data (mock dates/times)
 - Verify MSW handlers cover all API calls
 
 #### Build Errors
+
 - Run `pnpm lint:tsc` to catch TypeScript issues
 - Ensure all imports use correct path aliases
 - Check that MSW is properly initialized
 
 ### Performance Considerations
+
 - Lazy load feature modules using React.lazy()
 - Optimize bundle size with proper imports
 - Use React Query for efficient data fetching

@@ -4,7 +4,8 @@
  */
 
 import {cn} from '@ui/utils/cn'
-import {AlertCircle, Info, X} from 'lucide-react'
+// Add missing import
+import {AlertCircle, Check, Info, X} from 'lucide-react'
 import type React from 'react'
 import {useEffect, useState} from 'react'
 import {createPortal} from 'react-dom'
@@ -361,9 +362,6 @@ function getVariantButtonClasses(variant: ModalVariant): string {
 	}
 	return variants[variant]
 }
-
-// Add missing import
-import {Check} from 'lucide-react'
 
 // Convenience Components
 

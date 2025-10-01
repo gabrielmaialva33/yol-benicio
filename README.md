@@ -209,10 +209,10 @@ Definido em src/app/router.tsx com carregamento lazy:
 
 - '/' → LoginPage
 - '/dashboard' → layout do Dashboard (Header + Sidebar)
-  - index → DashboardContent
-  - 'folders/consultation' → consulta de pastas
-  - 'folders/consultation/:folderId' → detalhes de uma pasta
-  - 'folders/register' → cadastro de pastas
+    - index → DashboardContent
+    - 'folders/consultation' → consulta de pastas
+    - 'folders/consultation/:folderId' → detalhes de uma pasta
+    - 'folders/register' → cadastro de pastas
 - '*' → redireciona para '/'
 
 Observação: Por estar publicado no GitHub Pages, o projeto usa basename/base '/yol-benicio/':
@@ -225,8 +225,8 @@ Observação: Por estar publicado no GitHub Pages, o projeto usa basename/base '
 ### MSW (Mock Service Worker)
 
 - Inicialização em desenvolvimento e quando hospedado no GitHub Pages:
-  - src/main.tsx inicia o worker quando import.meta.env.DEV ou hostname inclui 'github.io'.
-  - O service worker é servido em '/yol-benicio/mock-service-worker.js'.
+    - src/main.tsx inicia o worker quando import.meta.env.DEV ou hostname inclui 'github.io'.
+    - O service worker é servido em '/yol-benicio/mock-service-worker.js'.
 - Antes do build, o worker é gerado em public/ via script prebuild: `npx msw init public/`.
 - Nos testes unitários (Vitest), o MSW roda em modo server (src/test-setup.ts via src/mocks/server.ts).
 

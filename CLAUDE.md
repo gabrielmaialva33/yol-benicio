@@ -48,9 +48,9 @@ The app follows a feature-based architecture with lazy-loaded routes:
 - **Entry Point**: `src/main.tsx` - Sets up React Query, Router, and MSW for mocking
 - **Routing**: `src/app/router.tsx` - Lazy-loaded routes with code splitting
 - **Features**: Domain-specific modules in `src/features/`
-  - `auth/` - Login authentication
-  - `dashboard/` - Main dashboard with sidebar navigation and widgets
-  - `folders/` - Legal folder management (consultation, registration, details)
+    - `auth/` - Login authentication
+    - `dashboard/` - Main dashboard with sidebar navigation and widgets
+    - `folders/` - Legal folder management (consultation, registration, details)
 
 ### State Management
 
