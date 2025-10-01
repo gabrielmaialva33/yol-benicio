@@ -1,14 +1,16 @@
 /**
  * ChatInput Component
- * Input field for sending chat messages
+ * Enhanced input field for sending chat messages with animations
  */
 
 import {cn} from '@ui/utils/cn'
+import {motion} from 'framer-motion'
 import {Send} from 'lucide-react'
 import React, {
 	type FormEvent,
 	type KeyboardEvent,
 	useCallback,
+	useEffect,
 	useRef,
 	useState
 } from 'react'
@@ -19,6 +21,15 @@ interface ChatInputProps {
 	disabled?: boolean
 	placeholder?: string
 }
+
+// Prompt suggestions that rotate in the placeholder
+const PROMPT_SUGGESTIONS = [
+	'Pesquisar jurisprudência sobre...',
+	'Analisar contrato de...',
+	'Calcular prazo processual...',
+	'Redigir petição para...',
+	'Explicar legislação sobre...'
+]
 
 // Extracted handler for auto-resizing
 const autoResizeTextarea = (element: HTMLTextAreaElement) => {
@@ -36,10 +47,21 @@ const resetTextarea = (element: HTMLTextAreaElement | null) => {
 function ChatInput({onSend, disabled = false, placeholder}: ChatInputProps) {
 	const {t} = useTranslation()
 	const [message, setMessage] = useState('')
+	const [currentSuggestion, setCurrentSuggestion] = useState(0)
 	const textareaRef = useRef<HTMLTextAreaElement>(null)
 
-	// Use translated placeholder if not provided
-	const finalPlaceholder = placeholder || t('chat.placeholder')
+	// Rotate placeholder suggestions
+	useEffect(() => {
+		const interval = setInterval(() => {
+			setCurrentSuggestion(prev => (prev + 1) % PROMPT_SUGGESTIONS.length)
+		}, 3000)
+
+		return () => clearInterval(interval)
+	}, [])
+
+	// Use rotating suggestions if no custom placeholder
+	const finalPlaceholder =
+		placeholder || PROMPT_SUGGESTIONS[currentSuggestion] || t('chat.placeholder')
 
 	const handleSubmit = useCallback(
 		(e: FormEvent) => {
@@ -74,7 +96,7 @@ function ChatInput({onSend, disabled = false, placeholder}: ChatInputProps) {
 
 	return (
 		<form
-			className='border-border border-t bg-surface p-4'
+			className='border-gray-200 border-t bg-white p-4'
 			onSubmit={handleSubmit}
 		>
 			<ChatInputField
@@ -109,10 +131,11 @@ const ChatInputField = React.forwardRef<
 		<div className='flex gap-2'>
 			<textarea
 				className={cn(
-					'flex-1 resize-none rounded-lg border border-border bg-surface px-4 py-2 text-sm',
-					'focus:outline-none focus:ring-2 focus:ring-brand-cyan',
-					'disabled:cursor-not-allowed disabled:opacity-50',
-					'max-h-32 overflow-y-auto'
+					'flex-1 resize-none rounded-lg border border-gray-300 bg-white px-4 py-3 text-sm transition-all',
+					'focus:outline-none focus:ring-2 focus:ring-brand-cyan focus:border-transparent',
+					'disabled:cursor-not-allowed disabled:opacity-50 disabled:bg-gray-50',
+					'max-h-32 overflow-y-auto',
+					'placeholder:text-gray-400 placeholder:transition-opacity placeholder:duration-300'
 				)}
 				disabled={disabled}
 				onChange={onChange}
@@ -122,18 +145,25 @@ const ChatInputField = React.forwardRef<
 				rows={1}
 				value={message}
 			/>
-			<button
+			<motion.button
+				animate={{
+					scale: message.trim() && !disabled ? 1 : 0.95,
+					opacity: message.trim() && !disabled ? 1 : 0.5
+				}}
 				aria-label={t('chat.send')}
 				className={cn(
 					'flex h-10 w-10 shrink-0 items-center justify-center rounded-lg',
-					'bg-brand-orange text-white transition-colors',
-					'hover:bg-orange-600 disabled:cursor-not-allowed disabled:opacity-50'
+					'bg-gradient-to-r from-orange-500 to-orange-600 text-white',
+					'hover:from-orange-600 hover:to-orange-700 disabled:cursor-not-allowed',
+					'shadow-sm hover:shadow-md transition-shadow'
 				)}
 				disabled={!message.trim() || disabled}
 				type='submit'
+				whileHover={{scale: 1.05}}
+				whileTap={{scale: 0.95}}
 			>
 				<Send className='h-5 w-5' />
-			</button>
+			</motion.button>
 		</div>
 	)
 })

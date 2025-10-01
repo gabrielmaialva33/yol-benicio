@@ -3,6 +3,13 @@
 @plugin "tailwindcss-animate";
 
 @layer base {
+	html,
+	body,
+	#root {
+		height: 100%;
+		overflow: hidden;
+	}
+
 	button,
 	[role="button"] {
 		cursor: pointer;

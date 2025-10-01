@@ -1,10 +1,11 @@
 /**
  * ChatWindow Component
- * Container for chat messages with auto-scroll
+ * Container for chat messages with intelligent auto-scroll
  */
 
-import {MessageSquare} from 'lucide-react'
-import {useEffect, useRef} from 'react'
+import {AnimatePresence, motion} from 'framer-motion'
+import {ArrowDown, MessageSquare} from 'lucide-react'
+import {useCallback, useEffect, useRef, useState} from 'react'
 import {useTranslation} from '@/core/i18n'
 import type {ChatMessage as ChatMessageType} from '../types'
 import {ChatMessage} from './ChatMessage'
@@ -25,11 +26,40 @@ export function ChatWindow({
 }: ChatWindowProps) {
 	const {t} = useTranslation()
 	const messagesEndRef = useRef<HTMLDivElement>(null)
+	const containerRef = useRef<HTMLDivElement>(null)
+	const [showScrollButton, setShowScrollButton] = useState(false)
+	const [shouldAutoScroll, setShouldAutoScroll] = useState(true)
 
-	// Auto-scroll to bottom when new messages arrive
-	useEffect(() => {
-		messagesEndRef.current?.scrollIntoView({behavior: 'smooth'})
+	// Check if user is scrolled to bottom
+	const checkScrollPosition = useCallback(() => {
+		const container = containerRef.current
+		if (!container) return
+
+		const {scrollTop, scrollHeight, clientHeight} = container
+		const isAtBottom = scrollHeight - scrollTop - clientHeight < 100 // 100px threshold
+
+		setShouldAutoScroll(isAtBottom)
+		setShowScrollButton(!isAtBottom && messages.length > 0)
+	}, [messages.length])
+
+	// Scroll to bottom smoothly
+	const scrollToBottom = useCallback((smooth = true) => {
+		messagesEndRef.current?.scrollIntoView({
+			behavior: smooth ? 'smooth' : 'auto'
+		})
 	}, [])
+
+	// Auto-scroll when new messages arrive or streaming
+	useEffect(() => {
+		if (shouldAutoScroll || isStreaming) {
+			scrollToBottom()
+		}
+	}, [messages.length, streamingContent, isStreaming, shouldAutoScroll, scrollToBottom])
+
+	// Initial scroll to bottom
+	useEffect(() => {
+		scrollToBottom(false)
+	}, [scrollToBottom])
 
 	if (isLoading) {
 		return (
@@ -57,21 +87,45 @@ export function ChatWindow({
 	}
 
 	return (
-		<div className='flex-1 space-y-0 overflow-y-auto'>
-			{messages.map(message => (
-				<ChatMessage key={message.id} message={message} />
-			))}
+		<div className='relative flex h-full flex-col'>
+			{/* Messages container */}
+			<div
+				ref={containerRef}
+				className='flex-1 space-y-0 overflow-y-auto'
+				onScroll={checkScrollPosition}
+			>
+				{messages.map((message, index) => (
+					<ChatMessage key={message.id} index={index} message={message} />
+				))}
 
-			{/* Streaming message */}
-			{(streamingContent || isStreaming) && (
-				<StreamingMessage
-					content={streamingContent}
-					isStreaming={isStreaming}
-				/>
-			)}
+				{/* Streaming message */}
+				{(streamingContent || isStreaming) && (
+					<StreamingMessage
+						content={streamingContent}
+						isStreaming={isStreaming}
+					/>
+				)}
 
-			{/* Auto-scroll anchor */}
-			<div ref={messagesEndRef} />
+				{/* Auto-scroll anchor */}
+				<div ref={messagesEndRef} />
+			</div>
+
+			{/* Scroll to bottom button */}
+			<AnimatePresence>
+				{showScrollButton && (
+					<motion.button
+						animate={{opacity: 1, y: 0}}
+						className='absolute bottom-4 right-4 flex h-10 w-10 items-center justify-center rounded-full bg-brand-cyan text-white shadow-lg hover:bg-cyan-600 focus:outline-none focus:ring-2 focus:ring-brand-cyan focus:ring-offset-2'
+						exit={{opacity: 0, y: 10}}
+						initial={{opacity: 0, y: 10}}
+						onClick={() => scrollToBottom()}
+						title={t('chat.scrollToBottom')}
+						type='button'
+					>
+						<ArrowDown className='h-5 w-5' />
+					</motion.button>
+				)}
+			</AnimatePresence>
 		</div>
 	)
 }

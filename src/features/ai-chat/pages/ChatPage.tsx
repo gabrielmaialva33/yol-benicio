@@ -25,7 +25,7 @@ export function ChatPage() {
 	} = useChatPage()
 
 	return (
-		<div className='flex h-[calc(100vh-64px)]'>
+		<div className='flex h-full'>
 			<ConversationList
 				activeConversationId={currentConversationId}
 				conversations={conversations}
@@ -49,9 +49,7 @@ export function ChatPage() {
 					/>
 				</div>
 
-				<div className='border-gray-200 border-t bg-white p-4'>
-					<ChatInput disabled={isStreaming} onSend={handleSendMessage} />
-				</div>
+				<ChatInput disabled={isStreaming} onSend={handleSendMessage} />
 			</div>
 		</div>
 	)

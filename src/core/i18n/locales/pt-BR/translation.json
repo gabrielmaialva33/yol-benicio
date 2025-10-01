@@ -47,6 +47,12 @@
 		"loadingConversation": "Carregando conversa...",
 		"startConversation": "Comece uma conversa",
 		"startConversationHint": "Faça uma pergunta ou inicie um chat com o assistente IA",
+		"copy": "Copiar",
+		"copied": "Copiado!",
+		"regenerate": "Regenerar resposta",
+		"likeMessage": "Gostei",
+		"dislikeMessage": "Não gostei",
+		"scrollToBottom": "Rolar para o fim",
 		"error": {
 			"sendMessage": "Erro ao enviar mensagem",
 			"loadConversations": "Erro ao carregar conversas"
