@@ -22,17 +22,17 @@ function ThinkingDots() {
 		<div className='flex gap-1'>
 			{[0, 1, 2].map(i => (
 				<motion.div
-					key={i}
 					animate={{
 						scale: [1, 1.3, 1],
 						opacity: [0.5, 1, 0.5]
 					}}
+					className='h-2 w-2 rounded-full bg-brand-cyan'
+					key={i}
 					transition={{
 						duration: 1,
 						repeat: Number.POSITIVE_INFINITY,
 						delay: i * 0.2
 					}}
-					className='h-2 w-2 rounded-full bg-brand-cyan'
 				/>
 			))}
 		</div>
@@ -44,13 +44,13 @@ function BlinkingCursor() {
 	return (
 		<motion.span
 			animate={{opacity: [1, 0, 1]}}
+			aria-hidden='true'
+			className='inline-block h-5 w-0.5 bg-brand-cyan'
 			transition={{
 				duration: 0.8,
 				repeat: Number.POSITIVE_INFINITY,
 				ease: 'linear'
 			}}
-			className='inline-block h-5 w-0.5 bg-brand-cyan'
-			aria-hidden='true'
 		/>
 	)
 }
@@ -73,10 +73,10 @@ export const StreamingMessage = memo(function StreamingMessage({
 
 	return (
 		<motion.div
-			initial={{opacity: 0, y: 10}}
 			animate={{opacity: 1, y: 0}}
-			transition={{duration: 0.3}}
 			className='flex gap-3 bg-gray-50 p-4'
+			initial={{opacity: 0, y: 10}}
+			transition={{duration: 0.3}}
 		>
 			{/* Avatar with gradient animation */}
 			<motion.div
@@ -89,11 +89,11 @@ export const StreamingMessage = memo(function StreamingMessage({
 							]
 						: 'linear-gradient(135deg, #00d4ff 0%, #0099cc 100%)'
 				}}
+				className='flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-white'
 				transition={{
 					duration: 2,
 					repeat: isStreaming ? Number.POSITIVE_INFINITY : 0
 				}}
-				className='flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-white'
 			>
 				<Bot className='h-5 w-5' />
 			</motion.div>

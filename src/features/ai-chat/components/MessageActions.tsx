@@ -34,8 +34,8 @@ export const MessageActions = memo(function MessageActions({
 			await navigator.clipboard.writeText(content)
 			setCopied(true)
 			setTimeout(() => setCopied(false), 2000)
-		} catch (error) {
-			console.error('Failed to copy:', error)
+		} catch (_error) {
+			// Clipboard API not available or permission denied - silent fail
 		}
 	}, [content])
 
@@ -52,15 +52,17 @@ export const MessageActions = memo(function MessageActions({
 
 	return (
 		<motion.div
-			initial={{opacity: 0, y: -5}}
 			animate={{opacity: 1, y: 0}}
-			exit={{opacity: 0, y: -5}}
 			className='flex items-center gap-1'
+			exit={{opacity: 0, y: -5}}
+			initial={{opacity: 0, y: -5}}
 		>
 			{/* Copy button */}
 			<ActionButton
 				aria-label={t('chat.copy')}
-				icon={copied ? <Check className='h-4 w-4' /> : <Copy className='h-4 w-4' />}
+				icon={
+					copied ? <Check className='h-4 w-4' /> : <Copy className='h-4 w-4' />
+				}
 				onClick={handleCopy}
 				title={copied ? t('chat.copied') : t('chat.copy')}
 			/>
@@ -107,11 +109,15 @@ interface ActionButtonProps {
 	'aria-label': string
 }
 
-function ActionButton({icon, onClick, title, isActive = false, ...props}: ActionButtonProps) {
+function ActionButton({
+	icon,
+	onClick,
+	title,
+	isActive = false,
+	...props
+}: ActionButtonProps) {
 	return (
 		<motion.button
-			whileHover={{scale: 1.1}}
-			whileTap={{scale: 0.95}}
 			className={`
 				rounded p-1.5 transition-colors
 				hover:bg-gray-200
@@ -120,6 +126,8 @@ function ActionButton({icon, onClick, title, isActive = false, ...props}: Action
 			onClick={onClick}
 			title={title}
 			type='button'
+			whileHover={{scale: 1.1}}
+			whileTap={{scale: 0.95}}
 			{...props}
 		>
 			{icon}

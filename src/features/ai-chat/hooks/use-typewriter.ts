@@ -4,7 +4,7 @@
  * Animates text character by character for a smooth reading experience
  */
 
-import {useEffect, useState, useRef} from 'react'
+import {useEffect, useRef, useState} from 'react'
 
 interface UseTypewriterOptions {
 	/** Speed in milliseconds per character (default: 15ms) */

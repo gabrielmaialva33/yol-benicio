@@ -1,5 +1,5 @@
-import {ProtectedRoute} from '@shared/components/ProtectedRoute'
 import {LoadingScreen} from '@shared/components/LoadingScreen'
+import {ProtectedRoute} from '@shared/components/ProtectedRoute'
 import {lazy, Suspense} from 'react'
 import {Navigate, Route, Routes} from 'react-router'
 

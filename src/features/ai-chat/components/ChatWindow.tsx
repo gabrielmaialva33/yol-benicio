@@ -33,7 +33,9 @@ export function ChatWindow({
 	// Check if user is scrolled to bottom
 	const checkScrollPosition = useCallback(() => {
 		const container = containerRef.current
-		if (!container) return
+		if (!container) {
+			return
+		}
 
 		const {scrollTop, scrollHeight, clientHeight} = container
 		const isAtBottom = scrollHeight - scrollTop - clientHeight < 100 // 100px threshold
@@ -54,7 +56,7 @@ export function ChatWindow({
 		if (shouldAutoScroll || isStreaming) {
 			scrollToBottom()
 		}
-	}, [messages.length, streamingContent, isStreaming, shouldAutoScroll, scrollToBottom])
+	}, [isStreaming, shouldAutoScroll, scrollToBottom])
 
 	// Initial scroll to bottom
 	useEffect(() => {
@@ -90,12 +92,12 @@ export function ChatWindow({
 		<div className='relative flex h-full flex-col'>
 			{/* Messages container */}
 			<div
-				ref={containerRef}
 				className='flex-1 space-y-0 overflow-y-auto'
 				onScroll={checkScrollPosition}
+				ref={containerRef}
 			>
 				{messages.map((message, index) => (
-					<ChatMessage key={message.id} index={index} message={message} />
+					<ChatMessage index={index} key={message.id} message={message} />
 				))}
 
 				{/* Streaming message */}

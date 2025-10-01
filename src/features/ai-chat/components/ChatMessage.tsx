@@ -29,26 +29,28 @@ export const ChatMessage = memo(function ChatMessage({
 
 	return (
 		<motion.div
-			initial={{opacity: 0, y: 20}}
 			animate={{opacity: 1, y: 0}}
-			transition={{
-				duration: 0.3,
-				delay: index * 0.05 // Stagger animation
-			}}
 			className={cn(
 				'group flex gap-3 p-4 transition-colors',
 				isUser && 'bg-blue-50 hover:bg-blue-100/50',
 				isAssistant && 'bg-gray-50 hover:bg-gray-100/50'
 			)}
+			initial={{opacity: 0, y: 20}}
 			onMouseEnter={() => setShowActions(true)}
 			onMouseLeave={() => setShowActions(false)}
+			transition={{
+				duration: 0.3,
+				delay: index * 0.05 // Stagger animation
+			}}
 		>
 			{/* Avatar */}
 			<motion.div
 				className={cn(
 					'flex h-8 w-8 shrink-0 items-center justify-center rounded-full',
-					isUser && 'bg-gradient-to-br from-orange-500 to-orange-600 text-white',
-					isAssistant && 'bg-gradient-to-br from-cyan-500 to-cyan-600 text-white'
+					isUser &&
+						'bg-gradient-to-br from-orange-500 to-orange-600 text-white',
+					isAssistant &&
+						'bg-gradient-to-br from-cyan-500 to-cyan-600 text-white'
 				)}
 				whileHover={{scale: 1.05}}
 			>
@@ -84,7 +86,9 @@ export const ChatMessage = memo(function ChatMessage({
 							{message.content}
 						</ReactMarkdown>
 					) : (
-						<p className='whitespace-pre-wrap text-gray-800'>{message.content}</p>
+						<p className='whitespace-pre-wrap text-gray-800'>
+							{message.content}
+						</p>
 					)}
 				</div>
 

@@ -9,8 +9,8 @@ import {BrowserRouter} from 'react-router'
 import {App} from './App'
 import {ENABLE_MSW} from './config/api'
 import {worker} from './mocks/browser'
-import {AuthProvider} from './shared/hooks/use-auth'
 import {LoadingScreen} from './shared/components/LoadingScreen'
+import {AuthProvider} from './shared/hooks/use-auth'
 
 const queryClient = new QueryClient()
 

@@ -61,7 +61,9 @@ function ChatInput({onSend, disabled = false, placeholder}: ChatInputProps) {
 
 	// Use rotating suggestions if no custom placeholder
 	const finalPlaceholder =
-		placeholder || PROMPT_SUGGESTIONS[currentSuggestion] || t('chat.placeholder')
+		placeholder ||
+		PROMPT_SUGGESTIONS[currentSuggestion] ||
+		t('chat.placeholder')
 
 	const handleSubmit = useCallback(
 		(e: FormEvent) => {

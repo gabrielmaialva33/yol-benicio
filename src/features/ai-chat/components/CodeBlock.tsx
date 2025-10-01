@@ -8,6 +8,10 @@ import {memo, useCallback, useState} from 'react'
 import {Prism as SyntaxHighlighter} from 'react-syntax-highlighter'
 import {oneDark} from 'react-syntax-highlighter/dist/esm/styles/prism'
 
+// Regex patterns at top level for performance
+const LANGUAGE_PATTERN = /language-(\w+)/
+const TRAILING_NEWLINE = /\n$/
+
 interface CodeBlockProps {
 	/** Programming language */
 	language?: string
@@ -29,8 +33,8 @@ export const CodeBlock = memo(function CodeBlock({
 			await navigator.clipboard.writeText(children)
 			setCopied(true)
 			setTimeout(() => setCopied(false), 2000)
-		} catch (error) {
-			console.error('Failed to copy code:', error)
+		} catch (_error) {
+			// Clipboard API not available or permission denied - silent fail
 		}
 	}, [children])
 
@@ -72,7 +76,7 @@ export const CodeBlock = memo(function CodeBlock({
 					language={language}
 					showLineNumbers={showLineNumbers}
 					style={oneDark}
-					wrapLines
+					wrapLines={true}
 				>
 					{children}
 				</SyntaxHighlighter>
@@ -92,9 +96,9 @@ export function MarkdownCode({
 	className?: string
 	children?: React.ReactNode
 }) {
-	const match = /language-(\w+)/.exec(className || '')
+	const match = LANGUAGE_PATTERN.exec(className || '')
 	const language = match ? match[1] : 'text'
-	const codeString = String(children).replace(/\n$/, '')
+	const codeString = String(children).replace(TRAILING_NEWLINE, '')
 
 	if (inline) {
 		return (
