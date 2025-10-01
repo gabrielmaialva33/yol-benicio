@@ -71,6 +71,7 @@ export function useStreamingChat() {
 		setStreamingContent('')
 		setError(null)
 		setIsStreaming(false)
+		setNewConversationId(null)
 	}, [])
 
 	return {

@@ -107,19 +107,23 @@ export function useChatPage() {
 		}
 	}, [currentConversationId, handleDeleteConversation])
 
-	// Reset streaming when switching to a different existing conversation
+	// Reset streaming when switching conversations
 	useEffect(() => {
 		const prev = previousConversationId.current
 		const curr = currentConversationId
 
-		// Only reset if switching between two existing conversations
-		// Don't reset when navigating from undefined to new conversation
-		if (
+		// Reset in these cases:
+		// 1. Switching between two existing conversations (not to newly created one)
+		// 2. Going from existing conversation to "new conversation" (no ID)
+		const switchingBetweenExisting =
 			prev !== undefined &&
 			curr !== undefined &&
 			prev !== curr &&
 			prev !== newConversationId
-		) {
+
+		const goingToNewConversation = prev !== undefined && curr === undefined
+
+		if (switchingBetweenExisting || goingToNewConversation) {
 			resetStreaming()
 		}
 
