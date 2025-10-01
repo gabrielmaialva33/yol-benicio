@@ -79,7 +79,7 @@ export const ChatMessage = memo(function ChatMessage({
 					{isAssistant ? (
 						<ReactMarkdown
 							components={{
-								code: MarkdownCode
+								code: MarkdownCode as any
 							}}
 							remarkPlugins={[remarkGfm]}
 						>

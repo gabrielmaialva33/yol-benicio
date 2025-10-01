@@ -17,6 +17,10 @@ const THIRTY_MINUTES = 30
 
 // Cache times for React Query
 export const CACHE_TIMES = {
+	// Time units
+	ONE_SECOND: Number(SECOND),
+	ONE_MINUTE: Number(MINUTE),
+	FIVE_MINUTES: FIVE_MINUTES * MINUTE,
 	// Stale times - how long data is considered fresh
 	STALE: {
 		IMMEDIATE: 0,

@@ -61,7 +61,7 @@ export interface User extends Timestamps {
 	full_name: string
 	email: string
 	username: string
-	user_type?: 'employee' | 'manager' | 'client'
+	user_type?: 'employee' | 'manager' | 'client' | undefined
 	avatar_url?: string
 	phone?: string
 	oab_number?: string // OAB number for lawyers

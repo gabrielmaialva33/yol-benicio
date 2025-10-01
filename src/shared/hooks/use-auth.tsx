@@ -56,12 +56,12 @@ export function AuthProvider({children}: {children: React.ReactNode}) {
 				full_name: response.full_name,
 				email: response.email,
 				username: response.username,
-				user_type: response.user_type,
+				user_type: response.user_type || undefined,
 				roles: response.roles,
 				metadata: response.metadata,
 				created_at: response.created_at,
 				updated_at: response.updated_at,
-				deleted_at: response.deleted_at,
+				deleted_at: response.deleted_at || undefined,
 				is_deleted: response.is_deleted
 			}
 			setUser(userData)

@@ -11,6 +11,9 @@ export interface ChatMessage {
 	created_at: string
 }
 
+// Alias for backward compatibility
+export type Message = ChatMessage
+
 export interface Conversation {
 	id: number
 	title: string
@@ -18,6 +21,7 @@ export interface Conversation {
 	created_at: string
 	updated_at: string
 	messages?: ChatMessage[]
+	lastMessage?: ChatMessage
 }
 
 export interface SendMessageRequest {

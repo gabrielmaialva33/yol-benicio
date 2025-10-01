@@ -4,17 +4,22 @@ import downIcon from '/icons/down.svg'
 const OPEN_PAREN = '('
 const CLOSE_PAREN = ')'
 
+interface IconProps {
+	className?: string | undefined
+	strokeWidth?: number | undefined
+}
+
 interface SidebarItemProps {
-	icon: string | React.ComponentType<{className?: string}>
+	icon: string | React.ComponentType<IconProps>
 	text: string
 	active?: boolean | undefined
 	isCollapsed: boolean
 	color?: string | undefined
 	badge?: number | undefined
-	hasSubItems?: boolean
-	isOpen?: boolean
-	asButton?: boolean
-	textOffset?: string
+	hasSubItems?: boolean | undefined
+	isOpen?: boolean | undefined
+	asButton?: boolean | undefined
+	textOffset?: string | undefined
 }
 
 const getIconClasses = (isCollapsed: boolean, active = false) => {

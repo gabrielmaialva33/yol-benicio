@@ -2,9 +2,9 @@
  * Custom hook for ChatPage logic
  */
 
+import {CACHE_TIMES} from '@core/constants/cache'
 import {useCallback, useEffect} from 'react'
 import {useNavigate, useParams} from 'react-router'
-import {TIMING} from '@/core/constants/cache'
 import {useConversation} from './use-conversation'
 import {useConversations} from './use-conversations'
 import {useDeleteConversation} from './use-delete-conversation'
@@ -54,7 +54,7 @@ export function useChatPage() {
 			// Refetch conversation to get updated messages
 			setTimeout(() => {
 				refetchConversation()
-			}, TIMING.ONE_SECOND)
+			}, CACHE_TIMES.ONE_SECOND)
 		},
 		[
 			currentConversationId,

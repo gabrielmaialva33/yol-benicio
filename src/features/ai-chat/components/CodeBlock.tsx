@@ -14,11 +14,11 @@ const TRAILING_NEWLINE = /\n$/
 
 interface CodeBlockProps {
 	/** Programming language */
-	language?: string
+	language?: string | undefined
 	/** Code content */
 	children: string
 	/** Whether to show line numbers */
-	showLineNumbers?: boolean
+	showLineNumbers?: boolean | undefined
 }
 
 export const CodeBlock = memo(function CodeBlock({
@@ -92,12 +92,12 @@ export function MarkdownCode({
 	children,
 	...props
 }: {
-	inline?: boolean
-	className?: string
+	inline?: boolean | undefined
+	className?: string | undefined
 	children?: React.ReactNode
 }) {
 	const match = LANGUAGE_PATTERN.exec(className || '')
-	const language = match ? match[1] : 'text'
+	const language: string | undefined = match ? match[1] : undefined
 	const codeString = String(children).replace(TRAILING_NEWLINE, '')
 
 	if (inline) {

@@ -23,7 +23,7 @@ export function useTypewriter(
 
 	const [displayText, setDisplayText] = useState('')
 	const [isTyping, setIsTyping] = useState(false)
-	const timeoutRef = useRef<NodeJS.Timeout>()
+	const timeoutRef = useRef<NodeJS.Timeout | undefined>(undefined)
 	const indexRef = useRef(0)
 
 	useEffect(() => {
@@ -47,7 +47,7 @@ export function useTypewriter(
 
 				// Vary speed: faster on spaces, slower on punctuation
 				let charSpeed = speed
-				if (varySpeed) {
+				if (varySpeed && char) {
 					if (char === ' ') {
 						charSpeed = speed * 0.5 // Faster on spaces
 					} else if (['.', '!', '?', ','].includes(char)) {
@@ -55,7 +55,10 @@ export function useTypewriter(
 					}
 				}
 
-				timeoutRef.current = setTimeout(typeNextChar, charSpeed)
+				timeoutRef.current = setTimeout(
+					typeNextChar,
+					charSpeed
+				) as NodeJS.Timeout
 			} else {
 				// Typing complete
 				setIsTyping(false)

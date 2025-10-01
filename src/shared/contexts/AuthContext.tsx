@@ -83,7 +83,7 @@ export function AuthProvider({children}: AuthProviderProps) {
 	return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
 }
 
-function useAuth(): AuthContextValue {
+export function useAuth(): AuthContextValue {
 	const context = useContext(AuthContext)
 
 	if (context === undefined) {
@@ -93,5 +93,4 @@ function useAuth(): AuthContextValue {
 	return context
 }
 
-export {AuthProvider, useAuth}
 export type {AuthContextValue, AuthProviderProps}
