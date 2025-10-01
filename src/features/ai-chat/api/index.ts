@@ -171,7 +171,8 @@ export async function getConversation(id: number): Promise<Conversation> {
 		throw new Error('Failed to fetch conversation')
 	}
 
-	return response.json()
+	const json = await response.json()
+	return json.data
 }
 
 /**
