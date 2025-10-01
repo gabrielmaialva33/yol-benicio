@@ -1,7 +1,8 @@
 // API configuration
 
-// API base URL
-export const API_BASE_URL = 'http://localhost:3333'
+// API base URL from environment variable with fallback
+export const API_BASE_URL =
+	import.meta.env.VITE_API_BASE_URL || 'http://localhost:3333'
 
-// MSW configuration - disabled when using real API
-export const ENABLE_MSW = false
+// MSW configuration - controlled by environment variable
+export const ENABLE_MSW = import.meta.env.VITE_ENABLE_MSW === 'true'
