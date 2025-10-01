@@ -20,7 +20,7 @@ export function useConversation(conversationId?: number) {
 			return getConversation(conversationId)
 		},
 		enabled: Boolean(token) && Boolean(conversationId),
-		staleTime: CACHE_TIMES.ONE_MINUTE,
+		staleTime: 0, // Always refetch when query is invalidated
 		gcTime: CACHE_TIMES.FIVE_MINUTES
 	})
 }

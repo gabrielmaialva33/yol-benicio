@@ -101,7 +101,7 @@ export function ChatWindow({
 				))}
 
 				{/* Streaming message */}
-				{(streamingContent || isStreaming) && (
+				{isStreaming && streamingContent && (
 					<StreamingMessage
 						content={streamingContent}
 						isStreaming={isStreaming}

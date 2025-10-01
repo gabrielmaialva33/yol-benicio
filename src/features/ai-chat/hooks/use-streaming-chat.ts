@@ -28,8 +28,29 @@ export function useStreamingChat() {
 				await streamMessage(request, chunk => {
 					if (chunk.done) {
 						setIsStreaming(false)
-						// Invalidate conversations to refresh
-						queryClient.invalidateQueries({queryKey: ['ai-conversations']})
+
+						// Invalidate queries based on conversation type
+						if (request.conversation_id) {
+							// Existing conversation - invalidate specific conversation
+							queryClient.invalidateQueries({
+								queryKey: ['ai-conversation', request.conversation_id]
+							})
+						} else {
+							// New conversation - invalidate conversations list
+							queryClient.invalidateQueries({queryKey: ['ai-conversations']})
+
+							// Also invalidate the new conversation if we have its ID
+							if (chunk.conversation?.id) {
+								queryClient.invalidateQueries({
+									queryKey: ['ai-conversation', chunk.conversation.id]
+								})
+							}
+						}
+
+						// Clear streaming after small delay to allow refetch
+						setTimeout(() => {
+							setStreamingContent('')
+						}, 200)
 					} else {
 						setStreamingContent(prev => prev + chunk.content)
 						// Capture new conversation ID if it's a new conversation

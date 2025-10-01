@@ -2,9 +2,10 @@
  * Custom hook for ChatPage logic
  */
 
-import {CACHE_TIMES} from '@core/constants/cache'
+import {useQueryClient} from '@tanstack/react-query'
 import {useCallback, useEffect} from 'react'
 import {useNavigate, useParams} from 'react-router'
+import type {ChatMessage, Conversation} from '../types'
 import {useConversation} from './use-conversation'
 import {useConversations} from './use-conversations'
 import {useDeleteConversation} from './use-delete-conversation'
@@ -13,15 +14,14 @@ import {useStreamingChat} from './use-streaming-chat'
 export function useChatPage() {
 	const {conversationId} = useParams<{conversationId?: string}>()
 	const navigate = useNavigate()
+	const queryClient = useQueryClient()
 	const currentConversationId = conversationId
 		? Number.parseInt(conversationId, 10)
 		: undefined
 
 	// Hooks
 	const {data: conversations = []} = useConversations()
-	const {data: conversation, refetch: refetchConversation} = useConversation(
-		currentConversationId
-	)
+	const {data: conversation} = useConversation(currentConversationId)
 	const {
 		sendStreamingMessage,
 		streamingContent: streamContent,
@@ -39,6 +39,31 @@ export function useChatPage() {
 		async (message: string) => {
 			resetStreaming()
 
+			// Create optimistic user message
+			const optimisticMessage: ChatMessage = {
+				id: -Date.now(), // Negative ID for temporary message
+				conversation_id: currentConversationId || -1,
+				role: 'user',
+				content: message,
+				created_at: new Date().toISOString()
+			}
+
+			// Optimistic update - add user message immediately
+			if (currentConversationId) {
+				queryClient.setQueryData<Conversation>(
+					['ai-conversation', currentConversationId],
+					old => {
+						if (!old) {
+							return old
+						}
+						return {
+							...old,
+							messages: [...(old.messages || []), optimisticMessage]
+						}
+					}
+				)
+			}
+
 			const request: {
 				message: string
 				mode: 'single' | 'multi'
@@ -50,21 +75,8 @@ export function useChatPage() {
 			}
 
 			await sendStreamingMessage(request)
-
-			// Refetch conversation to get updated messages
-			setTimeout(() => {
-				if (currentConversationId) {
-					resetStreaming()
-					refetchConversation()
-				}
-			}, CACHE_TIMES.ONE_SECOND)
 		},
-		[
-			currentConversationId,
-			sendStreamingMessage,
-			resetStreaming,
-			refetchConversation
-		]
+		[currentConversationId, sendStreamingMessage, resetStreaming, queryClient]
 	)
 
 	// Handle new conversation
